@@ -21,6 +21,7 @@ const rename = require('./rename')
  * @param {number} [options.startIndex] - 自动编号的起始索引值（可选，默认：0）
  * @param {array|string} [options.namesList] - 要修改的对应的文件名列表数组或者文件名列表的数据（可选，默认：空数组）
  * @param {boolean} [options.ignoreQuantityDiscrepancies] - 是否忽略数据数量不一致（可选，默认值：false）
+ * @param {boolean} [options.force] - 是否强制重命名（可选，默认值：false）
  * @param {function} [options.sort] - 给文件夹中的文件进行排序的函数方法，返回排序后的文件列表数据（可选，默认空）
  * @param {function} [options.format] - 文件名的格式化方法（可选，默认对比行的索引值）
  */
@@ -35,7 +36,7 @@ const batchRename = (folderPath, options) => {
     const config = options ? {
       ...options
     } : null
-    const namesList = config  ? config.namesList : []
+    const namesList = config ? config.namesList : []
     let names = []
 
     // 3. 获取文件名列表数据
@@ -57,9 +58,10 @@ const batchRename = (folderPath, options) => {
     const namesCount = names.length
     const filesCount = files.length
 
+    const sortFn = config && config.sort ? config.sort : null
+
     // 5. 遍历文件名数据，逐个文件重命名
     if (namesCount) {
-      const sortFn = config && config.sort ? config.sort : null
       let msg = '文件数量于文件名列表的数据数量不一致'
 
       if (namesCount !== filesCount) {
@@ -72,17 +74,13 @@ const batchRename = (folderPath, options) => {
       }
 
       config.names = names
-
-      sortFiles(files, sortFn).forEach(function (oldFileName, index) {
-        const name = namesCount && !config.autoIndex ? names[index] : ''
-
-        rename(absoluteFolderPath, oldFileName, name || index, config)
-      })
-    } else {
-      files.forEach((oldFileName, index) => {
-        rename(absoluteFolderPath, oldFileName, index, config)
-      })
     }
+
+    sortFiles(files, sortFn).forEach(function (oldFileName, index) {
+      const name = namesCount && !config.autoIndex ? names[index]: ''
+
+      rename(absoluteFolderPath, oldFileName, name || index, config)
+    })
 
     console.log('批量重命名完成！')
   } catch (error) {

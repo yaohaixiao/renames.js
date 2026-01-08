@@ -109,7 +109,7 @@ const getFinalFileName = (oldFileName, index, options) => {
 
   // 3. 构造新文件名（前缀 + 连接符号 + 文件名 + 连接符号 + 后缀）
   if (prefix) {
-    newFileName += prefix + connector
+    newFileName = prefix + connector + newFileName
   }
 
   if (suffix) {

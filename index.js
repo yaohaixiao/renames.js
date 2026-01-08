@@ -1,15 +1,10 @@
-const padZero = require('./utils/padZero')
-const getBasename = require('./utils/getBasename')
-const getExtension = require('./utils/getExtension')
-const getIndexChapter = require('./utils/replaceIndexChapter')
 const batchRename = require('./utils/batchRename')
-const rename = require('./utils/rename')
 
 // -------------------------- 调用示例 --------------------------
 // rename('C:\\Users\\haixi\\Videos', '国漫+电影+电视剧[分享中].txt', '分享')
 
 // 给 "images" 文件夹下的所有文件添加前缀 "vacation_"、后缀 "_2024"
-batchRename('C:\\Users\\haixi\\Downloads\\绝园的暴风雨', {
+batchRename('C:\\Users\\haixi\\Videos\\庆余年\\第1季', {
   // namesList: [
   //   '小妖怪的夏天',
   //   '鹅鹅鹅',
@@ -21,12 +16,17 @@ batchRename('C:\\Users\\haixi\\Downloads\\绝园的暴风雨', {
   //   '玉兔'
   // ],
 
-  namesList: 'C:\\Users\\haixi\\Downloads\\names.txt',
-  autoIndex: true,
+  // namesList: 'C:\\Users\\haixi\\Downloads\\names.txt',
+
+  prefix: '庆余年',
+  connector: '.',
+
+  autoIndex: 'only',
   indexPadZero: true,
+  // force: true,
   // extname: '.mkv'
 
-  // startIndex: 12,
+  // startIndex: 10,
 
   // sort: (files) => {
   //   return files.sort((a, b) => {
@@ -39,21 +39,6 @@ batchRename('C:\\Users\\haixi\\Downloads\\绝园的暴风雨', {
 
   // format: (oldFileName) => {
   //   const basename = getBasename(oldFileName)
-  //   return basename.replace(/-(.*)/, '')
-  // }
-
-  // format: (oldFileName) => {
-  //   return getIndexChapter(oldFileName, (filename) => {
-  //     const title = filename.replace(/^(\d+\-)/, '')
-  //     const name = filename.replace(title, '')
-  //     const index = name.replace(/\-/, '')
-  //     const number = Number(index)
-  //
-  //     return {
-  //       name,
-  //       index,
-  //       number
-  //     }
-  //   })
+  //   return basename.replace(/(\d+)\s/, '第$1集：')
   // }
 })
