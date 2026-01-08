@@ -4,6 +4,7 @@ const path = require('path')
 const readList = require('./readList')
 const sortFiles = require('./sortFiles')
 const rename = require('./rename')
+const isFunction = require('./isFunction')
 
 /**
  * 批量给文件添加前缀/后缀
@@ -37,6 +38,7 @@ const batchRename = (folderPath, options) => {
       ...options
     } : null
     const namesList = config ? config.namesList : []
+    const filter = config && isFunction(config.filter) ? config.filter : null
     let names = []
 
     // 3. 获取文件名列表数据
@@ -76,8 +78,10 @@ const batchRename = (folderPath, options) => {
       config.names = names
     }
 
-    sortFiles(files, sortFn).forEach(function (oldFileName, index) {
-      const name = namesCount && !config.autoIndex ? names[index]: ''
+    const targets = filter ? filter(files) : files
+
+    sortFiles(targets, sortFn).forEach(function (oldFileName, index) {
+      const name = namesCount && !config.autoIndex ? names[index] : ''
 
       rename(absoluteFolderPath, oldFileName, name || index, config)
     })

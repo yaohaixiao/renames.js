@@ -1,10 +1,12 @@
 const batchRename = require('./utils/batchRename')
+const getBasename = require('./utils/getBasename')
+const getExtension = require('./utils/getExtension')
 
 // -------------------------- 调用示例 --------------------------
 // rename('C:\\Users\\haixi\\Videos', '国漫+电影+电视剧[分享中].txt', '分享')
 
 // 给 "images" 文件夹下的所有文件添加前缀 "vacation_"、后缀 "_2024"
-batchRename('C:\\Users\\haixi\\Videos\\庆余年\\第1季', {
+batchRename('C:\\Users\\haixi\\Downloads', {
   // namesList: [
   //   '小妖怪的夏天',
   //   '鹅鹅鹅',
@@ -27,6 +29,14 @@ batchRename('C:\\Users\\haixi\\Videos\\庆余年\\第1季', {
   // extname: '.mkv'
 
   // startIndex: 10,
+
+  filter: (files) => {
+    return files.filter((file) => {
+      const extname = getExtension(file)
+
+      return extname === '.txt'
+    })
+  },
 
   // sort: (files) => {
   //   return files.sort((a, b) => {
