@@ -1,9 +1,10 @@
 /**
  * 自定义 padStart 方法，在字符串开头填充字符至目标长度
  * ===================================================================
+ * @method padStart
  * @param {string} val - 原始字符串（需处理的字符串）
  * @param {number} length - 最终目标字符串长度
- * @param {string} [padString=' '] - 填充字符（默认空格）
+ * @param {string} [padString=' '] - 可选：填充字符（默认值：' '）
  * @returns {string} 填充后的字符串
  */
 const padStart = (val, length, padString = ' ') => {

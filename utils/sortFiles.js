@@ -3,11 +3,12 @@ const getBasename = require('./getBasename')
 /**
  * 获取排序后的文件组数数据
  * ===================================================================
+ * @method sortFiles
  * @param {array} files - 需要排序的文件组数数据
- * @param {function} [sortFn] - 可选，用来排序的回调函数
+ * @param {function} [sortFn=null] - 可选，用来排序的回调函数（默认值：空）
  * @returns {array}
  */
-const sortFiles = (files, sortFn) => {
+const sortFiles = (files, sortFn = null) => {
   let sortedFiles
 
   // 对文件夹中的文件排序

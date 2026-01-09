@@ -4,6 +4,7 @@ const path = require('path')
 /**
  * （同步）读取文件名列表文件中的文件名数据，返回文件名数组
  * ===================================================================
+ * @method readList
  * @param {string} filePath - 文件名列表文件路径
  * @returns {array}
  */

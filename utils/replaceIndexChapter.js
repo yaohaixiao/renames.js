@@ -6,16 +6,17 @@ const toIndexChapter = require('./toIndexChapter')
 /**
  * 替换文件名中的章节信息
  * ===================================================================
+ * @method replaceIndexChapter
  * @param {string} oldFileName
  * @param {object|function} chapter - 必选，过滤文件名中的索引编号的处理函数
  * @param {string} chapter.name - 文件名中的整个索引编号的字符出，例如：第04章
  * @param {string} chapter.index - 件名中的索引编号的字符，例如：04
  * @param {number} chapter.number - 件名中的索引编号的数值，例如：4
- * @param {number|boolean} [length] - 可选，自动补齐索引编号的长度（默认值：2）
- * @param {object} [options] - 可选，其他的格式化配置参数（对象）
- * @param {string} [options.prefix] - 可选，索引部分的前缀（默认值：'第'）
- * @param {string} [options.suffix] - 可选，索引部分的后缀（默认值：'集'）
- * @param {string} [options.delimiter] - 可选，用来拆分索引部分和正式名的分割符号（默认值：'-'）
+ * @param {number|boolean} [length=2] - 可选，自动填充索引编号的长度（默认值：2）
+ * @param {object} [options=null] - 可选，其他的格式化配置参数（默认值：null）
+ * @param {string} [options.prefix='第'] - 可选，索引部分的前缀（默认值：'第'）
+ * @param {string} [options.suffix='集'] - 可选，索引部分的后缀（默认值：'集'）
+ * @param {string} [options.delimiter='：'] - 可选，用来拆分索引部分和正式名的分割符号（默认值：'：'）
  * @returns {string}
  */
 const replaceIndexChapter = (
@@ -31,11 +32,11 @@ const replaceIndexChapter = (
   let delimiter= '：'
   let padZeroIndex = true
 
-  // 关闭了自动补齐索引编号
+  // 关闭了自动填充索引编号
   if(length === false) {
     padZeroIndex = false
   } else {
-    // 开启自动补齐索引编号
+    // 开启自动填充索引编号
     if (options) {
       prefix = options.prefix
       suffix = options.suffix

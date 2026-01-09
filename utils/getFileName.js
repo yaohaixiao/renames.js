@@ -1,32 +1,31 @@
 const padZero = require('./padZero')
-const getExtension = require('./getExtension')
 const getBasename = require('./getBasename')
+const getExtension = require('./getExtension')
 const toIndexChapter = require('./toIndexChapter')
-
 
 /**
  * 获取文件名，通过原文件名，文件在文件夹中所有文件中的索引值和配置参数
  * ===================================================================
+ * @method getFileName
  * @param {string} oldFileName - 原文件名
- * @param {number} index - 文件在文件夹中所有文件中的索引值
- * @param {{prefix?: string, suffix?: string, connector?: string, autoIndex?: (boolean|string), indexPadZero?: boolean,
- *   indexLength?: number, indexPrefix?: string, indexSuffix?: string, indexDelimiter?: string, names?: Array, sort?:
- *   Function, format?: Function}} options - 配置参数对象数据（可选，默认空）
- * @param {string} [options.prefix] 要添加的前缀（可选，默认空）
- * @param {string} [options.suffix] - 要添加的后缀（可选，默认空，添加在文件名和扩展名之间）
- * @param {string} [options.connector] - prefix 和 suffix 之间的连接符（可选，默认空）
- * @param {boolean|string} [options.autoIndex] - 自动编号前缀（可选，默认：false）
- * @param {number} [options.startIndex] - 自动编号的起始索引值（可选，默认：0）
- * @param {number} [options.indexLength] - 可选，索引编号是否自动填充‘0’的长度（默认值：0）
- * @param {string} [options.indexPrefix] - 自动编号后缀（可选，默认：'第'）
- * @param {string} [options.indexSuffix] - 是否自动编号（可选，默认：'集'）
- * @param {string} [options.delimiter] - 自动编号和名字间的分隔符（可选，默认：'：'）
- * @param {string} [options.names] - 要修改的对应的文件名列表数据（可选，默认：空数组）
- * @param {function} [options.format] - 读取文件名的格式化方法（可选，默认对比行的索引值）
- * @param {string} [options.extname] - 可选，想替换的扩展名（默认值：''）
+ * @param {string|number} index - 文件在文件夹中所有文件中的索引值或者文件名字符串
+ * @param {object} [options=null] - 配置参数对象数据 （可选，默认值：null）
+ * @param {array} [options.names=[]] - 要修改的对应的文件名列表数组（可选，默认值：[]）
+ * @param {string} [options.prefix=''] 要添加的前缀（可选，默认值：''）
+ * @param {string} [options.suffix=''] - 要添加的后缀，添加在文件名和扩展名之间（可选，默认值：''）
+ * @param {string} [options.connector=''] - prefix 和 suffix 之间的连接符（可选，默认值：''）
+ * @param {boolean|string} [options.autoIndex=false] - 是否自动编号（可选，默认值：false）
+ * @param {number} [options.startIndex=0] - 自动编号的起始索引值（可选，默认值：0）
+ * @param {boolean} [options.indexPadZero=true] - 是否索引编号自动补‘0’（可选，默认值：true）
+ * @param {number} [options.indexLength=2] - 自动补齐的字符串长度值（可选，默认值：2）
+ * @param {string} [options.indexPrefix='第'] - 自动编号后缀（可选，默认值：'第'）
+ * @param {string} [options.indexSuffix='集'] - 是否自动编号（可选，默认值：'集'）
+ * @param {string} [options.delimiter='：'] - 自动编号和名字间的分隔符（可选，默认值：'：'）
+ * @param {function} [options.format=null] - 文件名的格式化方法（可选，默认值：null）
+ * @param {string} [options.extname=''] - 想替换的扩展名（可选，默认值：''）
  * @returns {string}
  */
-const getFinalFileName = (oldFileName, index, options) => {
+const getFileName = (oldFileName, index, options) => {
   // 1. 拆分文件名和扩展名（如 "photo.jpg" → 文件名"photo"，扩展名".jpg"）
   const basename = getBasename(oldFileName)
 
@@ -50,6 +49,10 @@ const getFinalFileName = (oldFileName, index, options) => {
   let namesList = []
   let format = null
   let startIndex = 0
+
+  if (typeof index === 'string') {
+    return index
+  }
 
   // options 为可选参数，读取 options 有配置时的各个参数的数据
   if (options) {
@@ -120,4 +123,4 @@ const getFinalFileName = (oldFileName, index, options) => {
   return `${newFileName}${extension ? extension : getExtension(oldFileName)}`
 }
 
-module.exports = getFinalFileName
+module.exports = getFileName

@@ -3,6 +3,7 @@ const padStart = require('./padStart')
 /**
  * 数字/字符串补零（前置补0，确保指定长度）
  * ===================================================================
+ * @method padZero
  * @param {number|string} value - 要补零的数字或字符串（如 27、'27'）
  * @param {number} length - 目标总长度（如 3 → '027'，4 → '0027'）
  * @returns {string} 补零后的字符串
