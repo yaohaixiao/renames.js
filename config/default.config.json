@@ -1,0 +1,16 @@
+{
+  "folderPath": "",
+  "namesList": "",
+  "prefix": "",
+  "suffix": "",
+  "connector": "",
+  "autoIndex": false,
+  "startIndex": 0,
+  "indexPadZero": true,
+  "indexPrefix": "第",
+  "indexSuffix": "集",
+  "delimiter": "：",
+  "force": false,
+  "extname": "",
+  "sortBy": "name"
+}

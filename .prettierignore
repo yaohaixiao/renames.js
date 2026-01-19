@@ -1,0 +1,28 @@
+# dependencies
+**/node_modules
+
+# production
+/dist
+/docs
+/.vscode
+/report
+/tests
+
+# misc
+npm-debug.log*
+
+/coverage
+.idea
+package-lock.json
+
+# visual studio code
+.history
+*.log
+functions/*
+.temp/**
+
+# screenshot
+screenshot
+.firebase
+
+.husky
