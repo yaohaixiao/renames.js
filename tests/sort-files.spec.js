@@ -181,10 +181,10 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('write-file.spec');
+    expect(getBasename(sorted[0])).toEqual('batch-rename.spec');
   });
 
   const sortByBirthtimeDescOptions = {
@@ -192,9 +192,9 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'read-dir.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('read-dir.spec');
+    expect(getBasename(sorted[0])).toEqual('write-file.spec');
   });
 });
