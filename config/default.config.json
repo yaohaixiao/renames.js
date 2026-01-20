@@ -12,5 +12,7 @@
   "delimiter": "：",
   "force": false,
   "extname": "",
-  "sortBy": "name"
+  "sortBy": "name",
+  "order": "desc",
+  "sensitivity": "base"
 }
