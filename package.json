@@ -1,7 +1,7 @@
 {
   "name": "@yaohaixiao/renames.js",
   "version": "0.0.1",
-  "description": "renames.js - 基于 Node 的批量文件名重命名 cli 工具库",
+  "description": "renames.js - 基于 Node 的批量文件名重命名 cli 工具库。",
   "main": "index.js",
   "bin": {
     "renames": "bin/renames.js"

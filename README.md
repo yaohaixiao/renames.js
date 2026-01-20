@@ -1,3 +1,3 @@
-# batchRename
+# renames.js
 
-基于 Node 的批量文件名重命名工具库
+renames.js - 基于 Node 的批量文件名重命名 cli 工具库

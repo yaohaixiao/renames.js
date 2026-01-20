@@ -12,11 +12,13 @@ import isFileExists from '../lib/utils/is-file-exists.js';
 import isEmptyObject from '../lib/utils/is-empty-object.js';
 import readFile from '../lib/utils/read-file.js';
 import renames from '../index.js';
+import showWarningLog from '../lib/utils/show-warning-log.js';
 
 const { resolve, dirname } = path;
 const currentFilePath = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFile(resolve(currentFilePath, '../package.json')));
 const { version, author, description } = pkg;
+
 const CONFIG_FILE_NAME = 'renames.config.json';
 const CONFIG_PATH = resolve(currentFilePath, `../${CONFIG_FILE_NAME}`);
 const DEFAULT_CONFIG_PATH = resolve(
@@ -51,7 +53,7 @@ program
   )
   .option(
     '--autoIndex [enable]',
-    '是否自动生成索引编号（不传递，默认值：false）',
+    '是否自动生成索引编号（default：false）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -68,22 +70,29 @@ program
       }
     },
   )
-  .option('--startIndex <startIndex>', '索引编号起始值', (index) => {
-    /*
-     * argParser：参数处理函数，将字符串转为数值
-     * 可选：增加合法性校验，避免非数字参数
-     */
-    const startIndex = Number(index);
-    if (Number.isNaN(startIndex)) {
-      throw new TypeError(
-        `无效的数字：${index}，--startIndex 必须传入合法数值`,
-      );
-    }
-    return startIndex;
-  })
+  .option(
+    '--startIndex <startIndex>',
+    '索引编号起始值（default：0）',
+    (index) => {
+      /*
+       * argParser：参数处理函数，将字符串转为数值
+       * 可选：增加合法性校验，避免非数字参数
+       */
+      const startIndex = Number(index);
+      if (Number.isNaN(startIndex)) {
+        showWarningLog(
+          '警告',
+          `${index} 为无效数字`,
+          '--startIndex 必须传入合法数值，将使用默认值"0"。',
+        );
+        return 0;
+      }
+      return startIndex;
+    },
+  )
   .option(
     '--indexPadZero [enable]',
-    '是否自动用0填充索引编号（不传递，默认值：true）',
+    '是否自动用"0"填充索引编号（default：true）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -117,7 +126,7 @@ program
   )
   .option(
     '-f, --force [enable]',
-    '是否强制重命名（不传递，默认值：true）',
+    '是否强制重命名（default：true）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -136,9 +145,15 @@ program
   )
   .option('--ext, --extname <extname>', '重命名后的扩展名，例如：".txt"')
   .option(
-    '--sortBy <sortBy>',
-    '排序方式，可选项：name、type、size、birthtime 和 modify-time)',
+    '--sort, --sortBy <sortBy>',
+    '排序类型，可选项：name、type、size、birthtime 和 modify-time',
     'name',
+  )
+  .option('--order <order>', '排序方式，可选项：desc 和 asc', 'desc')
+  .option(
+    '--sensitivity <sensitivity>',
+    'name 排序时大小写/重音处理的方式，可选项：base、accent、case 和 variant',
+    'base',
   )
   .arguments('[target-path]')
   .action(async (targetPath, options) => {
@@ -252,7 +267,7 @@ program
   )
   .option(
     '--autoIndex [enable]',
-    '是否自动生成索引编号（不传递，默认值：false）',
+    '是否自动生成索引编号（default：false）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -269,22 +284,29 @@ program
       }
     },
   )
-  .option('--startIndex <startIndex>', '索引编号起始值', (index) => {
-    /*
-     * argParser：参数处理函数，将字符串转为数值
-     * 可选：增加合法性校验，避免非数字参数
-     */
-    const startIndex = Number(index);
-    if (Number.isNaN(startIndex)) {
-      throw new TypeError(
-        `无效的数字：${index}，--startIndex 必须传入合法数值`,
-      );
-    }
-    return startIndex;
-  })
+  .option(
+    '--startIndex <startIndex>',
+    '索引编号起始值（default：0）',
+    (index) => {
+      /*
+       * argParser：参数处理函数，将字符串转为数值
+       * 可选：增加合法性校验，避免非数字参数
+       */
+      const startIndex = Number(index);
+      if (Number.isNaN(startIndex)) {
+        showWarningLog(
+          '警告',
+          `${index} 为无效数字`,
+          '--startIndex 必须传入合法数值，将使用默认值"0"。',
+        );
+        return 0;
+      }
+      return startIndex;
+    },
+  )
   .option(
     '--indexPadZero [enable]',
-    '是否自动用0填充索引编号（不传递，默认值：true）',
+    '是否自动用"0"填充索引编号（default：true）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -318,7 +340,7 @@ program
   )
   .option(
     '-f, --force [enable]',
-    '是否强制重命名（不传递，默认值：true）',
+    '是否强制重命名（default：true）',
     (enable) => {
       switch (enable) {
         case '1':
@@ -337,9 +359,15 @@ program
   )
   .option('--ext, --extname <extname>', '重命名后的扩展名，例如：".txt"')
   .option(
-    '--sortBy <sortBy>',
-    '排序方式，可选项：name、type、size、birthtime 和 modify-time)',
+    '--sort, --sortBy <sortBy>',
+    '排序方式，可选项：name、type、size、birthtime 和 modify-time',
     'name',
+  )
+  .option('--order <order>', '排序方式，可选项：desc 和 asc', 'desc')
+  .option(
+    '--sensitivity <sensitivity>',
+    'name 排序时大小写/重音处理的方式，可选项：base、accent、case 和 variant',
+    'base',
   )
   .action((options) => {
     createConfig(options).then(
