@@ -34,6 +34,13 @@ describe('rename() 方法：', () => {
     expect(isFileExists(MD_PATH)).toBe(true);
   });
 
+  it(`rename('${OLD_PATH}', '${MD_PATH}', () => {console.log('重命名完成')})，检测文件${MD_PATH}是否存在，返回：true`, () => {
+    rename(OLD_PATH, MD_PATH, () => {
+      console.log('重命名完成');
+    });
+    expect(isFileExists(MD_PATH)).toBe(true);
+  });
+
   it(`rename('${NOT_EXISTS_PATH}', '${NEW_PATH}')，检测文件${NEW_PATH}是否存在，返回：false`, () => {
     expect(rename(NOT_EXISTS_PATH, NEW_PATH)).toBe(false);
   });

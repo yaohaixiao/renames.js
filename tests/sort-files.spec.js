@@ -51,6 +51,14 @@ const ORIGIN_BOOKS = [
   '菊与刀.docx',
 ];
 
+const SORT_BOOKS = [
+  'JavaScript Data Structures and Algorithms.pdf',
+  'Express in Action.epub',
+  '仙逆.md',
+  '菊与刀.docx',
+  '凡人修仙传.txt',
+];
+
 const SORT_BY_BOOKS = [
   'Express in Action.epub',
   'JavaScript Data Structures and Algorithms.pdf',
@@ -77,6 +85,16 @@ describe('sortFiles() 方法：', () => {
   const customizeSortByOptions = {
     sortBy,
   };
+
+  it(`sortFiles('${ORIGIN_BOOKS}', null), 返回：'${DESC_BOOKS}'`, () => {
+    const sorted = sortFiles(ORIGIN_BOOKS, null);
+    expect(sorted).toEqual(DESC_BOOKS);
+  });
+
+  it(`sortFiles('${ORIGIN_BOOKS}'), 返回：'${DESC_BOOKS}'`, () => {
+    const sorted = sortFiles(ORIGIN_BOOKS);
+    expect(sorted).toEqual(DESC_BOOKS);
+  });
 
   it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(customizeSortByOptions)}), 自定义排序，返回：'${SORT_BY_BOOKS}'`, () => {
     const sorted = sortFiles(ORIGIN_BOOKS, customizeSortByOptions);
@@ -179,7 +197,7 @@ describe('sortFiles() 方法：', () => {
     sortBy: 'birthtime',
     order: 'asc',
     folderPath: TESTS_DIR_PATH,
-  };
+  }
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeAscOptions);

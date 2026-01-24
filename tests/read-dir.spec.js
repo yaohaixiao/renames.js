@@ -11,13 +11,22 @@ const FILE_PATH = resolve(process.cwd(), `${TESTS_DIR}/sort-files.spec.js`);
 const NOT_EXISTS_PATH = resolve(process.cwd(), './demo/case');
 
 describe(`readDir() 方法：`, () => {
-  it(`readDir('${ABSOLUTE_PATH}', 'utf8')，返回：true`, () => {
-    const result = readDir(ABSOLUTE_PATH, 'utf8');
+  it(`readDir('${ABSOLUTE_PATH}', 'utf8', (files) => {console.log(files.length)})，返回：true`, () => {
+    const result = readDir(ABSOLUTE_PATH, 'utf8', (files) => {
+      console.log(files.length);
+    });
     expect(result.length > 0).toBe(true);
   });
 
   it(`readDir('${ABSOLUTE_PATH}', { encoding: 'md' })，返回：true`, () => {
     const result = readDir(ABSOLUTE_PATH, { encoding: 'md' });
+    expect(result.length > 0).toBe(true);
+  });
+
+  it(`readDir('${ABSOLUTE_PATH}', (files) => {console.log(files.length)})，返回：true`, () => {
+    const result = readDir(ABSOLUTE_PATH, (files) => {
+      console.log(files.length);
+    });
     expect(result.length > 0).toBe(true);
   });
 
