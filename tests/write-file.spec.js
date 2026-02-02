@@ -7,7 +7,8 @@ import removeFile from '@/lib/utils/remove-file.js';
 const { resolve, dirname } = path;
 
 const FILE_NAME = 'default.config.json';
-const ABSOLUTE_PATH = resolve(process.cwd(), `./tests/json/${FILE_NAME}`);
+const TEMPLATE_DIR = './tests/write';
+const ABSOLUTE_PATH = resolve(process.cwd(), `${TEMPLATE_DIR}/${FILE_NAME}`);
 const CONTENT_FOLDER = '{"folderPath": "./tests"}';
 const CONTENT_PAD_START = '{"indexPadZero": true}';
 

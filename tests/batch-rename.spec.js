@@ -36,14 +36,14 @@ const CONTENTS = [
 
 const NOT_EXISTS_PATH = './not-exists.json';
 const CURRENT_PATH = process.cwd();
-const RELATIVE_PATH = './tests/template';
-const ABSOLUTE_PATH = resolve(CURRENT_PATH, RELATIVE_PATH);
+const TEMPLATE_DIR = './tests/batch';
+const ABSOLUTE_PATH = resolve(CURRENT_PATH, TEMPLATE_DIR);
 
 describe('batchRename() 方法：', () => {
   beforeEach(() => {
     for (const content of CONTENTS) {
       writeFile(
-        resolve(CURRENT_PATH, `${RELATIVE_PATH}/${content}.txt`),
+        resolve(CURRENT_PATH, `${TEMPLATE_DIR}/${content}.txt`),
         content,
       );
     }
@@ -51,18 +51,18 @@ describe('batchRename() 方法：', () => {
 
   afterEach(() => {
     // 删除临时文件，确保单测代码干净
-    removeFile(resolve(CURRENT_PATH, RELATIVE_PATH));
+    removeFile(resolve(CURRENT_PATH, TEMPLATE_DIR));
   });
 
   it(`batchRename('${NOT_EXISTS_PATH}'), 返回：false`, () => {
     expect(batchRename(NOT_EXISTS_PATH)).toBe(false);
   });
 
-  it(`batchRename('${ABSOLUTE_PATH}', ${stringify(DEFAULT_CONFIG)}), 返回：true，检测文件'${RELATIVE_PATH}/${CONTENTS[0]}.txt是否存在，返回：true'`, () => {
+  it(`batchRename('${ABSOLUTE_PATH}', ${stringify(DEFAULT_CONFIG)}), 返回：true，检测文件'${TEMPLATE_DIR}/${CONTENTS[0]}.txt是否存在，返回：true'`, () => {
     const result = batchRename(ABSOLUTE_PATH, DEFAULT_CONFIG);
     expect(result).toBe(true);
 
-    const TEMP_FILE = `${RELATIVE_PATH}/${CONTENTS[0]}.txt`;
+    const TEMP_FILE = `${TEMPLATE_DIR}/${CONTENTS[0]}.txt`;
     expect(isFileExists(resolve(CURRENT_PATH, TEMP_FILE))).toBe(true);
   });
 
@@ -83,7 +83,7 @@ describe('batchRename() 方法：', () => {
     const result = batchRename(ABSOLUTE_PATH, AUTO_CONFIG);
     expect(result).toBe(true);
 
-    const TEMP_FILE = `${RELATIVE_PATH}/第1集：龙珠-神秘的龙珠出现！悟空变成了小孩.txt`;
+    const TEMP_FILE = `${TEMPLATE_DIR}/第1集：龙珠-神秘的龙珠出现！悟空变成了小孩.txt`;
     expect(isFileExists(resolve(CURRENT_PATH, TEMP_FILE))).toBe(true);
   });
 
@@ -103,7 +103,7 @@ describe('batchRename() 方法：', () => {
     const result = batchRename(ABSOLUTE_PATH, AUTO_DIFF_NAMES_CONFIG);
     expect(result).toBe(true);
 
-    const TEMP_FILE = `${RELATIVE_PATH}/第6集：超级抢钱！商人的行星伊美加.txt`;
+    const TEMP_FILE = `${TEMPLATE_DIR}/第6集：超级抢钱！商人的行星伊美加.txt`;
     expect(isFileExists(resolve(CURRENT_PATH, TEMP_FILE))).toBe(true);
   });
 
@@ -116,7 +116,7 @@ describe('batchRename() 方法：', () => {
     const result = batchRename(ABSOLUTE_PATH, AUTO_NAMES_CONFIG);
     expect(result).toBe(true);
 
-    const TEMP_FILE = `${RELATIVE_PATH}/第1集：好痛啊！当牙医的悟空.txt`;
+    const TEMP_FILE = `${TEMPLATE_DIR}/第1集：好痛啊！当牙医的悟空.txt`;
     expect(isFileExists(resolve(CURRENT_PATH, TEMP_FILE))).toBe(true);
   });
 });

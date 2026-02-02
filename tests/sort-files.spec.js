@@ -51,14 +51,6 @@ const ORIGIN_BOOKS = [
   '菊与刀.docx',
 ];
 
-const SORT_BOOKS = [
-  'JavaScript Data Structures and Algorithms.pdf',
-  'Express in Action.epub',
-  '仙逆.md',
-  '菊与刀.docx',
-  '凡人修仙传.txt',
-];
-
 const SORT_BY_BOOKS = [
   'Express in Action.epub',
   'JavaScript Data Structures and Algorithms.pdf',
@@ -176,10 +168,10 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'to-index-chapter.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('write-file.spec');
+    expect(getBasename(sorted[0])).toEqual('to-index-chapter.spec');
   });
 
   const sortByModifyTimeDescOptions = {
@@ -187,17 +179,17 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'sort-files.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('sort-files.spec');
+    expect(getBasename(sorted[0])).toEqual('batch-rename.spec');
   });
 
   const sortByBirthtimeAscOptions = {
     sortBy: 'birthtime',
     order: 'asc',
     folderPath: TESTS_DIR_PATH,
-  }
+  };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeAscOptions);

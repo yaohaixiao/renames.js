@@ -7,9 +7,10 @@ import rename from '@/lib/utils/rename.js';
 
 const { resolve } = path;
 
-const OLD_PATH = resolve('./tests/readme.txt');
-const NEW_PATH = resolve('./tests/new-readme.txt');
-const MD_PATH = resolve('./tests/readme.md');
+const TEMPLATE_DIR = './tests/rename';
+const OLD_PATH = resolve(`${TEMPLATE_DIR}/readme.txt`);
+const NEW_PATH = resolve(`${TEMPLATE_DIR}/new-readme.txt`);
+const MD_PATH = resolve(`${TEMPLATE_DIR}/readme.md`);
 const NOT_EXISTS_PATH = resolve('./music.mp3');
 
 describe('rename() 方法：', () => {
@@ -19,9 +20,7 @@ describe('rename() 方法：', () => {
 
   afterEach(() => {
     // 删除临时文件，确保单测代码干净
-    removeFile(OLD_PATH);
-    removeFile(NEW_PATH);
-    removeFile(MD_PATH);
+    removeFile(resolve(TEMPLATE_DIR));
   });
 
   it(`rename('${OLD_PATH}', '${NEW_PATH}')，检测文件${NEW_PATH}是否存在，返回：true`, () => {
