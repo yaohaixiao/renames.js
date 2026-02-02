@@ -21,7 +21,7 @@ const { version, author, description } = pkg;
 
 // 配置文件相关常量
 const CONSTANTS = {
-  CONFIG_FILE_NAME: 'renames.config.json',
+  CONFIG_FILE_NAME: 'renames.config.js',
   DEMO_FOLDER_PATH: String.raw`C:\Downloads\Videos`,
   DEMO_LIST_PATH: String.raw`C:\Downloads\names.txt`,
   DEMO_LIST_DATA: '悟空成了通缉犯,当牙医的悟空',
@@ -345,17 +345,17 @@ mainCommander.arguments('[target-path]').action(async (targetPath, options) => {
     }
     default: {
       // 获取配置文件内容
-      const configPath = isFileExists(CONFIG_PATH)
-        ? CONFIG_PATH
-        : DEFAULT_CONFIG_PATH;
-      const content = readFile(configPath, { encoding: 'utf8' });
-      const defaults = JSON.parse(content);
+      const content = readFile(DEFAULT_CONFIG_PATH, { encoding: 'utf8' });
+      const defaults = isFileExists(CONFIG_PATH)
+        ? await import(`../${CONFIG_FILE_NAME}`)
+        : JSON.parse(content);
+      const config = defaults.default || defaults;
 
       // 获取最终的文件夹路径
-      const finalFolderPath = await getFinalFolderPath(targetPath, defaults);
+      const finalFolderPath = await getFinalFolderPath(targetPath, config);
 
       // 合并配置并处理文件名列表
-      const finalOptions = { ...defaults, ...options };
+      const finalOptions = { ...config, ...options };
 
       finalOptions.namesList = processNameList(finalOptions.namesList);
 

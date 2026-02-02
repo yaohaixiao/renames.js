@@ -2,5 +2,5 @@
 /node_modules
 --fix
 report
-/renames.config.json
+/renames.config.js
 /tests/json/default.config.json
