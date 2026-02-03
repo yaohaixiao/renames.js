@@ -23,6 +23,7 @@ const DEFAULT_CONFIG = {
   force: false,
   extname: '',
   sortBy: 'name',
+  order: 'desc',
 };
 
 const CONTENTS = [
@@ -112,11 +113,11 @@ describe('batchRename() 方法：', () => {
     autoIndex: true,
   };
 
-  it(`batchRename('${ABSOLUTE_PATH}', ${stringify(AUTO_NAMES_CONFIG)}), 返回：true，并检测重命名后的"第1集：好痛啊！当牙医的悟空.txt"是否存在，返回：true`, () => {
+  it(`batchRename('${ABSOLUTE_PATH}', ${stringify(AUTO_NAMES_CONFIG)}), 返回：true，并检测重命名后的"第1集：悟空成了通缉犯.txt"是否存在，返回：true`, () => {
     const result = batchRename(ABSOLUTE_PATH, AUTO_NAMES_CONFIG);
     expect(result).toBe(true);
 
-    const TEMP_FILE = `${TEMPLATE_DIR}/第1集：好痛啊！当牙医的悟空.txt`;
+    const TEMP_FILE = `${TEMPLATE_DIR}/第1集：悟空成了通缉犯.txt`;
     expect(isFileExists(resolve(CURRENT_PATH, TEMP_FILE))).toBe(true);
   });
 });

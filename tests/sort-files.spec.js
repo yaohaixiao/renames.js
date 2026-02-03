@@ -59,6 +59,14 @@ const SORT_BY_BOOKS = [
   '菊与刀.docx',
 ];
 
+const ASC_BOOKS = [
+  '凡人修仙传.txt',
+  '菊与刀.docx',
+  '仙逆.md',
+  'Express in Action.epub',
+  'JavaScript Data Structures and Algorithms.pdf',
+];
+
 const DESC_BOOKS = [
   'JavaScript Data Structures and Algorithms.pdf',
   'Express in Action.epub',
@@ -70,7 +78,7 @@ const DESC_BOOKS = [
 const { resolve } = path;
 const { stringify } = JSON;
 const sortBy = (files) => files.toSorted();
-const TESTS_DIR_PATH = resolve(process.cwd(), './tests');
+const TESTS_DIR_PATH = resolve(process.cwd(), './lib/utils');
 const JS_FILES = readDir(TESTS_DIR_PATH);
 
 describe('sortFiles() 方法：', () => {
@@ -78,14 +86,14 @@ describe('sortFiles() 方法：', () => {
     sortBy,
   };
 
-  it(`sortFiles('${ORIGIN_BOOKS}', null), 返回：'${DESC_BOOKS}'`, () => {
+  it(`sortFiles('${ORIGIN_BOOKS}', null), 返回：'${ASC_BOOKS}'`, () => {
     const sorted = sortFiles(ORIGIN_BOOKS, null);
-    expect(sorted).toEqual(DESC_BOOKS);
+    expect(sorted).toEqual(ASC_BOOKS);
   });
 
-  it(`sortFiles('${ORIGIN_BOOKS}'), 返回：'${DESC_BOOKS}'`, () => {
+  it(`sortFiles('${ORIGIN_BOOKS}'), 返回：'${ASC_BOOKS}'`, () => {
     const sorted = sortFiles(ORIGIN_BOOKS);
-    expect(sorted).toEqual(DESC_BOOKS);
+    expect(sorted).toEqual(ASC_BOOKS);
   });
 
   it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(customizeSortByOptions)}), 自定义排序，返回：'${SORT_BY_BOOKS}'`, () => {
@@ -119,13 +127,14 @@ describe('sortFiles() 方法：', () => {
 
   const sortBySizeDescOptions = {
     sortBy: 'size',
+    order: 'desc',
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'sort-files.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
     const sorted = sortFiles(JS_FILES, sortBySizeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('sort-files.spec');
+    expect(getBasename(sorted[0])).toEqual('sort-files');
   });
 
   const sortBySizeAscOptions = {
@@ -134,15 +143,15 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'pad-zero.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'strip-non-digit'`, () => {
     const sorted = sortFiles(JS_FILES, sortBySizeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('pad-zero.spec');
+    expect(getBasename(sorted[0])).toEqual('strip-non-digit');
   });
 
   const sortByTypeDescOptions = {
     sortBy: 'type',
-    order: 'base',
+    order: 'desc',
   };
 
   it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(sortByTypeDescOptions)}), 按文件类型（desc排序）， 排序后的第1个文件名称，返回：'凡人修仙传.txt'`, () => {
@@ -168,21 +177,22 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'to-index-chapter.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('to-index-chapter.spec');
+    expect(getBasename(sorted[0])).toEqual('get-basename');
   });
 
   const sortByModifyTimeDescOptions = {
     sortBy: 'modify-time',
+    order: 'desc',
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('batch-rename.spec');
+    expect(getBasename(sorted[0])).toEqual('sort-files');
   });
 
   const sortByBirthtimeAscOptions = {
@@ -191,20 +201,21 @@ describe('sortFiles() 方法：', () => {
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'batch-rename.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('batch-rename.spec');
+    expect(getBasename(sorted[0])).toEqual('get-basename');
   });
 
   const sortByBirthtimeDescOptions = {
     sortBy: 'birthtime',
+    order: 'desc',
     folderPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file.spec'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('write-file.spec');
+    expect(getBasename(sorted[0])).toEqual('write-file');
   });
 });

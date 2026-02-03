@@ -4,13 +4,13 @@ import removeFile from '@/lib/utils/remove-file.js';
 
 import readList from '@/lib/read-list.js';
 
-const { resolve } = path;
+const { resolve, dirname } = path;
 
-const TXT_PATH = resolve('./tests/names.txt');
+const TXT_PATH = resolve('./tests/txt/names.txt');
 const NOT_EXISTS_PATH = resolve('./not_exists.txt');
 const NAMES = '封面-1\n' + '封面-3\n' + '封面-2\n' + '封面-4';
 
-const JSON_PATH = resolve('./tests/books.json');
+const JSON_PATH = resolve('./tests/json/books.json');
 const CHAPTERS = [
   '神秘的龙珠出现！悟空变成了小孩',
   null,
@@ -36,10 +36,10 @@ describe('readList() 方法：', () => {
 
   afterEach(() => {
     // 删除临时文件，确保单测代码干净
-    removeFile(TXT_PATH, () => {
+    removeFile(dirname(TXT_PATH), () => {
       console.log(`${TXT_PATH}已删除！`);
     });
-    removeFile(JSON_PATH, {
+    removeFile(dirname(JSON_PATH), {
       maxRetries: 1,
     });
   });
