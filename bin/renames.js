@@ -22,13 +22,13 @@ const { version, author, description } = pkg;
 // 配置文件相关常量
 const CONSTANTS = {
   CONFIG_FILE_NAME: 'renames.config.js',
-  DEMO_FOLDER_PATH: String.raw`C:\Downloads\Videos`,
+  DEMO_DIR_PATH: String.raw`C:\Downloads\Videos`,
   DEMO_LIST_PATH: String.raw`C:\Downloads\names.txt`,
   DEMO_LIST_DATA: '悟空成了通缉犯,当牙医的悟空',
   DEMO_FILE_NAME: '第01话：新的开始.mp4',
   DEMO_FULL_FILE_NAME: '动画片-第01话：新的开始-1080p.mp4',
   DEFAULT_SORT: 'name',
-  DEFAULT_ORDER: 'desc',
+  DEFAULT_ORDER: 'asc',
   DEFAULT_SENSITIVITY: 'base',
   DEFAULT_INDEX_PREFIX: '第',
   DEFAULT_INDEX_SUFFIX: '集',
@@ -39,7 +39,7 @@ const CONSTANTS = {
 // 解构常量
 const {
   CONFIG_FILE_NAME,
-  DEMO_FOLDER_PATH,
+  DEMO_DIR_PATH,
   DEMO_LIST_PATH,
   DEMO_LIST_DATA,
   DEMO_FILE_NAME,
@@ -240,26 +240,26 @@ const processNameList = (nameList) => {
 /**
  * # 辅助函数：获取最终的文件夹路径
  *
- * @function getFinalFolderPath
- * @param {string} targetPath - 命令行传入的路径
+ * @function getFinalDirPath
+ * @param {string} dirPath - 命令行传入的路径
  * @param {object} defaults - 默认配置
  * @returns {Promise<string>} 最终的文件夹路径
  */
-async function getFinalFolderPath(targetPath, defaults) {
+async function getFinalDirPath(dirPath, defaults) {
   // 优先使用命令行传入的路径
-  if (targetPath) {
-    return targetPath;
+  if (dirPath) {
+    return dirPath;
   }
 
   // 使用默认配置中的路径
-  if (defaults?.folderPath) {
-    return defaults.folderPath;
+  if (defaults?.dirPath) {
+    return defaults.dirPath;
   }
 
   // 交互式获取路径
   return await input({
     message: chalk.greenBright(
-      `请输入需要执行重命名操作的文件夹路径（例如："${DEMO_FOLDER_PATH}"）：`,
+      `请输入需要执行重命名操作的文件夹路径（例如："${DEMO_DIR_PATH}"）：`,
     ),
   });
 }
@@ -299,7 +299,7 @@ const mainCommander = program
 addCommonOptions(mainCommander);
 
 // 主命令逻辑
-mainCommander.arguments('[target-path]').action(async (targetPath, options) => {
+mainCommander.arguments('[dir-path]').action(async (dirPath, options) => {
   let answer;
 
   // 无配置文件且无选项时，提供交互式选择
@@ -352,7 +352,7 @@ mainCommander.arguments('[target-path]').action(async (targetPath, options) => {
       const config = defaults.default || defaults;
 
       // 获取最终的文件夹路径
-      const finalFolderPath = await getFinalFolderPath(targetPath, config);
+      const finalDirPath = await getFinalDirPath(dirPath, config);
 
       // 合并配置并处理文件名列表
       const finalOptions = { ...config, ...options };
@@ -360,7 +360,7 @@ mainCommander.arguments('[target-path]').action(async (targetPath, options) => {
       finalOptions.namesList = processNameList(finalOptions.namesList);
 
       // 执行重命名
-      renames(finalFolderPath, finalOptions);
+      renames(finalDirPath, finalOptions);
       break;
     }
   }

@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "keywords": [
-    "javaScript",
+    "javascript",
     "node",
     "cli",
     "rename",
