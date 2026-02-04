@@ -13,6 +13,7 @@ import isEmptyObject from '../lib/utils/is-empty-object.js';
 import readFile from '../lib/utils/read-file.js';
 import renames from '../index.js';
 import showWarningLog from '../lib/utils/show-warning-log.js';
+import terminalLink from '../lib/utils/terminal-link.js';
 
 const { resolve, dirname } = path;
 const currentFilePath = dirname(fileURLToPath(import.meta.url));
@@ -20,41 +21,27 @@ const pkg = JSON.parse(readFile(resolve(currentFilePath, '../package.json')));
 const { version, author, description } = pkg;
 
 // 配置文件相关常量
-const CONSTANTS = {
-  CONFIG_FILE_NAME: 'renames.config.js',
-  DEMO_DIR_PATH: String.raw`C:\Downloads\Videos`,
-  DEMO_LIST_PATH: String.raw`C:\Downloads\names.txt`,
-  DEMO_LIST_DATA: '悟空成了通缉犯,当牙医的悟空',
-  DEMO_FILE_NAME: '第01话：新的开始.mp4',
-  DEMO_FULL_FILE_NAME: '动画片-第01话：新的开始-1080p.mp4',
-  DEFAULT_SORT: 'name',
-  DEFAULT_ORDER: 'asc',
-  DEFAULT_SENSITIVITY: 'base',
-  DEFAULT_INDEX_PREFIX: '第',
-  DEFAULT_INDEX_SUFFIX: '集',
-  DEFAULT_DELIMITER: '：',
-  DEFAULT_START_INDEX: 0,
-};
-
-// 解构常量
-const {
-  CONFIG_FILE_NAME,
-  DEMO_DIR_PATH,
-  DEMO_LIST_PATH,
-  DEMO_LIST_DATA,
-  DEMO_FILE_NAME,
-  DEMO_FULL_FILE_NAME,
-  DEFAULT_SORT,
-  DEFAULT_ORDER,
-  DEFAULT_SENSITIVITY,
-  DEFAULT_INDEX_PREFIX,
-  DEFAULT_INDEX_SUFFIX,
-  DEFAULT_DELIMITER,
-  DEFAULT_START_INDEX,
-} = CONSTANTS;
+const CONFIG_FILE_NAME = 'renames.config.js',
+  DEMO_DIR_PATH = String.raw`C:\Downloads\Videos`,
+  DEMO_LIST_PATH = String.raw`C:\Downloads\names.txt`,
+  DEMO_LIST_DATA = '新的开始,完美结局',
+  DEMO_PREFIX = '动画片',
+  DEMO_SUFFIX = '1080p',
+  DEMO_CONNECTOR = '-',
+  DEMO_BASENAME = '第01话：新的开始',
+  DEMO_FILE_NAME = `${DEMO_BASENAME}.mp4`,
+  DEMO_FULL_FILE_NAME = `${DEMO_PREFIX}${DEMO_CONNECTOR}${DEMO_BASENAME}${DEMO_CONNECTOR}${DEMO_SUFFIX}.mp4`,
+  DEFAULT_SORT = 'name',
+  DEFAULT_ORDER = 'asc',
+  DEFAULT_SENSITIVITY = 'base',
+  DEFAULT_INDEX_PREFIX = '第',
+  DEFAULT_INDEX_SUFFIX = '集',
+  DEFAULT_DELIMITER = '：',
+  DEFAULT_START_INDEX = 0;
 
 // 配置文件路径
 const CONFIG_PATH = resolve(currentFilePath, `../${CONFIG_FILE_NAME}`);
+const CONFIG_PATH_URL = `file://${CONFIG_PATH}`;
 const DEFAULT_CONFIG_PATH = resolve(
   currentFilePath,
   '../config/default.config.json',
@@ -119,73 +106,74 @@ const parseNumberOption = (
 const getCommonOptions = () => [
   {
     flags: '--names, --namesList <namesList>',
-    description: `文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
+    description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
   },
   {
     flags: '--prefix <prefix>',
-    description: `文件名的前缀字符串，例如："${DEMO_FULL_FILE_NAME}"中的"动画片"`,
+    description: `可选，文件名的前缀字符串，例如："${DEMO_FULL_FILE_NAME}"中的"${DEMO_PREFIX}"`,
   },
   {
     flags: '--suffix <suffix>',
-    description: `文件名的后缀字符串，例如："${DEMO_FULL_FILE_NAME}"中的"1080p"`,
+    description: `可选，文件名的后缀字符串，例如："${DEMO_FULL_FILE_NAME}"中的"${DEMO_SUFFIX}"`,
   },
   {
     flags: '--connector <connector>',
-    description: `文件名的前/后缀字符串间的连接字符串，例如："${DEMO_FULL_FILE_NAME}"中的"-"`,
+    description: `可选，文件名的前/后缀字符串间的连接字符串，例如："${DEMO_FULL_FILE_NAME}"中的"${DEMO_CONNECTOR}"`,
   },
   {
     flags: '--autoIndex [enable]',
-    description: '是否自动生成索引编号（default：false）',
+    description: '可选，是否自动生成索引编号（default：false）',
     parser: (enable) => parseBooleanOption(enable, false),
   },
   {
     flags: '--startIndex <startIndex>',
-    description: `索引编号起始值（default：${DEFAULT_START_INDEX}）`,
+    description: `可选，索引编号起始值（default：${DEFAULT_START_INDEX}）`,
     parser: (index) => parseNumberOption(index, DEFAULT_START_INDEX),
   },
   {
     flags: '--indexPadZero [enable]',
-    description: '是否自动用"0"填充索引编号（default：true）',
+    description: '可选，是否自动用"0"填充索引编号（default：true）',
     parser: (enable) => parseBooleanOption(enable, true),
   },
   {
     flags: '--indexPrefix <indexPrefix>',
-    description: `索引编号的前缀字符串，例如："${DEMO_FILE_NAME}"中的"第"`,
+    description: `可选，索引编号的前缀字符串，例如："${DEMO_FILE_NAME}"中的"第"`,
     defaultValue: DEFAULT_INDEX_PREFIX,
   },
   {
     flags: '--indexSuffix <indexSuffix>',
-    description: `索引编号的后缀字符串，例如："${DEMO_FILE_NAME}"中的"话"`,
+    description: `可选，索引编号的后缀字符串，例如："${DEMO_FILE_NAME}"中的"话"`,
     defaultValue: DEFAULT_INDEX_SUFFIX,
   },
   {
     flags: '--delimiter <delimiter>',
-    description: `索引编号和的前/后缀字符串间的连接符，例如："${DEMO_FILE_NAME}"中的"："`,
+    description: `可选，索引编号和的前/后缀字符串间的连接符，例如："${DEMO_FILE_NAME}"中的"："`,
     defaultValue: DEFAULT_DELIMITER,
   },
   {
     flags: '-f, --force [enable]',
-    description: '是否强制重命名（default：false）',
+    description: '可选，是否强制重命名（default：false）',
     parser: (enable) => parseBooleanOption(enable, false),
   },
   {
     flags: '--ext, --extname <extname>',
-    description: '重命名后的扩展名，例如：".txt"',
+    description: '可选，重命名后的扩展名，例如：".txt"',
   },
   {
     flags: '--sort, --sortBy <sortBy>',
-    description: '排序类型，可选项：name、type、size、birthtime 和 modify-time',
+    description:
+      '可选，排序类型，可选项：name、type、size、birthtime 和 modify-time',
     defaultValue: DEFAULT_SORT,
   },
   {
     flags: '--order <order>',
-    description: '排序方式，可选项：desc 和 asc',
+    description: '可选，排序方式，可选项：desc 和 asc',
     defaultValue: DEFAULT_ORDER,
   },
   {
     flags: '--sensitivity <sensitivity>',
     description:
-      'name 排序时大小写/重音处理的方式，可选项：base、accent、case 和 variant',
+      '可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant',
     defaultValue: DEFAULT_SENSITIVITY,
   },
 ];
@@ -299,72 +287,92 @@ const mainCommander = program
 addCommonOptions(mainCommander);
 
 // 主命令逻辑
-mainCommander.arguments('[dir-path]').action(async (dirPath, options) => {
-  let answer;
+mainCommander
+  .argument(
+    '[dir-path]',
+    `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CONFIG_FILE_NAME} 中的 dirPath 属性。`,
+  )
+  .action(async (dirPath, options) => {
+    let answer;
 
-  // 无配置文件且无选项时，提供交互式选择
-  if (!isFileExists(CONFIG_PATH) && isEmptyObject(options)) {
-    answer = await select({
-      message:
-        `请指定命令的必要参数，或者创建 ${CONFIG_FILE_NAME} 配置文件，\n` +
-        '执行命令：renames -h 将显示 renames 命令的详细参数帮助信息，\n' +
-        '执行命令：renames init 将创建命令配置文件，请选择后序操作？',
-      pageSize: 3,
-      choices: [
-        {
-          name: '执行命令：renames -h',
-          value: 'help',
-          description: '执行 renames -h 命令，显示帮助信息',
-        },
-        {
-          name: '执行命令：renames init 命令',
-          value: 'init',
-          description: '执行命令：renames init，创建配置文件',
-        },
-        {
-          name: '退出',
-          value: 'exit',
-          disabled: false,
-        },
-      ],
-    });
-  }
-
-  switch (answer) {
-    case 'help': {
-      executeHelpCommand();
-      break;
+    // 无配置文件且无选项时，提供交互式选择
+    if (!isFileExists(CONFIG_PATH) && isEmptyObject(options)) {
+      answer = await select({
+        message:
+          `请指定命令或参数，或者创建 ${CONFIG_FILE_NAME} 配置文件，\n` +
+          '执行命令：renames -h，将显示 renames 命令的详细帮助信息，\n' +
+          '执行命令：renames init，将创建命令配置文件，请选择后序操作？',
+        pageSize: 3,
+        choices: [
+          {
+            name: '执行命令：renames -h',
+            value: 'help',
+            description: '执行 renames -h 命令，显示帮助信息',
+          },
+          {
+            name: '执行命令：renames init 命令',
+            value: 'init',
+            description: '执行命令：renames init，创建配置文件',
+          },
+          {
+            name: '退出',
+            value: 'exit',
+            disabled: false,
+          },
+        ],
+      });
     }
-    case 'init': {
-      executeInitCommand();
-      break;
+
+    switch (answer) {
+      case 'help': {
+        executeHelpCommand();
+        break;
+      }
+      case 'init': {
+        executeInitCommand();
+        break;
+      }
+      case 'exit': {
+        console.log(chalk.green('\n已退出！'));
+        break;
+      }
+      default: {
+        // 获取配置文件内容
+        const content = readFile(DEFAULT_CONFIG_PATH, { encoding: 'utf8' });
+        const defaults = isFileExists(CONFIG_PATH)
+          ? await import(`../${CONFIG_FILE_NAME}`)
+          : JSON.parse(content);
+        const config = defaults.default || defaults;
+
+        // 获取最终的文件夹路径
+        const finalDirPath = await getFinalDirPath(dirPath, config);
+
+        // 合并配置并处理文件名列表
+        const finalOptions = { ...config, ...options };
+
+        finalOptions.namesList = processNameList(finalOptions.namesList);
+
+        if (finalDirPath) {
+          // 执行重命名
+          renames(finalDirPath, finalOptions);
+        } else if (isFileExists(CONFIG_PATH)) {
+          // 提示修改配置文件中的 dirPath
+          showWarningLog(
+            '警告',
+            `${terminalLink(CONFIG_PATH, CONFIG_PATH_URL)}`,
+            '已生成，可配置 dirPath 属性后再执行 renames 命令。',
+          );
+        } else {
+          showWarningLog(
+            '警告',
+            '执行重命名操作的文件夹路径',
+            '未接受到任何信息，已退出程序。',
+          );
+        }
+        break;
+      }
     }
-    case 'exit': {
-      console.log(chalk.green('\n已退出！'));
-      break;
-    }
-    default: {
-      // 获取配置文件内容
-      const content = readFile(DEFAULT_CONFIG_PATH, { encoding: 'utf8' });
-      const defaults = isFileExists(CONFIG_PATH)
-        ? await import(`../${CONFIG_FILE_NAME}`)
-        : JSON.parse(content);
-      const config = defaults.default || defaults;
-
-      // 获取最终的文件夹路径
-      const finalDirPath = await getFinalDirPath(dirPath, config);
-
-      // 合并配置并处理文件名列表
-      const finalOptions = { ...config, ...options };
-
-      finalOptions.namesList = processNameList(finalOptions.namesList);
-
-      // 执行重命名
-      renames(finalDirPath, finalOptions);
-      break;
-    }
-  }
-});
+  });
 
 // 配置 init 命令
 const initCommand = program
@@ -377,8 +385,21 @@ addCommonOptions(initCommand);
 // init 命令逻辑
 initCommand.action((options) => {
   createConfig(options)
-    .then(() => {
-      console.log(chalk.green(`\n${CONFIG_FILE_NAME} 配置文件已生成！`));
+    .then(({ isCancel }) => {
+      if (!isCancel) {
+        console.log(
+          chalk.green(
+            `\n配置文件 ${terminalLink(CONFIG_PATH, CONFIG_PATH_URL)} 已生成！`,
+          ),
+        );
+        return false;
+      }
+
+      console.log(
+        chalk.yellowBright(
+          `\n已取消重写 ${terminalLink(CONFIG_PATH, CONFIG_PATH_URL)} 配置文件！`,
+        ),
+      );
     })
     .catch((error) => {
       console.log(chalk.red(`生成配置文件失败：${error.message}`));

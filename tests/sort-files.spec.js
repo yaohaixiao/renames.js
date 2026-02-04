@@ -189,10 +189,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'read-file'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'terminal-link'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('read-file');
+    expect(getBasename(sorted[0])).toEqual('terminal-link');
   });
 
   const sortByBirthtimeAscOptions = {
@@ -213,9 +213,9 @@ describe('sortFiles() 方法：', () => {
     dirPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'terminal-link'`, () => {
     const sorted = sortFiles(JS_FILES, sortByBirthtimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('write-file');
+    expect(getBasename(sorted[0])).toEqual('terminal-link');
   });
 });
