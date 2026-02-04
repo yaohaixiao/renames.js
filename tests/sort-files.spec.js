@@ -128,7 +128,7 @@ describe('sortFiles() 方法：', () => {
   const sortBySizeDescOptions = {
     sortBy: 'size',
     order: 'desc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
@@ -140,7 +140,7 @@ describe('sortFiles() 方法：', () => {
   const sortBySizeAscOptions = {
     sortBy: 'size',
     order: 'asc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'strip-non-digit'`, () => {
@@ -174,7 +174,7 @@ describe('sortFiles() 方法：', () => {
   const sortByModifyTimeAscOptions = {
     sortBy: 'modify-time',
     order: 'asc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
@@ -186,19 +186,19 @@ describe('sortFiles() 方法：', () => {
   const sortByModifyTimeDescOptions = {
     sortBy: 'modify-time',
     order: 'desc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'read-file'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('sort-files');
+    expect(getBasename(sorted[0])).toEqual('read-file');
   });
 
   const sortByBirthtimeAscOptions = {
     sortBy: 'birthtime',
     order: 'asc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
@@ -210,7 +210,7 @@ describe('sortFiles() 方法：', () => {
   const sortByBirthtimeDescOptions = {
     sortBy: 'birthtime',
     order: 'desc',
-    folderPath: TESTS_DIR_PATH,
+    dirPath: TESTS_DIR_PATH,
   };
 
   it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file'`, () => {
