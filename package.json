@@ -39,7 +39,9 @@
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
     "chalk": "^5.6.2",
-    "commander": "^14.0.2"
+    "cli-highlight": "^2.1.11",
+    "commander": "^14.0.2",
+    "prettier": "^3.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
@@ -65,7 +67,6 @@
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "jest-html-reporter": "^4.3.0",
-    "prettier": "^3.7.4",
     "prettier-plugin-jsdoc": "^1.8.0"
   },
   "type": "module",

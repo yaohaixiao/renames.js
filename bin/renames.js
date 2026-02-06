@@ -21,23 +21,23 @@ const pkg = JSON.parse(readFile(resolve(currentFilePath, '../package.json')));
 const { version, author, description } = pkg;
 
 // 配置文件相关常量
-const CONFIG_FILE_NAME = 'renames.config.js',
-  DEMO_DIR_PATH = String.raw`C:\Downloads\Videos`,
-  DEMO_LIST_PATH = String.raw`C:\Downloads\names.txt`,
-  DEMO_LIST_DATA = '新的开始,完美结局',
-  DEMO_PREFIX = '动画片',
-  DEMO_SUFFIX = '1080p',
-  DEMO_CONNECTOR = '-',
-  DEMO_BASENAME = '第01话：新的开始',
-  DEMO_FILE_NAME = `${DEMO_BASENAME}.mp4`,
-  DEMO_FULL_FILE_NAME = `${DEMO_PREFIX}${DEMO_CONNECTOR}${DEMO_BASENAME}${DEMO_CONNECTOR}${DEMO_SUFFIX}.mp4`,
-  DEFAULT_SORT = 'name',
-  DEFAULT_ORDER = 'asc',
-  DEFAULT_SENSITIVITY = 'base',
-  DEFAULT_INDEX_PREFIX = '第',
-  DEFAULT_INDEX_SUFFIX = '集',
-  DEFAULT_DELIMITER = '：',
-  DEFAULT_START_INDEX = 0;
+const CONFIG_FILE_NAME = 'renames.config.js';
+const DEMO_DIR_PATH = String.raw`C:\Downloads\Videos`;
+const DEMO_LIST_PATH = String.raw`C:\Downloads\names.txt`;
+const DEMO_LIST_DATA = '新的开始,完美结局';
+const DEMO_PREFIX = '动画片';
+const DEMO_SUFFIX = '1080p';
+const DEMO_CONNECTOR = '-';
+const DEMO_BASENAME = '第01话：新的开始';
+const DEMO_FILE_NAME = `${DEMO_BASENAME}.mp4`;
+const DEMO_FULL_FILE_NAME = `${DEMO_PREFIX}${DEMO_CONNECTOR}${DEMO_BASENAME}${DEMO_CONNECTOR}${DEMO_SUFFIX}.mp4`;
+const DEFAULT_SORT = 'name';
+const DEFAULT_ORDER = 'asc';
+const DEFAULT_SENSITIVITY = 'base';
+const DEFAULT_INDEX_PREFIX = '第';
+const DEFAULT_INDEX_SUFFIX = '集';
+const DEFAULT_DELIMITER = '：';
+const DEFAULT_START_INDEX = 0;
 
 // 配置文件路径
 const CONFIG_PATH = resolve(currentFilePath, `../${CONFIG_FILE_NAME}`);
@@ -378,6 +378,12 @@ mainCommander
 const initCommand = program
   .command('init')
   .description(`用以生成"${CONFIG_FILE_NAME}"配置文件`);
+
+// init 命令添加 dirPath 选项
+initCommand.option(
+  '--dir, --dirPath <dirPath>',
+  `可选，目标文件夹（绝对或相对）路径，例如：${DEMO_DIR_PATH}`,
+);
 
 // init 命令添加通用选项
 addCommonOptions(initCommand);
