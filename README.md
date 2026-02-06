@@ -243,3 +243,7 @@ export default {
   }
 };
 ```
+
+## License
+
+JavaScript Code Licensed under [MIT License](http://opensource.org/licenses/mit-license.html).
