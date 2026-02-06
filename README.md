@@ -47,23 +47,25 @@ renames C:\Downloads --autoIndex only
 
 renames.js 提供了较为丰富的 options 参数，用以控制重命名的操作细节处理方式：
 
-* -h, --help                        display help for command
-* --dir, --dirPath <dirPath>        可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持）
-* --names, --namesList <namesList>  可选，文件名列表数组数据，例如："新的开始,完美结局"。或者文件名列表文件的路径，例如："C:\Downloads\names.txt"。
-* --prefix <prefix>                 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"
-* --suffix <suffix>                 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"
-* --connector <connector>           可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-"
-* --autoIndex [enable]              可选，是否自动生成索引编号（default：false）
-* --startIndex <startIndex>         可选，索引编号起始值（default：0）
-* --indexPadZero [enable]           可选，是否自动用"0"填充索引编号（default：true）
-* --indexPrefix <indexPrefix>       可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第")
-* --indexSuffix <indexSuffix>       可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集")
-* --delimiter <delimiter>           可选，索引编号和的前/后缀字符串间的连接符，例如："第01话：新的开始.mp4"中的"：" (default: "：")
-* -f, --force [enable]              可选，是否强制重命名（default：false）
-* --ext, --extname <extname>        可选，重命名后的扩展名，例如：".txt"
-* --sort, --sortBy <sortBy>         可选，排序类型，可选项：name、type、size、birthtime 和 modify-time (default: "name")
-* --order <order>                   可选，排序方式，可选项：desc 和 asc (default: "asc")
-* --sensitivity <sensitivity>       可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base")
+| 参数名                          | 参数说明                                                                         |
+|--------------------------------|------------------------------------------------------------------------------|
+| -h, --help                     | display help for command                                                     |
+| --dir, --dirPath <dirPath>     | 可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持）                                            |
+| --names, --namesList <namesList> | 可选，文件名列表数组数据，例如："新的开始,完美结局"。或者文件名列表文件的路径，例如："C:\Downloads\names.txt"。        |
+| --prefix <prefix>              | 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"                             |
+| --suffix <suffix>              | 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"                           |
+| --connector <connector>        | 可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-" |
+| --autoIndex [enable]           | 可选，是否自动生成索引编号（default：false） |
+| --startIndex <startIndex>      | 可选，索引编号起始值（default：0） |
+| --indexPadZero [enable]        | 可选，是否自动用"0"填充索引编号（default：true） |
+| --indexPrefix <indexPrefix>    | 可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第") |
+| --indexSuffix <indexSuffix>    | 可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集") |
+| --delimiter <delimiter>        | 可选，索引编号和的前/后缀字符串间的连接符，例如："第01话：新的开始.mp4"中的"：" (default: "：") |
+| -f, --force [enable]           | 可选，是否强制重命名（default：false） |
+| --ext, --extname <extname>     | 可选，重命名后的扩展名，例如：".txt" |
+| --sort, --sortBy <sortBy>      | 可选，排序类型，可选项：name、type、size、birthtime 和 modify-time (default: "name") |
+| --order <order>                | 可选，排序方式，可选项：desc 和 asc (default: "asc") |
+| --sensitivity <sensitivity>    | 可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base") |
 
 例如希望将 C:\Downloads 目录下的文件批量重命名为数字索引的信息，可以输入以下命令：
 
