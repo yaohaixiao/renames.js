@@ -13,7 +13,13 @@ renames.js - 基于 Node 的批量文件名重命名 cli 工具库。
 
 ## Usage
 
-renames.js 使用方式如下：
+首先需要全局安装 renames.js，命令如下：
+
+```bash
+npm i -g @yaohaixiao/renames.js
+```
+
+全局安装完成后，我们就可以在命令行使用了，renames.js 使用方式如下：
 
 ```bash
 renames [arguments|command] [options]
@@ -154,7 +160,7 @@ filter 参数可以用来过滤 dirPath 文件夹中的文件，例如 C:\Downlo
 
 ```js
 // renames.js 内部提供的功能函数
-import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension';
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension.js';
 
 export default {
   dirPath: 'C:\\Downloads',
@@ -193,7 +199,7 @@ export default {
 
 ```js
 // renames.js 内部提供的功能函数
-import getBasename from '@yaohaixiao/renames.js/lib/utils/get-basename';
+import getBasename from '@yaohaixiao/renames.js/lib/utils/get-basename.js';
 
 export default {
   dirPath: 'C:\\Downloads',
@@ -222,7 +228,7 @@ format 参数可以对文件夹中的文件进行格式化，例如 C:\Downloads
 
 ```js
 // renames.js 内部提供的功能函数
-import stripNonDigit from '@yaohaixiao/renames.js/lib/utils/strip-non-digit';
+import stripNonDigit from '@yaohaixiao/renames.js/lib/utils/strip-non-digit.js';
 
 export default {
   dirPath: 'C:\\Downloads',
@@ -233,7 +239,265 @@ export default {
 };
 ```
 
+### Typical Use Case
+
+下面介绍通过调整配置 renames.config.js 的配置，实现批量重命名的一些典型的使用案例，操作起来是非常的简单的。
+
+#### autoIndex: 'only'
+
+将杂乱的图片库的文件名，批量重命名为自动生成数值（升序）索引（例如：1.jpg -
+2x.jpg）的文件名，调整 renames.config.js 配置如下：
+
+```js
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: '',
+  suffix: '',
+  connector: '',
+  // 自动生成数值（升序）索引
+  autoIndex: 'only',
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![autoIndex-only](./docs/img/autoIndex-only.png)
+
+说明：执行 renames 命令，未配置任何参数和配置参数，则执行命令时完全使用配置文件的设置。
+
+#### startIndex
+
+如果你是一个爱收集壁纸的人，应该会陆续收集更多的图片，我们可以使用 startIndex 在原来的索引位置继续自动生成数值索引名称，配置如下：
+
+```js
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: '',
+  suffix: '',
+  connector: '',
+  // 自动生成数值（升序）索引
+  autoIndex: 'only',
+  // 上图中文件名的索引值已经到 29.jpg，则 startIndex 的值就是 29
+  startIndex: 29,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![startIndex](./docs/img/startIndex.png)
+
+#### indexPadZero
+
+细心的朋友应该发现文件名 01.jpg，自动用‘0’填充。使用的就是 indexPadZero 这个配置参数。 现在将文件夹的图片文件数量增加到100以上，看看索引使用自动填充‘0’后的效果，配置如下：
+
+```js
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: '',
+  suffix: '',
+  connector: '',
+  // 自动生成数值（升序）索引
+  autoIndex: 'only',
+  startIndex: 0,
+  // 使用 '0' 自动填充
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![indexPadZero](./docs/img/indexPadZero.png)
+
+当然，如果没有强迫症，不希望文件名的长度一致，我们也可以关闭 indexPadZero，配置如下：
+
+```js
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: '',
+  suffix: '',
+  connector: '',
+  // 自动生成数值（升序）索引
+  autoIndex: 'only',
+  startIndex: 0,
+  // 使用 '0' 自动填充
+  indexPadZero: false,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![indexPadZero-false](./docs/img/indexPadZero-false.png)
+
+可以看到，关闭后就不会使用‘0’自动填充了。
+
+#### prefix、suffix、connector
+
+接着我们可以对以上重命名好的文件名再继续调整，使用 prefix、suffix、connector 这3个配置参数，添加前缀和后缀，配置如下：
+
+```js
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: 'wallpaper',
+  suffix: '1080p',
+  connector: '-',
+  // 关闭自动生成数值索引（升序）
+  autoIndex: false,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![prefix-suffix-connector](./docs/img/prefix-suffix-connector.png)
+
+#### filter
+
+接着我们使用 filter 配置参数，进一步对上面重命名的文件再操作，我们将图片中的 .png 格式的图片再批量处理以下，配置如下：
+
+```js
+// renames.js 内部提供的功能函数
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension';
+
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  prefix: 'wallpaper',
+  // 添加 png 的后缀
+  suffix: 'png',
+  connector: '-',
+  // 针对 png 图片生成自动索引的文件名
+  autoIndex: 'only',
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  // 过滤 .png 图片
+  filter: (files) => {
+    return files.filter((filename) => {
+      const extname = getExtension(filename);
+      return extname === '.png';
+    });
+  },
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![filter](./docs/img/filter.png)
+
+#### format
+
+接下来，我们将使用 format 参数，将上面我们使用 filter 参数将 .png 格式的图片的后缀再改成 1080p，配置如下：
+
+```js
+// renames.js 内部提供的功能函数
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension';
+
+export default {
+  dirPath: 'C:\\Users\\robert\\Downloads\\壁纸',
+  namesList: '',
+  // 清空前后缀的配置，我们现在的操作是仅修改原来的文件名
+  prefix: '',
+  suffix: '',
+  connector: '',
+  // 关闭自动索引也是因为需要仅修改原始的文件名
+  autoIndex: false,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  // 过滤 .png 图片，也可以配置过滤，那工具会遍历所有的文件，
+  // 为了性能，我们还是保留 filter 配置
+  filter: (files) => {
+    return files.filter((filename) => {
+      const extname = getExtension(filename);
+      return extname === '.png';
+    });
+  },
+  sortBy: 'name',
+  order: 'desc',
+  sensitivity: 'base',
+  format: (basename) => {
+    return basename.replace('png', '1080p')
+  },
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![format](./docs/img/format.png)
+
+
+
 ## License
 
-Licensed under
-[MIT License](http://opensource.org/licenses/mit-license.html).
+Licensed under [MIT License](http://opensource.org/licenses/mit-license.html).
