@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>renames.js - 基于 Node 的批量文件名重命名 cli 工具库</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <style>
+    html,
+    body {
+      width: 100%;
+      margin: 0;
+      font-family: 'Microsoft YaHei UI', Arial, sans-serif;
+      font-size: 16px;
+      background-color: #fff;
+      color: #333;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    pre {
+      padding: 1em;
+      border: 1px solid #ddd;
+      margin: 1.5em 0;
+      background-color: #f8f8f6;
+    }
+
+    code {
+      font-family: 'Courier New', Menlo, Monaco, Consolas, monospace;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      border-top: 1px solid #ddd;
+    }
+
+    th, td {
+      line-height: 2.5em;
+      border-bottom: 1px solid #ddd;
+      padding: 0 16px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8f8f6;
+    }
+
+    li {
+      line-height: 1.5em;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .paper {
+      max-width: 1200px;
+      margin: 2.5em;
+      padding: 2.5em 3em;
+      box-shadow: 0 0 20px #ddd;
+    }
+
+    .title {
+      font-size: 4em;
+      text-align: center;
+    }
+
+    .screenshot{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="paper">
+  <header>
+    <h1 class="title">renames.js</h1>
+  </header>
+  <main>
+    <p>renames.js - 基于 Node 的批量文件名重命名 cli 工具库。</p>
+    <h2>Features</h2>
+    <ul>
+      <li>方便快捷，配置灵活；</li>
+      <li>支持指定文件名列表数据或者文件名列表文件；</li>
+      <li>支持文件名自动生成（章节）索引；</li>
+      <li>支持文件名自定义过滤文件；</li>
+      <li>支持文件名自定义文件排序；</li>
+      <li>支持文件名自定义格式化名；</li>
+    </ul>
+    <h2>Usage</h2>
+    <p>首先需要全局安装 renames.js，命令如下：</p>
+    <pre><code class="language-bash">npm i -g @yaohaixiao/renames.js
+</code></pre>
+    <p>全局安装完成后，我们就可以在命令行使用了，renames.js 使用方式如下：</p>
+    <pre><code class="language-bash">renames [arguments|command] [options]
+</code></pre>
+    <p>renames.js 和其它 cli 工具一样，也可以通过 -h 选项获取完整帮助信息，命令如下：</p>
+    <pre><code class="language-bash">renames -h
+</code></pre>
+    <p>renames.js 提供目前提供一个 arguments（dir-path）参数和一个 command（init）子命令，以及10多个 options 配置信息。</p>
+    <h3>Arguments:</h3>
+    <ul>
+      <li>dir-path - 可选，目标文件夹（绝对或相对）路径，如不设置，则使用 renames.config.js 中的 dirPath。</li>
+    </ul>
+    <p>使用 dir-path 参数的命令如下：</p>
+    <pre><code class="language-bash">renames C:\Downloads --autoIndex only
+</code></pre>
+    <p>当然，我们可以指定更多的 options 配置选项指定具体的文件重命名的操作细节信息。</p>
+    <h3>Options</h3>
+    <p>renames.js 提供了较为丰富的 options 参数，用以控制重命名的操作细节处理方式：</p>
+    <table>
+      <thead>
+      <tr>
+        <th>参数名</th>
+        <th>参数说明</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>-h, --help</td>
+        <td>display help for command</td>
+      </tr>
+      <tr>
+        <td>--dir, --dirPath
+          &lt;dirPath&gt;
+        </td>
+        <td>可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持）</td>
+      </tr>
+      <tr>
+        <td>--names, --namesList
+          &lt;namesList&gt;
+        </td>
+        <td>可选，文件名列表数组数据，例如：&quot;新的开始,完美结局&quot;。或者文件名列表文件的路径，例如：&quot;C:\Downloads\names.txt&quot;。</td>
+      </tr>
+      <tr>
+        <td>--prefix
+          &lt;prefix&gt;
+        </td>
+        <td>可选，文件名的前缀字符串，例如：&quot;动画片-第01话：新的开始-1080p.mp4&quot;中的&quot;动画片&quot;</td>
+      </tr>
+      <tr>
+        <td>--suffix
+          &lt;suffix&gt;
+        </td>
+        <td>可选，文件名的后缀字符串，例如：&quot;动画片-第01话：新的开始-1080p.mp4&quot;中的&quot;1080p&quot;</td>
+      </tr>
+      <tr>
+        <td>--connector
+          &lt;connector&gt;
+        </td>
+        <td>
+          可选，文件名的前/后缀字符串间的连接字符串，例如：&quot;动画片-第01话：新的开始-1080p.mp4&quot;中的&quot;-&quot;
+        </td>
+      </tr>
+      <tr>
+        <td>--autoIndex [enable]</td>
+        <td>可选，是否自动生成索引编号（default：false）</td>
+      </tr>
+      <tr>
+        <td>--startIndex
+          &lt;startIndex&gt;
+        </td>
+        <td>可选，索引编号起始值（default：0）</td>
+      </tr>
+      <tr>
+        <td>--indexPadZero [enable]</td>
+        <td>可选，是否自动用&quot;0&quot;填充索引编号（default：true）</td>
+      </tr>
+      <tr>
+        <td>--indexPrefix
+          &lt;indexPrefix&gt;
+        </td>
+        <td>可选，索引编号的前缀字符串，例如：&quot;第01话：新的开始.mp4&quot;中的&quot;第&quot; (default: &quot;第&quot;)
+        </td>
+      </tr>
+      <tr>
+        <td>--indexSuffix
+          &lt;indexSuffix&gt;
+        </td>
+        <td>可选，索引编号的后缀字符串，例如：&quot;第01话：新的开始.mp4&quot;中的&quot;话&quot; (default: &quot;集&quot;)
+        </td>
+      </tr>
+      <tr>
+        <td>--delimiter
+          &lt;delimiter&gt;
+        </td>
+        <td>可选，索引编号和的前/后缀字符串间的连接符，例如：&quot;第01话：新的开始.mp4&quot;中的&quot;：&quot; (default:
+          &quot;：&quot;)
+        </td>
+      </tr>
+      <tr>
+        <td>-f, --force [enable]</td>
+        <td>可选，是否强制重命名（default：false）</td>
+      </tr>
+      <tr>
+        <td>--ext, --extname
+          &lt;extname&gt;
+        </td>
+        <td>可选，重命名后的扩展名，例如：&quot;.txt&quot;</td>
+      </tr>
+      <tr>
+        <td>--sort, --sortBy
+          &lt;sortBy&gt;
+        </td>
+        <td>可选，排序类型，可选项：name、type、size、birthtime 和 modify-time (default: &quot;name&quot;)</td>
+      </tr>
+      <tr>
+        <td>--order
+          &lt;order&gt;
+        </td>
+        <td>可选，排序方式，可选项：desc 和 asc (default: &quot;asc&quot;)</td>
+      </tr>
+      <tr>
+        <td>--sensitivity
+          &lt;sensitivity&gt;
+        </td>
+        <td>可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: &quot;base&quot;)
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <p>例如希望将 C:\Downloads 目录下的文件批量重命名为数字索引的信息，可以输入以下命令：</p>
+    <pre><code class="language-bash">renames C:\Downloads --autoIndex only
+</code></pre>
+    <h3>Command</h3>
+    <p>renames.js 目前仅提供了一个 init 子命令。</p>
+    <h4>init 子命令</h4>
+    <p>init 子命令是用来创建名为 renames.config.js 配置文件的，命令如下：</p>
+    <pre><code class="language-bash">renames init
+</code></pre>
+    <p>输入以上命令，renames.js 会提示输入 dirPath 和 namesList 两个重要的配置参数。</p>
+    <h4>获取 init 子命令的帮助信息</h4>
+    <p>当然，renames.js 也可以直接在 init 命令后添加各种不同的 options 参数。查看完整的 options 参数信息的命令如下：</p>
+    <pre><code class="language-bash">renames init -h
+</code></pre>
+    <h4>init 命令传递 options 配置参数</h4>
+    <p>以下展示通过传递 options 参数中的 dirPath 和 namesList 信息生成配置文件的方法，命令如下：</p>
+    <pre><code class="language-bash">renames init --dir C:\Downloads --names C:\Downloads\names.txt
+</code></pre>
+    <p>以上命令的功能是将 C:\Downloads 文件夹下的文件名，已 names.txt 文件中的文件列表数据进行重命名。</p>
+    <h2>renames.config.js 配置文件</h2>
+    <p>通过 init 命令生成 renames.config.js 文件的内容如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Downloads&#39;,
+  namesList: &#39;C:\\Downloads\\names.txt&#39;,
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  autoIndex: false,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  // 指定过滤 dirPath 文件夹中的文件过滤方法
+  filter: null,
+  // 可以是排序方式的名称（可选项：name、type、size、birthtime 和 modify-time），也可以是具体的处理函数
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  // 指定对最终文件名字的格式化处理函数
+  format: null,
+};
+</code></pre>
+    <p>除了输出以上的配置文件内容，工具还会采用蓝色的链接文字显示 renames.config.js 的文件路径。（Windows 环境）可以按 Ctrl
+      键点并用鼠标击链接文本打开文件进行编辑。</p>
+    <h3>特殊配置</h3>
+    <p>renames.js 处理 options 参数中的配置信息外，在 renames.config.js 配置文件中，还额外提供了3个特殊的配置：</p>
+    <ul>
+      <li>filter - 过滤文件处理函数</li>
+      <li>sortBy - 排序方式，可以是排序的名称或者具体的处理函数</li>
+      <li>format - 文件名字的格式化处理函数</li>
+    </ul>
+    <h4>filter</h4>
+    <p>filter 参数可以用来过滤 dirPath 文件夹中的文件，例如 C:\Downloads 中的文件如下：</p>
+    <ul>
+      <li>tinified.zip</li>
+      <li>83665500d425db4a902c3d4d36f5181e24380200.jpg</li>
+      <li>77665500d425db4a902c3d4d36f5181e24380200.jpg</li>
+      <li>names.txt</li>
+    </ul>
+    <p>我们希望过滤文件列表中的 .jpg 图片文件，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension.js&#39;;
+
+export default {
+  dirPath: &#39;C:\\Downloads&#39;,
+  // ...省略其它默认参数
+  // 指定过滤 dirPath 文件夹中的文件过滤方法
+  filter: (files) =&gt; {
+    // files 为 dirPath 下所有文件的数组数据
+    return files.filter((filename) =&gt; {
+      // getExtension 函数用以获取文件名中的扩展名
+      return getExtension(filename) === &#39;.jpg&#39;;
+    });
+  },
+};
+</code></pre>
+    <h4>sortBy</h4>
+    <p>sortBy 参数可以给文件夹中的文件进行排序，例如 C:\Downloads 中的文件如下：</p>
+    <ul>
+      <li>tinified.zip</li>
+      <li>83665500d425db4a902c3d4d36f5181e24380200.jpg</li>
+      <li>77665500d425db4a902c3d4d36f5181e24380200.jpg</li>
+      <li>names.txt</li>
+    </ul>
+    <p>我们希望通过文件大小进行排序，配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Downloads&#39;,
+  // ...省略其它默认参数
+  sortBy: &#39;size&#39;,
+};
+</code></pre>
+    <p>如果你希望的排序方式不在 name、type、size、birthtime 和 modify-time 这几种内置方式中，例如我们希望按文件名首字符
+      Unicode
+      编码值进行升序排序，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import getBasename from &#39;@yaohaixiao/renames.js/lib/utils/get-basename.js&#39;;
+
+export default {
+  dirPath: &#39;C:\\Downloads&#39;,
+  // ...省略其它默认参数
+  sortBy: (files) =&gt; {
+    return files.sorted((prev, next) =&gt; {
+      const prevBasename = getBasename(prev);
+      const nextBasename = getBasename(next);
+
+      return prevBasename.charCodeAt(0) - nextBasename.charCodeAt(0);
+    });
+  },
+};
+</code></pre>
+    <h4>format</h4>
+    <p>format 参数可以对文件夹中的文件进行格式化，例如 C:\Downloads 中的文件如下：</p>
+    <ul>
+      <li>01-start.mp4</li>
+      <li>02-龙珠-神秘的龙珠出现！.mp4</li>
+      <li>03-DRAGON_BOLL-FINAL_FIGHT.mkv</li>
+      <li>05-悟空变成了小孩.mov</li>
+    </ul>
+    <p>我们希望通过文件名的索引信息重命名，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import stripNonDigit from &#39;@yaohaixiao/renames.js/lib/utils/strip-non-digit.js&#39;;
+
+export default {
+  dirPath: &#39;C:\\Downloads&#39;,
+  // ...省略其它默认参数
+  format: (basename) =&gt; {
+    return stripNonDigit(basename);
+  },
+};
+</code></pre>
+    <h3>Typical Use Case</h3>
+    <p>下面介绍通过调整配置 renames.config.js 的配置，实现批量重命名的一些典型的使用案例，操作起来是非常的简单的。</p>
+    <h4>autoIndex: &#39;only&#39;</h4>
+    <p>将杂乱的图片库的文件名，批量重命名为自动生成数值（升序）索引（例如：1.jpg -
+      2x.jpg）的文件名，调整 renames.config.js 配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  // 自动生成数值（升序）索引
+  autoIndex: &#39;only&#39;,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/autoIndex-only.png" alt="autoIndex-only"></p>
+    <p>说明：执行 renames 命令，未配置任何参数和配置参数，则执行命令时完全使用配置文件的设置。</p>
+    <h4>startIndex</h4>
+    <p>如果你是一个爱收集壁纸的人，应该会陆续收集更多的图片，我们可以使用 startIndex
+      在原来的索引位置继续自动生成数值索引名称，配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  // 自动生成数值（升序）索引
+  autoIndex: &#39;only&#39;,
+  // 上图中文件名的索引值已经到 29.jpg，则 startIndex 的值就是 29
+  startIndex: 29,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/startIndex.png" alt="startIndex"></p>
+    <h4>indexPadZero</h4>
+    <p>细心的朋友应该发现文件名 01.jpg，自动用‘0’填充。使用的就是 indexPadZero 这个配置参数。
+      现在将文件夹的图片文件数量增加到100以上，看看索引使用自动填充‘0’后的效果，配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  // 自动生成数值（升序）索引
+  autoIndex: &#39;only&#39;,
+  startIndex: 0,
+  // 使用 &#39;0&#39; 自动填充
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/indexPadZero.png" alt="indexPadZero"></p>
+    <p>当然，如果没有强迫症，不希望文件名的长度一致，我们也可以关闭 indexPadZero，配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  // 自动生成数值（升序）索引
+  autoIndex: &#39;only&#39;,
+  startIndex: 0,
+  // 使用 &#39;0&#39; 自动填充
+  indexPadZero: false,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/indexPadZero-false.png" alt="indexPadZero-false"></p>
+    <p>可以看到，关闭后就不会使用‘0’自动填充了。</p>
+    <h4>prefix、suffix、connector</h4>
+    <p>接着我们可以对以上重命名好的文件名再继续调整，使用 prefix、suffix、connector
+      这3个配置参数，添加前缀和后缀，配置如下：</p>
+    <pre><code class="language-js">export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;wallpaper&#39;,
+  suffix: &#39;1080p&#39;,
+  connector: &#39;-&#39;,
+  // 关闭自动生成数值索引（升序）
+  autoIndex: false,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/prefix-suffix-connector.png" alt="prefix-suffix-connector"></p>
+    <h4>filter</h4>
+    <p>接着我们使用 filter 配置参数，进一步对上面重命名的文件再操作，我们将图片中的 .png
+      格式的图片再批量处理以下，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension&#39;;
+
+export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  prefix: &#39;wallpaper&#39;,
+  // 添加 png 的后缀
+  suffix: &#39;png&#39;,
+  connector: &#39;-&#39;,
+  // 针对 png 图片生成自动索引的文件名
+  autoIndex: &#39;only&#39;,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  // 过滤 .png 图片
+  filter: (files) =&gt; {
+    return files.filter((filename) =&gt; {
+      const extname = getExtension(filename);
+      return extname === &#39;.png&#39;;
+    });
+  },
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/filter.png" alt="filter"></p>
+    <h4>format</h4>
+    <p>接下来，我们将使用 format 参数，将上面我们使用 filter 参数将 .png 格式的图片的后缀再改成 1080p，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension&#39;;
+
+export default {
+  dirPath: &#39;C:\\Users\\robert\\Downloads\\壁纸&#39;,
+  namesList: &#39;&#39;,
+  // 清空前后缀的配置，我们现在的操作是仅修改原来的文件名
+  prefix: &#39;&#39;,
+  suffix: &#39;&#39;,
+  connector: &#39;&#39;,
+  // 关闭自动索引也是因为需要仅修改原始的文件名
+  autoIndex: false,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  // 过滤 .png 图片，也可以配置过滤，那工具会遍历所有的文件，
+  // 为了性能，我们还是保留 filter 配置
+  filter: (files) =&gt; {
+    return files.filter((filename) =&gt; {
+      const extname = getExtension(filename);
+      return extname === &#39;.png&#39;;
+    });
+  },
+  sortBy: &#39;name&#39;,
+  order: &#39;desc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: (basename) =&gt; {
+    return basename.replace(&#39;png&#39;, &#39;1080p&#39;);
+  },
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/format.png" alt="format"></p>
+    <h4>nameList、sortBy</h4>
+    <p>前面介绍的都是直接修改原来的文件名的方式来重命名，namesList 则可以通过外部数据将定义好的文件名结合 sortBy
+      将文件的顺序调整跟
+      namesList 中的数据一致，进行批量重命名。</p>
+    <p>例如，我下载了《达尔文游戏》这个动漫，但下载下来的文件名是这样的：</p>
+    <ul>
+      <li>1-E01-1 (1).mp4</li>
+      <li>10-E09 (1).mp4</li>
+      <li>11-E10 (1).mp4</li>
+      <li>12-E11 (1).mp4</li>
+      <li>2-E01-2 (1).mp4</li>
+      <li>3-E02 (1).mp4</li>
+      <li>4-E03 (1).mp4</li>
+      <li>5-E04 (1).mp4</li>
+      <li>6-E05 (1).mp4</li>
+      <li>7-E06 (1).mp4</li>
+      <li>8-E07 (1).mp4</li>
+      <li>9-E08 (1).mp4</li>
+    </ul>
+    <p>顺便说以下，如果直接用内置的 sortBy:
+      &#39;name&#39; 排序，就是以上的排序结果。而我通过 AI 获取到的《达尔文游戏》其 12集的名称如下：</p>
+    <ul>
+      <li>初战</li>
+      <li>涉谷</li>
+      <li>导火索</li>
+      <li>火花</li>
+      <li>记忆（特别篇）</li>
+      <li>水葬</li>
+      <li>金刚</li>
+      <li>压碎</li>
+      <li>平稳</li>
+      <li>决斗</li>
+      <li>旧王</li>
+      <li>血盟</li>
+    </ul>
+    <p>所以我需要通过自定义的 sortBy 函数处理以下，按 1-12 的索引值升序排序，配置如下：</p>
+    <pre><code class="language-js">// renames.js 内部提供的功能函数
+import getBasename from &#39;./lib/utils/get-basename.js&#39;;
+
+export default {
+  dirPath: &#39;C:\\Users\\haixi\\Downloads\\达尔文游戏&#39;,
+  namesList: &#39;C:\\Users\\haixi\\Downloads\\names.txt&#39;,
+  // namesList: &#39;,初战,涉谷,导火索,火花,记忆（特别篇）,水葬,金刚,压碎,平稳,决斗,旧王,血盟&#39;
+  prefix: &#39;达尔文游戏&#39;,
+  suffix: &#39;1080p&#39;,
+  connector: &#39;-&#39;,
+  autoIndex: true,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: &#39;第&#39;,
+  indexSuffix: &#39;集&#39;,
+  delimiter: &#39;：&#39;,
+  force: false,
+  extname: &#39;&#39;,
+  filter: null,
+  // 使用自定义的排序方式
+  sortBy: (files) =&gt; {
+    return files.sort((prev, next) =&gt; {
+      const pattern = /-(.*)/;
+      // 保留文件名中的第一个字符，也就是索引值
+      const prevIndex = getBasename(prev).replace(pattern, &#39;&#39;);
+      const nextIndex = getBasename(next).replace(pattern, &#39;&#39;);
+
+      // 升序排列
+      return Number(prevIndex) - Number(nextIndex);
+    });
+  },
+  // 使用自定义排序函数后 order 和 sensitivity 就没有作用了
+  order: &#39;asc&#39;,
+  sensitivity: &#39;base&#39;,
+  format: null,
+};
+</code></pre>
+    <p>然后在命令行工具执行 renames 命令，如下图：</p>
+    <p class="screenshot"><img src="./img/namesList-sortBy.png" alt="namesList-sortBy"></p>
+    <p><strong>PS</strong>: 这是我当初开发 renames.js 的主要目的，重命名下载的视频文件名！</p>
+    <h2>API Documentation</h2>
+    <p>renames.js 除了作为 cli 工具可以在命令行直接使用外，也额外提供了一些基础的处理获取文件信息的功能函数模块。</p>
+    <h3>getBasename(filename) ⇒ <code>string</code></h3>
+    <p>getBasename() 方法用来获取文件名中不含扩展名的字符串。</p>
+    <p><strong>Kind</strong>: global function
+      <strong>Returns</strong>: <code>string</code> - - 返回文件名中去掉扩展名部分的字符串</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Param</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>filename</td>
+        <td><code>string</code></td>
+        <td>文件名（路径）字符串</td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Usage</h4>
+    <pre><code class="language-js">import getBasename from &#39;@yaohaixiao/renames.js/lib/utils/get-basename.js&#39;
+
+const filename = &#39;1-E01-1 (1).mp4&#39;
+const basename = getBasename(filename)
+
+console.log(basename) // -&gt; &#39;1-E01-1 (1)&#39;
+</code></pre>
+    <h3>getExtension(filename) ⇒ <code>string</code></h3>
+    <p>getExtension() 方法用来获取文件名中的扩展名部分字符串（含.）。</p>
+    <p><strong>Kind</strong>: global function
+      <strong>Returns</strong>: <code>string</code> - - 返回文件名中扩展名部分的字符串，例如：&#39;.jpg&#39;</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Param</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>filename</td>
+        <td><code>string</code></td>
+        <td>文件名（路径）字符串</td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Usage</h4>
+    <pre><code class="language-js">import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension.js&#39;
+
+const filename = &#39;1-E01-1 (1).mp4&#39;
+const extname = getExtension(filename)
+
+console.log(extname) // -&gt; &#39;.mp4&#39;
+</code></pre>
+    <h3>isFileExists(filePath, [basePath]) ⇒ <code>boolean</code></h3>
+    <p>isFileExists() 方法用来同步检测文件是否存在，如果存在，返回 true，否则返回 false。</p>
+    <p><strong>Kind</strong>: global function
+      <strong>Returns</strong>: <code>boolean</code> - - 文件存在返回 true，否则返回 false</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Param</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>filePath</td>
+        <td><code>string</code></td>
+        <td></td>
+        <td>检测的文件路径</td>
+      </tr>
+      <tr>
+        <td>[basePath]</td>
+        <td><code>string</code></td>
+        <td><code>&quot;&#x27;&#x27;&quot;</code></td>
+        <td>可选，基础路径。. Default is <code>&#39;&#39;</code></td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Usage</h4>
+    <pre><code class="language-js">import isFileExists from &#39;@yaohaixiao/renames.js/lib/utils/is-file-exists.js&#39;
+
+const filename = &#39;1-E01-1 (1).mp4&#39;
+const basePath = &#39;C:\Users\haixi\Downloads\达尔文游戏&#39;
+
+// console.log(isFileExists(&#39;C:\Users\haixi\Downloads\达尔文游戏\1-E01-1 (1).mp4&#39;))
+console.log(isFileExists(filename, basePath)) // -&gt; true
+</code></pre>
+    <h3>padZero(val, [length]) ⇒ <code>string</code></h3>
+    <p>padZero() 方法用来处理对数字/字符串补零，前置补‘0’，确保返回指定长度的字符串。</p>
+    <p><strong>Kind</strong>: global function
+      <strong>Returns</strong>: <code>string</code> - - 返回补零后的字符串</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Param</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>val</td>
+        <td><code>number</code> | <code>string</code></td>
+        <td></td>
+        <td>要补零的数字或字符串（如 27、&#39;27&#39;）</td>
+      </tr>
+      <tr>
+        <td>[length]</td>
+        <td><code>number</code></td>
+        <td><code>2</code></td>
+        <td>可选，目标总长度（如 3 → &#39;027&#39;，4 → &#39;0027&#39;）. Default is <code>2</code></td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Usage</h4>
+    <pre><code class="language-js">import getBasename from &#39;@yaohaixiao/renames.js/lib/utils/get-basename.js&#39;
+import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension.js&#39;
+import padZero from &#39;@yaohaixiao/renames.js/lib/utils/pad-zero.js&#39;
+
+const filename = &#39;1.mp4&#39;
+const finalFileName = `${padZero(getBasename(filename), 3)}${getExtension(filename)}`
+
+console.log(finalFileName) // -&gt; &#39;001.mp4&#39;
+</code></pre>
+    <h3>stripNonDigit(str) ⇒ <code>string</code></h3>
+    <p>stripNonDigit(str) 方法用来移除文本中所有非数值的文本，返回移除纯数值的字符串。</p>
+    <p><strong>Kind</strong>: global function
+      <strong>Returns</strong>: <code>string</code> - - 返回移除非数值的字符串</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Param</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>str</td>
+        <td><code>string</code></td>
+        <td>文件名的文本字符串</td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>Usage</h4>
+    <pre><code class="language-js">import getBasename from &#39;@yaohaixiao/renames.js/lib/utils/get-basename.js&#39;
+import getExtension from &#39;@yaohaixiao/renames.js/lib/utils/get-extension.js&#39;
+import stripNonDigit from &#39;@yaohaixiao/renames.js/lib/utils/strip-non-digit.js&#39;
+
+const filename = &#39;第01集：初战&#39;
+const basename = getBasename(filename)
+const extname = getExtension(filename)
+
+console.log(`${stripNonDigit(basename)}${extname}`) // -&gt; &#39;01.mp4&#39;
+</code></pre>
+    <h2>License</h2>
+    <p>Licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a>.</p>
+  </main>
+</div>
+<script>
+  document.querySelectorAll('pre code').forEach((el) => {
+    hljs.highlightElement(el);
+  });
+</script>
+</body>
+</html>

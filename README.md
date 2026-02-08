@@ -6,10 +6,10 @@ renames.js - 基于 Node 的批量文件名重命名 cli 工具库。
 
 - 方便快捷，配置灵活；
 - 支持指定文件名列表数据或者文件名列表文件；
-- 支持文件名自动生成索引；
-- 支持文件名自定义过滤；
-- 支持文件名自定义排序；
-- 支持文件名自定义格式化；
+- 支持文件名自动生成（章节）索引；
+- 支持文件名自定义过滤文件；
+- 支持文件名自定义文件排序；
+- 支持文件名自定义格式化名；
 
 ## Usage
 
@@ -577,6 +577,128 @@ export default {
 ![namesList-sortBy](./docs/img/namesList-sortBy.png)
 
 **PS**: 这是我当初开发 renames.js 的主要目的，重命名下载的视频文件名！
+
+## API Documentation
+
+renames.js 除了作为 cli 工具可以在命令行直接使用外，也额外提供了一些基础的处理获取文件信息的功能函数模块。
+
+### getBasename(filename) ⇒ <code>string</code>
+
+getBasename() 方法用来获取文件名中不含扩展名的字符串。
+
+**Kind**: global function **Returns**:
+<code>string</code> - - 返回文件名中去掉扩展名部分的字符串
+
+| Param    | Type                | Description          |
+| -------- | ------------------- | -------------------- |
+| filename | <code>string</code> | 文件名（路径）字符串 |
+
+#### Usage
+
+```js
+import getBasename from '@yaohaixiao/renames.js/lib/utils/get-basename.js';
+
+const filename = '1-E01-1 (1).mp4';
+const basename = getBasename(filename);
+
+console.log(basename); // -> '1-E01-1 (1)'
+```
+
+### getExtension(filename) ⇒ <code>string</code>
+
+getExtension() 方法用来获取文件名中的扩展名部分字符串（含.）。
+
+**Kind**: global function **Returns**:
+<code>string</code> - - 返回文件名中扩展名部分的字符串，例如：'.jpg'
+
+| Param    | Type                | Description          |
+| -------- | ------------------- | -------------------- |
+| filename | <code>string</code> | 文件名（路径）字符串 |
+
+#### Usage
+
+```js
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension.js';
+
+const filename = '1-E01-1 (1).mp4';
+const extname = getExtension(filename);
+
+console.log(extname); // -> '.mp4'
+```
+
+### isFileExists(filePath, [basePath]) ⇒ <code>boolean</code>
+
+isFileExists() 方法用来同步检测文件是否存在，如果存在，返回 true，否则返回 false。
+
+**Kind**: global function **Returns**:
+<code>boolean</code> - - 文件存在返回 true，否则返回 false
+
+| Param      | Type                | Default                               | Description                       |
+| ---------- | ------------------- | ------------------------------------- | --------------------------------- |
+| filePath   | <code>string</code> |                                       | 检测的文件路径                    |
+| [basePath] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | 可选，基础路径。. Default is `''` |
+
+#### Usage
+
+```js
+import isFileExists from '@yaohaixiao/renames.js/lib/utils/is-file-exists.js';
+
+const filename = '1-E01-1 (1).mp4';
+const basePath = 'C:\Users\haixi\Downloads\达尔文游戏';
+
+// console.log(isFileExists('C:\Users\haixi\Downloads\达尔文游戏\1-E01-1 (1).mp4'))
+console.log(isFileExists(filename, basePath)); // -> true
+```
+
+### padZero(val, [length]) ⇒ <code>string</code>
+
+padZero() 方法用来处理对数字/字符串补零，前置补‘0’，确保返回指定长度的字符串。
+
+**Kind**: global function **Returns**:
+<code>string</code> - - 返回补零后的字符串
+
+| Param    | Type                                       | Default        | Description                                                  |
+| -------- | ------------------------------------------ | -------------- | ------------------------------------------------------------ |
+| val      | <code>number</code> \| <code>string</code> |                | 要补零的数字或字符串（如 27、'27'）                          |
+| [length] | <code>number</code>                        | <code>2</code> | 可选，目标总长度（如 3 → '027'，4 → '0027'）. Default is `2` |
+
+#### Usage
+
+```js
+import getBasename from '@yaohaixiao/renames.js/lib/utils/get-basename.js';
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension.js';
+import padZero from '@yaohaixiao/renames.js/lib/utils/pad-zero.js';
+
+const filename = '1.mp4';
+const finalFileName = `${padZero(getBasename(filename), 3)}${getExtension(filename)}`;
+
+console.log(finalFileName); // -> '001.mp4'
+```
+
+### stripNonDigit(str) ⇒ <code>string</code>
+
+stripNonDigit(str) 方法用来移除文本中所有非数值的文本，返回移除纯数值的字符串。
+
+**Kind**: global function **Returns**:
+<code>string</code> - - 返回移除非数值的字符串
+
+| Param | Type                | Description        |
+| ----- | ------------------- | ------------------ |
+| str   | <code>string</code> | 文件名的文本字符串 |
+
+#### Usage
+
+```js
+import getBasename from '@yaohaixiao/renames.js/lib/utils/get-basename.js';
+import getExtension from '@yaohaixiao/renames.js/lib/utils/get-extension.js';
+import stripNonDigit from '@yaohaixiao/renames.js/lib/utils/strip-non-digit.js';
+
+const filename = '第01集：初战';
+const basename = getBasename(filename);
+const extname = getExtension(filename);
+
+console.log(`${stripNonDigit(basename)}${extname}`); // -> '01.mp4'
+```
 
 ## License
 
