@@ -162,8 +162,7 @@ const getCommonOptions = () => [
   {
     flags: '--sort, --sortBy <sortBy>',
     description:
-      '可选，排序类型，可选项：name、type、size、birthtime 和 modify-time',
-    defaultValue: DEFAULT_SORT,
+      '可选，排序类型，可选项：name、type、size、birthtime 和 modify-time（default：name）',
   },
   {
     flags: '--order <order>',
@@ -347,10 +346,12 @@ mainCommander
         // 获取最终的文件夹路径
         const finalDirPath = await getFinalDirPath(dirPath, config);
 
-        // 合并配置并处理文件名列表
+        // 合并命令行输入的配置参数
         const finalOptions = { ...config, ...options };
 
-        finalOptions.namesList = processNameList(finalOptions.namesList);
+        if (options.namesList) {
+          finalOptions.namesList = processNameList(options.namesList);
+        }
 
         if (finalDirPath) {
           // 执行重命名
