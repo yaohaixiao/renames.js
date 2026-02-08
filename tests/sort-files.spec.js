@@ -189,10 +189,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TESTS_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'terminal-link'`, () => {
+  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
     const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('terminal-link');
+    expect(getBasename(sorted[0])).toEqual('sort-files');
   });
 
   const sortByBirthtimeAscOptions = {
