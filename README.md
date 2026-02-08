@@ -487,7 +487,7 @@ export default {
   order: 'desc',
   sensitivity: 'base',
   format: (basename) => {
-    return basename.replace('png', '1080p')
+    return basename.replace('png', '1080p');
   },
 };
 ```
@@ -496,7 +496,87 @@ export default {
 
 ![format](./docs/img/format.png)
 
+#### nameList、sortBy
 
+前面介绍的都是直接修改原来的文件名的方式来重命名，namesList 则可以通过外部数据将定义好的文件名结合 sortBy 将文件的顺序调整跟 namesList 中的数据一致，进行批量重命名。
+
+例如，我下载了《达尔文游戏》这个动漫，但下载下来的文件名是这样的：
+
+- 1-E01-1 (1).mp4
+- 10-E09 (1).mp4
+- 11-E10 (1).mp4
+- 12-E11 (1).mp4
+- 2-E01-2 (1).mp4
+- 3-E02 (1).mp4
+- 4-E03 (1).mp4
+- 5-E04 (1).mp4
+- 6-E05 (1).mp4
+- 7-E06 (1).mp4
+- 8-E07 (1).mp4
+- 9-E08 (1).mp4
+
+顺便说以下，如果直接用内置的 sortBy:
+'name' 排序，就是以上的排序结果。而我通过 AI 获取到的《达尔文游戏》其 12集的名称如下：
+
+- 初战
+- 涉谷
+- 导火索
+- 火花
+- 记忆（特别篇）
+- 水葬
+- 金刚
+- 压碎
+- 平稳
+- 决斗
+- 旧王
+- 血盟
+
+所以我需要通过自定义的 sortBy 函数处理以下，按 1-12 的索引值升序排序，配置如下：
+
+```js
+// renames.js 内部提供的功能函数
+import getBasename from './lib/utils/get-basename.js';
+
+export default {
+  dirPath: 'C:\\Users\\haixi\\Downloads\\达尔文游戏',
+  namesList: 'C:\\Users\\haixi\\Downloads\\names.txt',
+  // namesList: ',初战,涉谷,导火索,火花,记忆（特别篇）,水葬,金刚,压碎,平稳,决斗,旧王,血盟'
+  prefix: '达尔文游戏',
+  suffix: '1080p',
+  connector: '-',
+  autoIndex: true,
+  startIndex: 0,
+  indexPadZero: true,
+  indexPrefix: '第',
+  indexSuffix: '集',
+  delimiter: '：',
+  force: false,
+  extname: '',
+  filter: null,
+  // 使用自定义的排序方式
+  sortBy: (files) => {
+    return files.sort((prev, next) => {
+      const pattern = /-(.*)/;
+      // 保留文件名中的第一个字符，也就是索引值
+      const prevIndex = getBasename(prev).replace(pattern, '');
+      const nextIndex = getBasename(next).replace(pattern, '');
+
+      // 升序排列
+      return Number(prevIndex) - Number(nextIndex);
+    });
+  },
+  // 使用自定义排序函数后 order 和 sensitivity 就没有作用了
+  order: 'asc',
+  sensitivity: 'base',
+  format: null,
+};
+```
+
+然后在命令行工具执行 renames 命令，如下图：
+
+![namesList-sortBy](./docs/img/namesList-sortBy.png)
+
+**PS**: 这是我当初开发 renames.js 的主要目的，重命名下载的视频文件名！
 
 ## License
 
