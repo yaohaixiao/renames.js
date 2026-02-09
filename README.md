@@ -55,25 +55,25 @@ renames C:\Downloads --autoIndex only
 
 renames.js 提供了较为丰富的 options 参数，用以控制重命名的操作细节处理方式：
 
-| 参数名                           | 参数说明                                                                                                        |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| -h, --help                       | display help for command                                                                                        |
-| --dir, --dirPath <dirPath>       | 可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持）                                                    |
-| --names, --namesList <namesList> | 可选，文件名列表数组数据，例如："新的开始,完美结局"。或者文件名列表文件的路径，例如："C:\Downloads\names.txt"。 |
-| --prefix <prefix>                | 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"                                 |
-| --suffix <suffix>                | 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"                                  |
-| --connector <connector>          | 可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-"                     |
-| --autoIndex [enable]             | 可选，是否自动生成索引编号（default：false）                                                                    |
-| --startIndex <startIndex>        | 可选，索引编号起始值（default：0）                                                                              |
-| --indexPadZero [enable]          | 可选，是否自动用"0"填充索引编号（default：true）                                                                |
-| --indexPrefix <indexPrefix>      | 可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第")                                |
-| --indexSuffix <indexSuffix>      | 可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集")                                |
+| 参数名                              | 参数说明                                                                         |
+|----------------------------------|------------------------------------------------------------------------------|
+| -h, --help                       | display help for command                                                     |
+| --dir, --dirPath <dirPath>       | 可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持）                                            |
+| --names, --namesList <namesList> | 可选，文件名列表数组数据，例如："新的开始,完美结局"。或者文件名列表文件的路径，例如："C:\Downloads\names.txt"。        |
+| --prefix <prefix>                | 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"                             |
+| --suffix <suffix>                | 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"                           |
+| --connector <connector>          | 可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-"                      |
+| --autoIndex [enable]             | 可选，是否自动生成索引编号（default：false）                                                 |
+| --startIndex <startIndex>        | 可选，索引编号起始值（default：0）                                                        |
+| --indexPadZero [enable]          | 可选，是否自动用"0"填充索引编号（default：true）                                              |
+| --indexPrefix <indexPrefix>      | 可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第")                         |
+| --indexSuffix <indexSuffix>      | 可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集")                         |
 | --delimiter <delimiter>          | 可选，索引编号和的前/后缀字符串间的连接符，例如："第01话：新的开始.mp4"中的"：" (default: "：")                 |
-| -f, --force [enable]             | 可选，是否强制重命名（default：false）                                                                          |
-| --ext, --extname <extname>       | 可选，重命名后的扩展名，例如：".txt"                                                                            |
-| --sort, --sortBy <sortBy>        | 可选，排序类型，可选项：name、type、size、birthtime 和 modify-time (default: "name")                            |
-| --order <order>                  | 可选，排序方式，可选项：desc 和 asc (default: "asc")                                                            |
-| --sensitivity <sensitivity>      | 可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base")        |
+| -f, --force [enable]             | 可选，是否强制重命名（default：false）                                                    |
+| --ext, --extname <extname>       | 可选，重命名后的扩展名，例如：".txt"                                                        |
+| --sort, --sortBy <sortBy>        | 可选，排序类型，可选项：name、type、size、birthtime 和 modify-time (default: "name")         |
+| --order <order>                  | 可选，排序方式，可选项：desc 和 asc (default: "asc")                                      |
+| --sensitivity <sensitivity>      | 可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base") |
 
 例如希望将 C:\Downloads 目录下的文件批量重命名为数字索引的信息，可以输入以下命令：
 
@@ -150,7 +150,7 @@ export default {
 renames.js 处理 options 参数中的配置信息外，在 renames.config.js 配置文件中，还额外提供了3个特殊的配置：
 
 - filter - 过滤文件处理函数
-- sortBy - 排序方式，可以是排序的名称或者具体的处理函数
+- sortBy - 排序方式，可以是排序的名称或者具体地处理函数
 - format - 文件名字的格式化处理函数
 
 #### filter
@@ -595,9 +595,9 @@ getBasename() 方法用来获取文件名中不含扩展名的字符串。
 **Kind**: global function **Returns**:
 <code>string</code> - - 返回文件名中去掉扩展名部分的字符串
 
-| Param    | Type                | Description          |
-| -------- | ------------------- | -------------------- |
-| filename | <code>string</code> | 文件名（路径）字符串 |
+| Param    | Type                | Description |
+|----------|---------------------|-------------|
+| filename | <code>string</code> | 文件名（路径）字符串  |
 
 #### Usage
 
@@ -617,9 +617,9 @@ getExtension() 方法用来获取文件名中的扩展名部分字符串（含.�
 **Kind**: global function **Returns**:
 <code>string</code> - - 返回文件名中扩展名部分的字符串，例如：'.jpg'
 
-| Param    | Type                | Description          |
-| -------- | ------------------- | -------------------- |
-| filename | <code>string</code> | 文件名（路径）字符串 |
+| Param    | Type                | Description |
+|----------|---------------------|-------------|
+| filename | <code>string</code> | 文件名（路径）字符串  |
 
 #### Usage
 
@@ -639,9 +639,9 @@ isFileExists() 方法用来同步检测文件是否存在，如果存在，返�
 **Kind**: global function **Returns**:
 <code>boolean</code> - - 文件存在返回 true，否则返回 false
 
-| Param      | Type                | Default                               | Description                       |
-| ---------- | ------------------- | ------------------------------------- | --------------------------------- |
-| filePath   | <code>string</code> |                                       | 检测的文件路径                    |
+| Param      | Type                | Default                               | Description               |
+|------------|---------------------|---------------------------------------|---------------------------|
+| filePath   | <code>string</code> |                                       | 检测的文件路径                   |
 | [basePath] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | 可选，基础路径。. Default is `''` |
 
 #### Usage
@@ -663,9 +663,9 @@ padZero() 方法用来处理对数字/字符串补零，前置补‘0’，确�
 **Kind**: global function **Returns**:
 <code>string</code> - - 返回补零后的字符串
 
-| Param    | Type                                       | Default        | Description                                                  |
-| -------- | ------------------------------------------ | -------------- | ------------------------------------------------------------ |
-| val      | <code>number</code> \| <code>string</code> |                | 要补零的数字或字符串（如 27、'27'）                          |
+| Param    | Type                                       | Default        | Description                                      |
+|----------|--------------------------------------------|----------------|--------------------------------------------------|
+| val      | <code>number</code> \| <code>string</code> |                | 要补零的数字或字符串（如 27、'27'）                            |
 | [length] | <code>number</code>                        | <code>2</code> | 可选，目标总长度（如 3 → '027'，4 → '0027'）. Default is `2` |
 
 #### Usage
@@ -688,9 +688,9 @@ stripNonDigit(str) 方法用来移除文本中所有非数值的文本，返回�
 **Kind**: global function **Returns**:
 <code>string</code> - - 返回移除非数值的字符串
 
-| Param | Type                | Description        |
-| ----- | ------------------- | ------------------ |
-| str   | <code>string</code> | 文件名的文本字符串 |
+| Param | Type                | Description |
+|-------|---------------------|-------------|
+| str   | <code>string</code> | 文件名的文本字符串   |
 
 #### Usage
 
