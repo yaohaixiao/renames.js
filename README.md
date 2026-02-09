@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/@yaohaixiao/renames.js)](https://www.npmjs.com/package/@yaohaixiao/renames.js)
 [![prettier code style](https://img.shields.io/badge/code_style-prettier-07b759.svg)](https://prettier.io)
-[![Coverage](https://codecov.io/gh/yaohaixiao/renames.js/branch/main/graph/badge.svg)](https://codecov.io/gh/yaohaixiao/renames.js)
 [![npm downloads](https://img.shields.io/npm/dt/@yaohaixiao/renames.js)](https://npmcharts.com/compare/@yaohaixiao/renames.js?minimal=true)
 [![MIT License](https://img.shields.io/github/license/yaohaixiao/renames.js.svg)](https://github.com/yaohaixiao/renames.js/blob/master/LICENSE)
 
