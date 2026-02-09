@@ -14,7 +14,7 @@
   "extname": "",
   "filter": null,
   "sortBy": "name",
-  "order": "desc",
+  "order": "asc",
   "sensitivity": "base",
   "format": null
 }
