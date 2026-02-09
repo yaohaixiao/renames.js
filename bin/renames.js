@@ -3,8 +3,8 @@
 import { program } from 'commander';
 
 import addCommanderOptions from './utils/add-commander-options.js';
-import initCommandAction from './utils/init-command-action.js';
-import mainCommandAction from './utils/main-command-action.js';
+import initCommanderAction from './utils/init-commander-action.js';
+import mainCommanderAction from './utils/main-commander-action.js';
 
 import CONSTANTS from '../lib/constants.js';
 
@@ -33,7 +33,7 @@ mainCommander
     '[dir-path]',
     `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CONFIG_FILE_NAME} 中的 dirPath 属性。`,
   )
-  .action(mainCommandAction);
+  .action(mainCommanderAction);
 
 // 配置 init 命令
 program
@@ -47,6 +47,6 @@ program
     '--names, --nameList <nameList>',
     `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
   )
-  .action(initCommandAction);
+  .action(initCommanderAction);
 
 program.parse(process.argv);

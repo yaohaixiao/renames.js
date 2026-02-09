@@ -8,7 +8,7 @@ import CONSTANTS from '../../lib/constants.js';
 
 const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
-const initCommandAction = (options) => {
+const initCommanderAction = (options) => {
   createConfig(options)
     .then(({ isCancel }) => {
       if (!isCancel) {
@@ -31,4 +31,4 @@ const initCommandAction = (options) => {
     });
 };
 
-export default initCommandAction;
+export default initCommanderAction;

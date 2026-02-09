@@ -22,7 +22,7 @@ const {
   CONFIG_FILE_PATH_URL,
 } = CONSTANTS;
 
-const mainCommandAction = async (dirPath, options) => {
+const mainCommanderAction = async (dirPath, options) => {
   let answer;
 
   // 无配置文件且未提供配置参数时，提供交互式选择
@@ -108,4 +108,4 @@ const mainCommandAction = async (dirPath, options) => {
   }
 };
 
-export default mainCommandAction;
+export default mainCommanderAction;

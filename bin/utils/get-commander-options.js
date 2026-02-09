@@ -1,5 +1,4 @@
-import parseBooleanOption from './parse-boolean-option.js';
-import parseNumberOption from './parse-number-option.js';
+import parseCommanderOption from './parse-commander-option.js';
 
 import CONSTANTS from '../../lib/constants.js';
 
@@ -12,9 +11,11 @@ const {
   DEMO_SUFFIX,
   DEMO_CONNECTOR,
   DEFAULT_START_INDEX,
+  DEFAULT_INDEX_PAD_ZERO,
   DEFAULT_INDEX_PREFIX,
   DEFAULT_INDEX_SUFFIX,
   DEFAULT_DELIMITER,
+  DEFAULT_FORCE,
   DEFAULT_ORDER,
   DEFAULT_SENSITIVITY,
 } = CONSTANTS;
@@ -22,10 +23,10 @@ const {
 /**
  * # 辅助函数：获取通用的 CLI 选项配置
  *
- * @function getCommonOptions
+ * @function getCommanderOptions
  * @returns {Array} 选项配置数组
  */
-const getCommonOptions = () => [
+const getCommanderOptions = () => [
   {
     flags: '--names, --namesList <namesList>',
     description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
@@ -45,17 +46,18 @@ const getCommonOptions = () => [
   {
     flags: '--autoIndex [enable]',
     description: '可选，是否自动生成索引编号（default：false）',
-    parser: (enable) => parseBooleanOption(enable, false),
+    parser: (enable) => parseCommanderOption(enable, false),
   },
   {
     flags: '--startIndex <startIndex>',
     description: `可选，索引编号起始值（default：${DEFAULT_START_INDEX}）`,
-    parser: (index) => parseNumberOption(index, DEFAULT_START_INDEX),
+    parser: (index) =>
+      parseCommanderOption(index, DEFAULT_START_INDEX, '--startIndex'),
   },
   {
     flags: '--indexPadZero [enable]',
-    description: '可选，是否自动用"0"填充索引编号（default：true）',
-    parser: (enable) => parseBooleanOption(enable, true),
+    description: '可选，是否自动用"0"填充索引编号（default: false）',
+    parser: (enable) => parseCommanderOption(enable, DEFAULT_INDEX_PAD_ZERO),
   },
   {
     flags: '--indexPrefix <indexPrefix>',
@@ -74,8 +76,8 @@ const getCommonOptions = () => [
   },
   {
     flags: '-f, --force [enable]',
-    description: '可选，是否强制重命名（default：false）',
-    parser: (enable) => parseBooleanOption(enable, false),
+    description: '可选，是否强制重命名（default: false）',
+    parser: (enable) => parseCommanderOption(enable, DEFAULT_FORCE),
   },
   {
     flags: '--ext, --extname <extname>',
@@ -99,4 +101,4 @@ const getCommonOptions = () => [
   },
 ];
 
-export default getCommonOptions;
+export default getCommanderOptions;
