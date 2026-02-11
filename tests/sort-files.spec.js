@@ -3,6 +3,9 @@ import path from 'node:path';
 import sortFiles from '@/lib/utils/sort-files.js';
 import readDir from '@/lib/utils/read-dir.js';
 import getBasename from '@/lib/utils/get-basename.js';
+import getExtension from '@/lib/utils/get-extension.js'
+import writeFile from '@/lib/utils/write-file.js'
+import removeFile from '@/lib/utils/remove-file.js'
 
 const ORIGIN_FILES = [
   '1.jpg',
@@ -78,13 +81,30 @@ const DESC_BOOKS = [
 const { resolve } = path;
 const { stringify } = JSON;
 const sortBy = (files) => files.toSorted();
-const TESTS_DIR_PATH = resolve(process.cwd(), './lib/utils');
-const JS_FILES = readDir(TESTS_DIR_PATH);
+const customizeSortByOptions = {
+  sortBy,
+};
+
+const TEMP_DIR_PATH = resolve(process.cwd(), './tests/tmp');
+let TEMP_FILES;
+
 
 describe('sortFiles() 方法：', () => {
-  const customizeSortByOptions = {
-    sortBy,
-  };
+  beforeEach(() => {
+    for (const content of DESC_BOOKS) {
+      writeFile(
+        resolve(`${TEMP_DIR_PATH}/${content}`),
+        content,
+      );
+    }
+
+    TEMP_FILES = readDir(TEMP_DIR_PATH);
+  });
+
+  afterEach(() => {
+    // 删除临时文件，确保单测代码干净
+    removeFile(TEMP_DIR_PATH);
+  });
 
   it(`sortFiles('${ORIGIN_BOOKS}', null), 返回：'${ASC_BOOKS}'`, () => {
     const sorted = sortFiles(ORIGIN_BOOKS, null);
@@ -125,30 +145,6 @@ describe('sortFiles() 方法：', () => {
     expect(sorted).toEqual(ASC_FILES);
   });
 
-  const sortBySizeDescOptions = {
-    sortBy: 'size',
-    order: 'desc',
-    dirPath: TESTS_DIR_PATH,
-  };
-
-  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'sort-files'`, () => {
-    const sorted = sortFiles(JS_FILES, sortBySizeDescOptions);
-
-    expect(getBasename(sorted[0])).toEqual('sort-files');
-  });
-
-  const sortBySizeAscOptions = {
-    sortBy: 'size',
-    order: 'asc',
-    dirPath: TESTS_DIR_PATH,
-  };
-
-  it(`sortFiles('${JS_FILES}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'strip-non-digit'`, () => {
-    const sorted = sortFiles(JS_FILES, sortBySizeAscOptions);
-
-    expect(getBasename(sorted[0])).toEqual('strip-non-digit');
-  });
-
   const sortByTypeDescOptions = {
     sortBy: 'type',
     order: 'desc',
@@ -171,57 +167,81 @@ describe('sortFiles() 方法：', () => {
     expect(sorted[0]).toEqual('菊与刀.docx');
   });
 
+  const sortBySizeDescOptions = {
+    sortBy: 'size',
+    order: 'desc',
+    dirPath: TEMP_DIR_PATH,
+  };
+
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortBySizeDescOptions);
+
+    expect(getBasename(sorted[0])).toEqual('JavaScript Data Structures and Algorithms');
+  });
+
+  const sortBySizeAscOptions = {
+    sortBy: 'size',
+    order: 'asc',
+    dirPath: TEMP_DIR_PATH,
+  };
+
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'仙逆'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortBySizeAscOptions);
+
+    expect(getBasename(sorted[0])).toEqual('仙逆');
+  });
+
   const sortByModifyTimeAscOptions = {
     sortBy: 'modify-time',
     order: 'asc',
-    dirPath: TESTS_DIR_PATH,
+    dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
-    const sorted = sortFiles(JS_FILES, sortByModifyTimeAscOptions);
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'"Express in Action'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('get-basename');
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByModifyTimeDescOptions = {
     sortBy: 'modify-time',
     order: 'desc',
-    dirPath: TESTS_DIR_PATH,
+    dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'to-index-chapter'`, () => {
-    const sorted = sortFiles(JS_FILES, sortByModifyTimeDescOptions);
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'凡人修仙传'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('to-index-chapter');
+    expect(getBasename(sorted[0])).toEqual('凡人修仙传');
   });
 
   const sortByBirthtimeAscOptions = {
     sortBy: 'birthtime',
     order: 'asc',
-    dirPath: TESTS_DIR_PATH,
+    dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'get-basename'`, () => {
-    const sorted = sortFiles(JS_FILES, sortByBirthtimeAscOptions);
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('get-basename');
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByBirthtimeDescOptions = {
     sortBy: 'birthtime',
     order: 'desc',
-    dirPath: TESTS_DIR_PATH,
+    dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${JS_FILES}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'write-file'`, () => {
-    const sorted = sortFiles(JS_FILES, sortByBirthtimeDescOptions);
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'凡人修仙传'`, () => {
+    const sorted = sortFiles(TEMP_FILES, sortByBirthtimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('write-file');
+    expect(getBasename(sorted[0])).toEqual('凡人修仙传');
   });
 
-  it(`sortFiles('${JS_FILES}', { sortBy: 'custom' }), 未知的排序方式，直接返回原始数据`, () => {
-    const sorted = sortFiles(JS_FILES, { sortBy: 'custom' });
+  it(`sortFiles('${stringify(DESC_BOOKS)}', { sortBy: 'custom' }), 未知的排序方式，直接返回原始数据`, () => {
+    const sorted = sortFiles(TEMP_FILES, { sortBy: 'custom' });
 
-    expect(sorted).toEqual(JS_FILES);
+    expect(sorted).toEqual(TEMP_FILES);
   });
 });

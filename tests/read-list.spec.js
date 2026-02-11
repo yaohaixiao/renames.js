@@ -2,7 +2,7 @@ import path from 'node:path';
 import writeFile from '@/lib/utils/write-file.js';
 import removeFile from '@/lib/utils/remove-file.js';
 
-import readList from '@/lib/read-list.js';
+import readList from '@/lib/utils/read-list.js';
 
 const { resolve, dirname } = path;
 

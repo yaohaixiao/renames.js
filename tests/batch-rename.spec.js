@@ -16,6 +16,7 @@ const DEFAULT_CONFIG = {
   autoIndex: false,
   startIndex: 0,
   indexPadZero: true,
+  indexLength: 'auto',
   indexPrefix: '第',
   indexSuffix: '集',
   delimiter: '：',
