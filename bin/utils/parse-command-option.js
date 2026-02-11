@@ -22,9 +22,9 @@ const parseCommandOption = (value, defaultValue = false, optionName = '') => {
       );
 
       return defaultValue;
-    } else {
+    } 
       return index;
-    }
+    
   }
 
   // 解析 autoIndex、indexPadZero、force

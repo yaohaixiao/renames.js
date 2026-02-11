@@ -30,6 +30,6 @@ const getFinalDirPath = async (dirPath, options) => {
       `请输入需要执行重命名操作的文件夹路径（例如："${DEMO_DIR_PATH}"）：`,
     ),
   });
-}
+};
 
 export default getFinalDirPath;
