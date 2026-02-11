@@ -3,17 +3,17 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 /**
  * # 辅助函数：解析命令传入的参数值
  *
- * @function parseCommanderOption
+ * @function parseCommandOption
  * @param {string} value - 输入的参数值
  * @param {boolean | number} [defaultValue=false] - 默认值. Default is `false`
  * @param {string} [optionName=''] - 参数名称. Default is `''`
  * @returns {boolean | string | number} - 解析后的配置参数值
  */
-const parseCommanderOption = (value, defaultValue = false, optionName = '') => {
+const parseCommandOption = (value, defaultValue = false, optionName = '') => {
   const index = Number(value);
 
   // 解析 startIndex 的数值
-  if (optionName === '--startIndex') {
+  if (optionName === '--startIndex' || optionName === '--indexLength') {
     if (Number.isNaN(index)) {
       showWarningLog(
         '警告',
@@ -42,10 +42,9 @@ const parseCommanderOption = (value, defaultValue = false, optionName = '') => {
       return 'only';
     }
     default: {
-      console.log('parseCommanderOption', 'defaultValue');
       return defaultValue;
     }
   }
 };
 
-export default parseCommanderOption;
+export default parseCommandOption;

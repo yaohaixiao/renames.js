@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import terminalLink from './terminal-link.js';
+import terminalLink from '../utils/terminal-link.js';
 
 import createConfig from '../../lib/create-config.js';
 
@@ -8,7 +8,7 @@ import CONSTANTS from '../../lib/constants.js';
 
 const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
-const initCommanderAction = (options) => {
+const initCommandAction = (options) => {
   createConfig(options)
     .then(({ isCancel }) => {
       if (!isCancel) {
@@ -31,4 +31,4 @@ const initCommanderAction = (options) => {
     });
 };
 
-export default initCommanderAction;
+export default initCommandAction;

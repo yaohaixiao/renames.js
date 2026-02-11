@@ -7,11 +7,11 @@ import readFile from '../../lib/utils/read-file.js';
 import renames from '../../index.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
-import getFinalDirPath from './get-final-dir-path.js';
-import executeHelpCommand from './execute-help-command.js';
-import executeInitCommand from './execute-init-command.js';
-import processNamesList from './process-names-list.js';
-import terminalLink from './terminal-link.js';
+import getFinalDirPath from '../utils/get-final-dir-path.js';
+import executeHelpCommand from '../utils/execute-help-command.js';
+import executeInitCommand from '../utils/execute-init-command.js';
+import processNamesList from '../utils/process-names-list.js';
+import terminalLink from '../utils/terminal-link.js';
 
 import CONSTANTS from '../../lib/constants.js';
 
@@ -22,7 +22,7 @@ const {
   CONFIG_FILE_PATH_URL,
 } = CONSTANTS;
 
-const mainCommanderAction = async (dirPath, options) => {
+const mainCommandAction = async (dirPath, options) => {
   let answer;
 
   // 无配置文件且未提供配置参数时，提供交互式选择
@@ -84,8 +84,6 @@ const mainCommanderAction = async (dirPath, options) => {
         finalOptions.namesList = processNamesList(options.namesList);
       }
 
-      console.log(JSON.stringify(finalOptions, null, 2));
-
       if (finalDirPath) {
         // 执行重命名
         renames(finalDirPath, finalOptions);
@@ -108,4 +106,4 @@ const mainCommanderAction = async (dirPath, options) => {
   }
 };
 
-export default mainCommanderAction;
+export default mainCommandAction;

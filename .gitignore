@@ -3,4 +3,4 @@
 --fix
 report
 /renames.config.js
-/tests/json/default.config.json
+/renames.cache.json

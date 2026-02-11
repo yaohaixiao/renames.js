@@ -7,6 +7,7 @@
   "autoIndex": false,
   "startIndex": 0,
   "indexPadZero": true,
+  "indexLength": "auto",
   "indexPrefix": "第",
   "indexSuffix": "集",
   "delimiter": "：",
@@ -16,5 +17,6 @@
   "sortBy": "name",
   "order": "asc",
   "sensitivity": "base",
-  "format": null
+  "format": null,
+  "cache": false
 }
