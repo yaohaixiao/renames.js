@@ -3,9 +3,8 @@ import path from 'node:path';
 import sortFiles from '@/lib/utils/sort-files.js';
 import readDir from '@/lib/utils/read-dir.js';
 import getBasename from '@/lib/utils/get-basename.js';
-import getExtension from '@/lib/utils/get-extension.js'
-import writeFile from '@/lib/utils/write-file.js'
-import removeFile from '@/lib/utils/remove-file.js'
+import writeFile from '@/lib/utils/write-file.js';
+import removeFile from '@/lib/utils/remove-file.js';
 
 const ORIGIN_FILES = [
   '1.jpg',
@@ -88,14 +87,11 @@ const customizeSortByOptions = {
 const TEMP_DIR_PATH = resolve(process.cwd(), './tests/tmp');
 let TEMP_FILES;
 
-
 describe('sortFiles() 方法：', () => {
   beforeEach(() => {
-    for (const content of DESC_BOOKS) {
-      writeFile(
-        resolve(`${TEMP_DIR_PATH}/${content}`),
-        content,
-      );
+    for(let i = 0; i < DESC_BOOKS.length; i++) {
+      const content = DESC_BOOKS[i]
+      writeFile(resolve(`${TEMP_DIR_PATH}/${content}`), content);
     }
 
     TEMP_FILES = readDir(TEMP_DIR_PATH);
@@ -176,7 +172,9 @@ describe('sortFiles() 方法：', () => {
   it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortBySizeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('JavaScript Data Structures and Algorithms');
+    expect(getBasename(sorted[0])).toEqual(
+      'JavaScript Data Structures and Algorithms',
+    );
   });
 
   const sortBySizeAscOptions = {
@@ -197,10 +195,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'"Express in Action'`, () => {
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('Express in Action');
+    expect(getBasename(sorted[0])).toEqual('JavaScript Data Structures and Algorithms');
   });
 
   const sortByModifyTimeDescOptions = {
