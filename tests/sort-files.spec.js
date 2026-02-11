@@ -89,9 +89,8 @@ let TEMP_FILES;
 
 describe('sortFiles() 方法：', () => {
   beforeEach(() => {
-    for(let i = 0; i < DESC_BOOKS.length; i++) {
-      const content = DESC_BOOKS[i]
-      writeFile(resolve(`${TEMP_DIR_PATH}/${content}`), content);
+    for (const [index, content] of DESC_BOOKS.entries()) {
+      writeFile(resolve(`${TEMP_DIR_PATH}/${content}`), `${index}. ${content}`);
     }
 
     TEMP_FILES = readDir(TEMP_DIR_PATH);
@@ -198,7 +197,9 @@ describe('sortFiles() 方法：', () => {
   it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('JavaScript Data Structures and Algorithms');
+    expect(getBasename(sorted[0])).toEqual(
+      'JavaScript Data Structures and Algorithms',
+    );
   });
 
   const sortByModifyTimeDescOptions = {
@@ -219,10 +220,12 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('Express in Action');
+    expect(getBasename(sorted[0])).toEqual(
+      'JavaScript Data Structures and Algorithms',
+    );
   });
 
   const sortByBirthtimeDescOptions = {
