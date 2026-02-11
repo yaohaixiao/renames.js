@@ -8,6 +8,13 @@ import CONSTANTS from '../../lib/constants.js';
 
 const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
+/**
+ * # init 命令的 action 逻辑
+ *
+ * @function initCommandAction
+ * @param {object} options - 配置参数对象
+ * @returns {Promise<void>}
+ */
 const initCommandAction = (options) => {
   createConfig(options)
     .then(({ isCancel }) => {

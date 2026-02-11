@@ -2,6 +2,12 @@ import CONSTANTS from '../../lib/constants.js';
 
 const { DEMO_DIR_PATH, DEMO_LIST_PATH, DEMO_LIST_DATA } = CONSTANTS;
 
+/**
+ * # 辅助函数：获取 init 命令选项配置数据
+ *
+ * @function getInitCommandOptions
+ * @returns {Array} 选项配置数组
+ */
 const getInitCommandOptions = () => [
   {
     flags: '--dir, --dirPath <dirPath>',

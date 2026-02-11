@@ -23,7 +23,7 @@ const {
 } = CONSTANTS;
 
 /**
- * # 辅助函数：获取通用的 CLI 选项配置
+ * # 辅助函数：获取主命令选项配置数据
  *
  * @function getMainCommandOptions
  * @returns {Array} 选项配置数组

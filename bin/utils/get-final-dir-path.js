@@ -10,7 +10,7 @@ const { DEMO_DIR_PATH } = CONSTANTS;
  *
  * @function getFinalDirPath
  * @param {string} dirPath - 命令行传入的路径
- * @param {object} options - 默认配置
+ * @param {object} options - 配置参数对象
  * @returns {Promise<string>} 最终的文件夹路径
  */
 const getFinalDirPath = async (dirPath, options) => {

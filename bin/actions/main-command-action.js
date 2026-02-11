@@ -22,6 +22,14 @@ const {
   CONFIG_FILE_PATH_URL,
 } = CONSTANTS;
 
+/**
+ * # 主命令的 action 逻辑
+ *
+ * @function mainCommandAction
+ * @param {string} dirPath - 目标文件夹（绝对或相对）路径
+ * @param {object} options - 配置参数对象
+ * @returns {void}
+ */
 const mainCommandAction = async (dirPath, options) => {
   let answer;
 

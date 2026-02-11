@@ -1,3 +1,9 @@
+/**
+ * # 辅助函数：获取 revoke 命令选项配置数据
+ *
+ * @function getRevokeCommandOptions
+ * @returns {Array} 选项配置数组
+ */
 const getRevokeCommandOptions = () => [
   {
     flags: '-a, --all',
