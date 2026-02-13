@@ -226,10 +226,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
+  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('Express in Action');
+    expect(getBasename(sorted[0])).toEqual('JavaScript Data Structures and Algorithms');
   });
 
   const sortByBirthtimeDescOptions = {

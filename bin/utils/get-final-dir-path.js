@@ -3,8 +3,6 @@ import { input } from '@inquirer/prompts';
 
 import CONSTANTS from '../../lib/constants.js';
 
-const { DEMO_DIR_PATH } = CONSTANTS;
-
 /**
  * # 辅助函数：获取最终的文件夹路径
  *
@@ -14,6 +12,8 @@ const { DEMO_DIR_PATH } = CONSTANTS;
  * @returns {Promise<string>} 最终的文件夹路径
  */
 const getFinalDirPath = async (dirPath, options) => {
+  const { DEMO_DIR_PATH } = CONSTANTS;
+
   // 优先使用命令行传入的路径
   if (dirPath) {
     return dirPath;

@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { marked } from 'marked';
 import prettier from 'prettier';
-import open from 'open';
 
 import CONSTANTS from '../lib/constants.js';
 import readFile from '../lib/utils/read-file.js';
@@ -15,23 +14,23 @@ const { README_PATH, API_PAGE_PATH } = CONSTANTS;
 const publishApiHTML = async (markedPath, htmlPath) => {
   const { resolve } = path;
 
-  const headerPattern = /<h1>(.+)(\.js)<\/h1>/g;
-  const shieldsPattern =
+  const TITLE_PATTERN = /<h1>(.+)(\.js)<\/h1>/g;
+  const SHIELDS_PATTERN =
     /(<p>)(\s*?<a href="https:\/\/www.npmjs.com\/package\/@yaohaixiao\/renames.js">[\s\S]*?MIT License<\/a>\s*?)<\/p>/g;
-  const mainPattern =
+  const MAIN_PATTERN =
     /(<header class="header">[\s\S]*?<\/header>)([\s\S]*?)(<footer class="footer">[\s\S]*?<\/footer>)/g;
-  const imgPattern = /<p>(\s*<img[^>]+>\s*)<\/p>/g;
+  const IMAGE_PATTERN = /<p>(\s*<img[^>]+>\s*)<\/p>/g;
 
   const markdownCode = readFile(markedPath);
   const HTMLCode = convertMarkdownToHTML(markdownCode)
     .replaceAll(
-      headerPattern,
+      TITLE_PATTERN,
       '<header class="header"><h1 class="title">$1<strong class="mark">$2</strong></h1></header>',
     )
-    .replace(shieldsPattern, '<p class="shields-icons">$2</p>')
-    .replaceAll(mainPattern, '$1<article class="article">$2</article>$3')
+    .replace(SHIELDS_PATTERN, '<p class="shields-icons">$2</p>')
+    .replaceAll(MAIN_PATTERN, '$1<article class="article">$2</article>$3')
     .replaceAll('./docs/', './')
-    .replace(imgPattern, '<p class="screenshot">$1</p>');
+    .replace(IMAGE_PATTERN, '<p class="screenshot">$1</p>');
   const formattedHTMLCode = await prettier.format(HTMLCode, {
     // 必须指定解析器为html，否则无法正确格式化
     parser: 'html',
@@ -50,8 +49,6 @@ const publishApiHTML = async (markedPath, htmlPath) => {
   });
 
   writeFile(htmlPath, formattedHTMLCode);
-
-  await open(htmlPath);
 };
 
 publishApiHTML(README_PATH, API_PAGE_PATH);

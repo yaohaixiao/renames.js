@@ -14,13 +14,6 @@ import executeInitCommand from '../utils/execute-init-command.js';
 import processNamesList from '../utils/process-names-list.js';
 import terminalLink from '../utils/terminal-link.js';
 
-const {
-  DEFAULT_CONFIG_PATH,
-  CONFIG_FILE_NAME,
-  CONFIG_FILE_PATH,
-  CONFIG_FILE_PATH_URL,
-} = CONSTANTS;
-
 /**
  * # 主命令的 action 逻辑
  *
@@ -30,6 +23,12 @@ const {
  * @returns {void}
  */
 const mainCommandAction = async (dirPath, options) => {
+  const {
+    DEFAULT_CONFIG_PATH,
+    CONFIG_FILE_NAME,
+    CONFIG_FILE_PATH,
+    CONFIG_FILE_PATH_URL,
+  } = CONSTANTS;
   let answer;
 
   // 无配置文件且未提供配置参数时，提供交互式选择

@@ -6,8 +6,6 @@ import writeFile from '../../lib/utils/write-file.js';
 
 import revokeDirPath from '../utils/revoke-dir-path.js';
 
-const { CONFIG_FILE_NAME, CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
-
 /**
  * # revoke 命令的 action 逻辑
  *
@@ -17,7 +15,9 @@ const { CONFIG_FILE_NAME, CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
 const revokeCommandAction = async (dirPath = '', options = null) => {
-  const { parse } = JSON;
+  const { parse, stringify } = JSON;
+  const { CONFIG_FILE_NAME, CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
+
   let revokePath = dirPath;
   let renames = {};
 
@@ -43,7 +43,7 @@ const revokeCommandAction = async (dirPath = '', options = null) => {
     revokeDirPath(renames, revokePath);
   }
 
-  writeFile(CACHE_FILE_PATH, JSON.stringify(renames, null, 2));
+  writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
 
   return true;
 };

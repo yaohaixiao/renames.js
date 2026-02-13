@@ -1,11 +1,9 @@
 import chalk from 'chalk';
 
-import createConfig from '../../lib/create-config.js';
 import CONSTANTS from '../../lib/constants.js';
+import createConfig from '../../lib/create-config.js';
 
 import terminalLink from '../utils/terminal-link.js';
-
-const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
 /**
  * # init 命令的 action 逻辑
@@ -15,6 +13,8 @@ const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
  * @returns {Promise<void>}
  */
 const initCommandAction = (options) => {
+  const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
+
   createConfig(options)
     .then(({ isCancel }) => {
       if (!isCancel) {
