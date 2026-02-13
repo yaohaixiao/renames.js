@@ -77,6 +77,14 @@ const DESC_BOOKS = [
   '凡人修仙传.txt',
 ];
 
+const TXT_FILES = [
+  'JavaScript Data Structures and Algorithms.txt',
+  'Express in Action.txt',
+  '仙逆.txt',
+  '菊与刀.txt',
+  '凡人修仙传.txt',
+];
+
 const { resolve } = path;
 const { stringify } = JSON;
 const sortBy = (files) => files.toSorted();
@@ -89,7 +97,9 @@ let TEMP_FILES;
 
 describe('sortFiles() 方法：', () => {
   beforeEach(() => {
-    for (const [index, content] of DESC_BOOKS.entries()) {
+    for (let index = 0; index < TXT_FILES.length; index++) {
+      const content = TXT_FILES[index];
+
       writeFile(resolve(`${TEMP_DIR_PATH}/${content}`), `${index}. ${content}`);
     }
 
@@ -140,24 +150,24 @@ describe('sortFiles() 方法：', () => {
     expect(sorted).toEqual(ASC_FILES);
   });
 
-  const sortByTypeDescOptions = {
-    sortBy: 'type',
+  const sortByExtensionDescOptions = {
+    sortBy: 'extension',
     order: 'desc',
   };
 
-  it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(sortByTypeDescOptions)}), 按文件类型（desc排序）， 排序后的第1个文件名称，返回：'凡人修仙传.txt'`, () => {
-    const sorted = sortFiles(ORIGIN_BOOKS, sortByTypeDescOptions);
+  it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(sortByExtensionDescOptions)}), 按文件类型（desc排序）， 排序后的第1个文件名称，返回：'凡人修仙传.txt'`, () => {
+    const sorted = sortFiles(ORIGIN_BOOKS, sortByExtensionDescOptions);
 
     expect(sorted[0]).toEqual('凡人修仙传.txt');
   });
 
-  const sortByTypeAscOptions = {
-    sortBy: 'type',
+  const sortByExtensionAscOptions = {
+    sortBy: 'extension',
     order: 'asc',
   };
 
-  it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(sortByTypeAscOptions)}), 按文件类型（desc排序）， 排序后的第1个文件名称，返回：'菊与刀.docx'`, () => {
-    const sorted = sortFiles(ORIGIN_BOOKS, sortByTypeAscOptions);
+  it(`sortFiles('${ORIGIN_BOOKS}', ${stringify(sortByExtensionAscOptions)}), 按文件类型（desc排序）， 排序后的第1个文件名称，返回：'菊与刀.docx'`, () => {
+    const sorted = sortFiles(ORIGIN_BOOKS, sortByExtensionAscOptions);
 
     expect(sorted[0]).toEqual('菊与刀.docx');
   });
@@ -168,12 +178,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeDescOptions)}'), 按文件大小（desc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortBySizeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual(
-      'JavaScript Data Structures and Algorithms',
-    );
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortBySizeAscOptions = {
@@ -182,10 +190,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'仙逆'`, () => {
+  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortBySizeAscOptions)}'), 按文件大小（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortBySizeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual('仙逆');
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByModifyTimeAscOptions = {
@@ -194,12 +202,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
+  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByModifyTimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByModifyTimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual(
-      'JavaScript Data Structures and Algorithms',
-    );
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByModifyTimeDescOptions = {
@@ -208,10 +214,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'凡人修仙传'`, () => {
+  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByModifyTimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByModifyTimeDescOptions);
 
-    expect(getBasename(sorted[0])).toEqual('凡人修仙传');
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByBirthtimeAscOptions = {
@@ -220,12 +226,10 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'JavaScript Data Structures and Algorithms'`, () => {
+  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByBirthtimeAscOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'Express in Action'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByBirthtimeAscOptions);
 
-    expect(getBasename(sorted[0])).toEqual(
-      'JavaScript Data Structures and Algorithms',
-    );
+    expect(getBasename(sorted[0])).toEqual('Express in Action');
   });
 
   const sortByBirthtimeDescOptions = {
@@ -234,15 +238,15 @@ describe('sortFiles() 方法：', () => {
     dirPath: TEMP_DIR_PATH,
   };
 
-  it(`sortFiles('${stringify(DESC_BOOKS)}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'凡人修仙传'`, () => {
+  it(`sortFiles('${stringify(TXT_FILES)}', '${stringify(sortByBirthtimeDescOptions)}'), 按文件修改时间（asc排序）， 排序后的第1个文件名称，返回：'凡人修仙传'`, () => {
     const sorted = sortFiles(TEMP_FILES, sortByBirthtimeDescOptions);
 
     expect(getBasename(sorted[0])).toEqual('凡人修仙传');
   });
 
   it(`sortFiles('${stringify(DESC_BOOKS)}', { sortBy: 'custom' }), 未知的排序方式，直接返回原始数据`, () => {
-    const sorted = sortFiles(TEMP_FILES, { sortBy: 'custom' });
+    const sorted = sortFiles(DESC_BOOKS, { sortBy: 'custom' });
 
-    expect(sorted).toEqual(TEMP_FILES);
+    expect(sorted).toEqual(DESC_BOOKS);
   });
 });
