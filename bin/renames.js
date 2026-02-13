@@ -2,12 +2,12 @@
 
 import { program } from 'commander';
 
+import CONSTANTS from '../lib/constants.js';
+
 import addCommandOptions from './utils/add-command-options.js';
 import initCommandAction from './actions/init-command-action.js';
 import mainCommandAction from './actions/main-command-action.js';
 import revokeCommandAction from './actions/revoke-command-action.js';
-
-import CONSTANTS from '../lib/constants.js';
 
 const { CONFIG_FILE_NAME, CACHE_FILE_NAME, PACKAGE_JSON } = CONSTANTS;
 const { version, author, description } = PACKAGE_JSON;

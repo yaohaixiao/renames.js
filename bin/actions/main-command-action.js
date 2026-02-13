@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { select } from '@inquirer/prompts';
 
+import CONSTANTS from '../../lib/constants.js';
 import isFileExists from '../../lib/utils/is-file-exists.js';
 import isEmptyObject from '../../lib/utils/is-empty-object.js';
 import readFile from '../../lib/utils/read-file.js';
@@ -12,8 +13,6 @@ import executeHelpCommand from '../utils/execute-help-command.js';
 import executeInitCommand from '../utils/execute-init-command.js';
 import processNamesList from '../utils/process-names-list.js';
 import terminalLink from '../utils/terminal-link.js';
-
-import CONSTANTS from '../../lib/constants.js';
 
 const {
   DEFAULT_CONFIG_PATH,

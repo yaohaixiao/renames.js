@@ -1,11 +1,10 @@
+import CONSTANTS from '../../lib/constants.js';
 import isFileExists from '../../lib/utils/is-file-exists.js';
 import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import writeFile from '../../lib/utils/write-file.js';
 
 import revokeDirPath from '../utils/revoke-dir-path.js';
-
-import CONSTANTS from '../../lib/constants.js';
 
 const { CONFIG_FILE_NAME, CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
 

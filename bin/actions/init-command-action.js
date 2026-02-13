@@ -1,10 +1,9 @@
 import chalk from 'chalk';
 
-import terminalLink from '../utils/terminal-link.js';
-
 import createConfig from '../../lib/create-config.js';
-
 import CONSTANTS from '../../lib/constants.js';
+
+import terminalLink from '../utils/terminal-link.js';
 
 const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 

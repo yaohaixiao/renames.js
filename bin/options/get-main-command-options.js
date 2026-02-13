@@ -1,6 +1,6 @@
-import parseCommandOption from '../utils/parse-command-option.js';
-
 import CONSTANTS from '../../lib/constants.js';
+
+import parseCommandOption from '../utils/parse-command-option.js';
 
 const {
   DEMO_FILE_NAME,
@@ -63,7 +63,7 @@ const getMainCommandOptions = () => [
   },
   {
     flags: '--indexLength <indexLength>',
-    description: '可选，自动编号自动补"0"的字符长度（default: 2）',
+    description: '可选，自动编号自动补"0"的字符长度（default: "auto"）',
     parser: (length) =>
       parseCommandOption(length, DEFAULT_INDEX_LENGTH, '--indexLength'),
   },
@@ -94,7 +94,7 @@ const getMainCommandOptions = () => [
   {
     flags: '--sort, --sortBy <sortBy>',
     description:
-      '可选，排序类型，可选项：name、type、size、birthtime 和 modify-time（default：name）',
+      '可选，排序类型，可选项：name、extension、size、birthtime 和 modify-time（default：name）',
   },
   {
     flags: '--order <order>',
