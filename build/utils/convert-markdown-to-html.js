@@ -223,13 +223,13 @@ const convertMarkdownToHTML = (content) => {
 </head>
 <body>
 <main class="paper">
-${marked.parse(content)}
-<footer class="footer">
-<p>Copyright © 2026 <a href="https://github.com/yaohaixiao">乘风巨浪</a>, all right reserved.</p>
-<p>Code licensed under&nbsp;<a href="http://opensource.org/licenses/mit-license.html">MIT License</a></p>
-<p>Documentation licensed under&nbsp;<a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
-<p><a href="https://github.com/yaohaixiao/renames.js">View on GitHub</a> ·<a href="https://github.com/yaohaixiao/renames.js/issues">Issues</a></p>
-</footer>
+  ${marked.parse(content)}
+  <footer class="footer">
+    <p>Copyright © 2026 <a href="https://github.com/yaohaixiao">乘风巨浪</a>, all right reserved.</p>
+    <p>Code licensed under&nbsp;<a href="http://opensource.org/licenses/mit-license.html">MIT License</a></p>
+    <p>Documentation licensed under&nbsp;<a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p><a href="https://github.com/yaohaixiao/renames.js">View on GitHub</a> ·<a href="https://github.com/yaohaixiao/renames.js/issues">Issues</a></p>
+  </footer>
 </main>
 <script>
   document.querySelectorAll('pre code').forEach((el) => {
