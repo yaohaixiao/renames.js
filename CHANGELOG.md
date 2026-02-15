@@ -1,3 +1,9 @@
+## <small>0.2.1 (2026-02-15)</small>
+
+* fix: 修复配置 namesList 为文件路径时 analysis-names-list.js 模块导入 read-list 错误的问题； ([6f9bcb6](https://github.com/yaohaixiao/renames.js/commit/6f9bcb6))
+
+
+
 ## 0.2.0 (2026-02-14)
 
 * chore: 按代码规范格式化代码； ([b817616](https://github.com/yaohaixiao/renames.js/commit/b817616))
