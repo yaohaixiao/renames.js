@@ -4,7 +4,7 @@ import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import writeFile from '../../lib/utils/write-file.js';
 
-import revokeDirPath from '../utils/revoke-dir-path.js';
+import revokeDirRecords from '../utils/revoke-dir-records.js';
 
 /**
  * # revoke 命令的 action 逻辑
@@ -22,27 +22,32 @@ const revokeCommandAction = async (dirPath = '', options = null) => {
   let renames = {};
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在，无任何数据可恢复。');
+    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在，无任何数据可恢复');
     return false;
   }
 
   renames = parse(readFile(CACHE_FILE_PATH));
 
-  // 未传入的 dirPath 值，使用 renames.config.js 中的 dirPath 参数
+  // 未传入的 dirPath 值
   if (!revokePath) {
-    const config = await import(`../../${CONFIG_FILE_NAME}`);
-    revokePath = config?.default?.dirPath || '';
-  }
+    // 还原所有数据
+    if (options.all) {
+      for (const key in renames) {
+        revokeDirRecords(renames, key);
+      }
+    } else {
+      // 读取配置文件
+      const config = await import(`../../${CONFIG_FILE_NAME}`);
 
-  // 还原所有数据
-  if (options.all) {
-    for (const key in renames) {
-      revokeDirPath(renames, key);
+      // 使用 renames.config.js 中的 dirPath 参数
+      revokePath = config?.default?.dirPath || '';
     }
-  } else {
-    revokeDirPath(renames, revokePath);
   }
 
+  // 缓存记录
+  revokeDirRecords(renames, revokePath);
+
+  // 将缓存数据写入缓存文件
   writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
 
   return true;

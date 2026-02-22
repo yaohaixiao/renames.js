@@ -5,6 +5,7 @@ import { program } from 'commander';
 import CONSTANTS from '../lib/constants.js';
 
 import addCommandOptions from './utils/add-command-options.js';
+import cacheCommandAction from './actions/cache-command-action.js';
 import initCommandAction from './actions/init-command-action.js';
 import mainCommandAction from './actions/main-command-action.js';
 import revokeCommandAction from './actions/revoke-command-action.js';
@@ -56,5 +57,21 @@ revokeCommand
     `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CACHE_FILE_NAME} 中的 dirPath 属性`,
   )
   .action(revokeCommandAction);
+
+// 配置 cache 命令
+const cacheCommand = program
+  .command('cache')
+  .description(`显示 ${CACHE_FILE_NAME} 缓存文件中的数据`);
+
+// cache 命令添加选项
+addCommandOptions(cacheCommand, 'cache');
+
+// cache 命令逻辑
+cacheCommand
+  .argument(
+    '[dir-path]',
+    `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CACHE_FILE_NAME} 中的 dirPath 属性`,
+  )
+  .action(cacheCommandAction);
 
 program.parse(process.argv);

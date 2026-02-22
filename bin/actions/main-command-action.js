@@ -7,6 +7,7 @@ import isEmptyObject from '../../lib/utils/is-empty-object.js';
 import readFile from '../../lib/utils/read-file.js';
 import renames from '../../index.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
+import getOptionsFromConfigJs from '../../lib/utils/get-options-from-config-js.js';
 
 import getFinalDirPath from '../utils/get-final-dir-path.js';
 import executeHelpCommand from '../utils/execute-help-command.js';
@@ -35,7 +36,7 @@ const mainCommandAction = async (dirPath, options) => {
   if (!isFileExists(CONFIG_FILE_PATH) && isEmptyObject(options)) {
     answer = await select({
       message:
-        `请指定命令或参数，或者创建 ${CONFIG_FILE_NAME} 配置文件，\n` +
+        `请指定命令或参数，或者创建配置文件 ${CONFIG_FILE_NAME}，\n` +
         '执行命令：renames -h，将显示 renames 命令的详细帮助信息，\n' +
         '执行命令：renames init，将创建命令配置文件，请选择后序操作？',
       pageSize: 3,
@@ -76,7 +77,7 @@ const mainCommandAction = async (dirPath, options) => {
       // 获取配置文件内容
       const content = readFile(DEFAULT_CONFIG_PATH, { encoding: 'utf8' });
       const defaults = isFileExists(CONFIG_FILE_PATH)
-        ? await import(`../../${CONFIG_FILE_NAME}`)
+        ? await getOptionsFromConfigJs()
         : JSON.parse(content);
       const config = defaults.default || defaults;
 

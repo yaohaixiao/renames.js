@@ -90,7 +90,7 @@ renames.js 目前仅提供了 2 个子命令：init 和 revoke。
 
 #### init 子命令
 
-init 子命令是用来创建名为 renames.config.js 配置文件的，命令如下：
+init 子命令是用来创建名为 renames.config.js 的配置文件，命令如下：
 
 ```bash
 renames init

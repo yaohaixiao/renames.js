@@ -1,5 +1,6 @@
-import getMainCommandOptions from '../options/get-main-command-options.js';
+import getCacheCommandOptions from '../options/get-cache-command-options.js';
 import getInitCommandOptions from '../options/get-init-command-options.js';
+import getMainCommandOptions from '../options/get-main-command-options.js';
 import getRevokeCommandOptions from '../options/get-revoke-command-options.js';
 
 /**
@@ -14,6 +15,10 @@ const addCommandOptions = (commanderInstance, commandName = 'main') => {
 
   // 获取命令选项配置
   switch (commandName) {
+    case 'cache': {
+      commandOptions = getCacheCommandOptions();
+      break;
+    }
     case 'init': {
       commandOptions = getInitCommandOptions();
       break;

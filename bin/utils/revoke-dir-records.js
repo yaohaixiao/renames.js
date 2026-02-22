@@ -7,12 +7,12 @@ import revokeRename from './revoke-rename.js';
 /**
  * # 撤销缓存记录中的 dirPath 路径中的文件重命名，经文件名恢复到重命名前的名字
  *
- * @function revokeDirPath
+ * @function revokeDirRecords
  * @param {object} renames - 缓存的 renames 记录
  * @param {string} dirPath - 目录路径
  * @returns {boolean} - 撤销操作成功，返回 true，否则返回 false
  */
-const revokeDirPath = (renames, dirPath) => {
+const revokeDirRecords = (renames, dirPath) => {
   const { resolve } = path;
   const records = [];
   const cacheRecords = renames[resolve(dirPath)];
@@ -40,4 +40,4 @@ const revokeDirPath = (renames, dirPath) => {
   return true;
 };
 
-export default revokeDirPath;
+export default revokeDirRecords;
