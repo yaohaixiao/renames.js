@@ -13,13 +13,14 @@ import displayCacheRecords from './display-cache-records.js';
  */
 const clearOrDisplayAllCache = async (options) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
-  const cacheJSON = readFile(CACHE_FILE_PATH);
+  const records = readFile(CACHE_FILE_PATH);
 
+  // 清理记录
   if (options.clear) {
     return clearCacheRecords('all');
   }
 
-  await displayCacheRecords(cacheJSON);
+  await displayCacheRecords(records);
 
   return true;
 };

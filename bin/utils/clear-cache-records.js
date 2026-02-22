@@ -19,7 +19,11 @@ const clearCacheRecords = (revokeDir = 'all') => {
 
   if (revokeDir === 'all') {
     writeFile(CACHE_FILE_PATH, '{}');
-    console.log(chalk.greenBright('成功:'), chalk.blueBright('所有缓存记录'), '已清除');
+    console.log(
+      chalk.greenBright('成功:'),
+      chalk.blueBright('所有缓存记录'),
+      '已清除',
+    );
   } else {
     const records = renames[revokeDir];
 
@@ -31,7 +35,11 @@ const clearCacheRecords = (revokeDir = 'all') => {
     delete renames[revokeDir];
 
     writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
-    console.log(chalk.greenBright('成功：'), chalk.blueBright(revokeDir), '的缓存记录已清除');
+    console.log(
+      chalk.greenBright('成功：'),
+      chalk.blueBright(revokeDir),
+      '的缓存记录已清除',
+    );
   }
 
   return true;

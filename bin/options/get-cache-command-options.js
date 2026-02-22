@@ -19,6 +19,10 @@ const getCacheCommandOptions = () => {
       description: `可选，清除缓存中的重命名记录`,
     },
     {
+      flags: '--delete',
+      description: `可选，删除缓存文件或者清除缓存中的重命名记录`,
+    },
+    {
       flags: '--off',
       description: `可选，关闭缓存重命名记录，即将配置文件 ${CONFIG_FILE_NAME} 中 cache 设置为 false`,
     },

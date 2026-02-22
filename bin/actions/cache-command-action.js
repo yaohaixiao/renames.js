@@ -5,6 +5,7 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearOrDisplayAllCache from '../utils/clear-or-display-all-cache.js';
 import clearOrDisplayDirCache from '../utils/clear-or-display-dir-cache.js';
+import deleteCacheFile from '../utils/delete-cache-file.js'
 import disableCache from '../utils/disable-cache.js';
 
 /**
@@ -27,6 +28,11 @@ const cacheCommandAction = async (dirPath = '', options = null) => {
 
   // 处理未传入目录路径的情况
   if (!targetDirPath) {
+    // 删除缓存文件
+    if (options.delete) {
+      return deleteCacheFile();
+    }
+
     // 处理全量操作
     if (options.all) {
       return clearOrDisplayAllCache(options);

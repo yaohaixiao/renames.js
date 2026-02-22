@@ -17,13 +17,13 @@ const clearOrDisplayDirCache = async (dirPath, options) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
   const { parse, stringify } = JSON;
   const cacheJSON = readFile(CACHE_FILE_PATH);
-  const cacheData = parse(cacheJSON);
+  const renames = parse(cacheJSON);
 
-  if (options.clear) {
+  if (options.clear || options.delete) {
     return clearCacheRecords(dirPath);
   }
 
-  const records = cacheData[dirPath];
+  const records = renames[dirPath];
 
   if (!records) {
     showWarningLog('警告', dirPath, '的缓存记录不存在或已被清除');
