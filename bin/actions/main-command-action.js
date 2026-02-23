@@ -70,7 +70,7 @@ const mainCommandAction = async (dirPath, options) => {
       break;
     }
     case 'exit': {
-      console.log(chalk.green('\n已退出！'));
+      console.log(chalk.green('\n已安全退出！'));
       break;
     }
     default: {
@@ -86,9 +86,11 @@ const mainCommandAction = async (dirPath, options) => {
 
       // 合并命令行输入的配置参数
       const finalOptions = { ...config, ...options };
+      const { namesList } = finalOptions;
 
-      if (options.namesList) {
-        finalOptions.namesList = processNamesList(options.namesList);
+      // 将 namesList 中的数据转化成数组格式的数据
+      if (namesList) {
+        finalOptions.namesList = processNamesList(namesList);
       }
 
       if (finalDirPath) {
