@@ -34,7 +34,7 @@ mainCommand
 // 配置 init 命令
 const initCommand = program
   .command('init')
-  .description(`用以生成"${CONFIG_FILE_NAME}"配置文件`);
+  .description(`用以生成配置文件 ${CONFIG_FILE_NAME}`);
 
 // init 命令添加选项
 addCommandOptions(initCommand, 'init');
@@ -61,7 +61,9 @@ revokeCommand
 // 配置 cache 命令
 const cacheCommand = program
   .command('cache')
-  .description(`显示 ${CACHE_FILE_NAME} 缓存文件中的数据`);
+  .description(
+    `显示缓存文件中的数据和调整配置文件中 cache 配置选项的开启或关闭状态`,
+  );
 
 // cache 命令添加选项
 addCommandOptions(cacheCommand, 'cache');
@@ -70,7 +72,7 @@ addCommandOptions(cacheCommand, 'cache');
 cacheCommand
   .argument(
     '[dir-path]',
-    `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CACHE_FILE_NAME} 中的 dirPath 属性`,
+    `可选，目标文件夹（绝对或相对）路径，如不设置，则是进行全局的（查看或清除全部的缓存数据）操作`,
   )
   .action(cacheCommandAction);
 

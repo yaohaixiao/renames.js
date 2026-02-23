@@ -1,16 +1,17 @@
 ## 0.3.0 (2026-02-23)
 
-* feat: 给 cache 子命令添加 --delete 配置项，用以删除缓存文件 renames.cache.json; ([34165ad](https://github.com/yaohaixiao/renames.js/commit/34165ad))
-* feat: 添加 cache 子命令； ([822e332](https://github.com/yaohaixiao/renames.js/commit/822e332))
-* feat: 为 cache 子命令添加 --on 配置参数，用来启用 renames.config.js 中的缓存配置；为 cache 子命令添加 --list 参数，用来以有序列表形式显示缓存数据； ([e8b73b3](https://github.com/yaohaixiao/renames.js/commit/e8b73b3))
-* chore: delete FUNDING.yml ([0e5d588](https://github.com/yaohaixiao/renames.js/commit/0e5d588))
-* Update FUNDING.yml to reflect supported platforms ([78b3e90](https://github.com/yaohaixiao/renames.js/commit/78b3e90))
-
+- feat: 给 cache 子命令添加 --delete 配置项，用以删除缓存文件 renames.cache.json;
+  ([34165ad](https://github.com/yaohaixiao/renames.js/commit/34165ad))
+- feat: 添加 cache 子命令； ([822e332](https://github.com/yaohaixiao/renames.js/commit/822e332))
+- feat: 为 cache 子命令添加 --on 配置参数，用来启用 renames.config.js 中的缓存配置；为 cache 子命令添加 --list 参数，用来以有序列表形式显示缓存数据； ([e8b73b3](https://github.com/yaohaixiao/renames.js/commit/e8b73b3))
+- chore: delete FUNDING.yml
+  ([0e5d588](https://github.com/yaohaixiao/renames.js/commit/0e5d588))
+- Update FUNDING.yml to reflect supported platforms
+  ([78b3e90](https://github.com/yaohaixiao/renames.js/commit/78b3e90))
 
 ## <small>0.2.1 (2026-02-15)</small>
 
 - fix: 修复配置 namesList 为文件路径时 analysis-names-list.js 模块导入 read-list 错误的问题； ([6f9bcb6](https://github.com/yaohaixiao/renames.js/commit/6f9bcb6))
-
 
 ## 0.2.0 (2026-02-14)
 
@@ -38,7 +39,6 @@
 - docs: update README.md
   ([d53aed4](https://github.com/yaohaixiao/renames.js/commit/d53aed4))
 
-
 ## 0.1.0 (2026-02-09)
 
 - chore: 调整优化主命令的代码； ([b6b6ebb](https://github.com/yaohaixiao/renames.js/commit/b6b6ebb))
@@ -47,7 +47,6 @@
 - chore: 优化代码，分离出全局变量，并抽离 renames.js 中的功能函数，优化代码可读性 ([ce5dc60](https://github.com/yaohaixiao/renames.js/commit/ce5dc60))
 - feat: 调整 init 命令配置参数为2个（dirPath和namesList），其余都用默认值，简化配置过程，优化体验； ([4db05be](https://github.com/yaohaixiao/renames.js/commit/4db05be))
 - test: 调整单测代码 ([b06703a](https://github.com/yaohaixiao/renames.js/commit/b06703a))
-
 
 ## <small>0.0.2 (2026-02-08)</small>
 

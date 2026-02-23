@@ -1,5 +1,3 @@
-import parseCommandOption from '../utils/parse-command-option.js';
-
 /**
  * # 辅助函数：获取 cache 命令选项配置数据
  *

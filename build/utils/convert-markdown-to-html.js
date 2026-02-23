@@ -5,9 +5,9 @@ const convertMarkdownToHTML = (content) => {
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>renames.js - 基于 Node 的批量文件名重命名 cli 工具库</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/github.min.css">
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
   <style>
     html,
     body {
@@ -124,101 +124,103 @@ const convertMarkdownToHTML = (content) => {
     }
 
     /* 1. 基础手机适配（屏幕宽度 ≤ 768px，覆盖绝大多数手机） */
-@media screen and (max-width: 768px) {
-  /* 调整主体容器间距，适配手机窄屏 */
-  .paper {
-    max-width: 100%; /* 取消最大宽度限制，占满屏幕 */
-    margin: 0; /* 移除左右外边距 */
-    padding: 0; /* 保留内边距，避免内容贴边 */
-    box-shadow: none; /* 移除阴影，节省视觉空间 */
-  }
+    @media (max-width: 768px) {
+      /* 调整主体容器间距，适配手机窄屏 */
+      .paper {
+        max-width: 100%; /* 取消最大宽度限制，占满屏幕 */
+        margin: 0; /* 移除左右外边距 */
+        padding: 0; /* 保留内边距，避免内容贴边 */
+        box-shadow: none; /* 移除阴影，节省视觉空间 */
+      }
 
-  /* 调整标题大小，适配手机 */
-  .title {
-    font-size: 2em; /* 从4em缩小到2em，避免超出屏幕 */
-    margin: 1em 0; /* 调整间距 */
-  }
+      /* 调整标题大小，适配手机 */
+      .title {
+        font-size: 2em; /* 从4em缩小到2em，避免超出屏幕 */
+        margin: 1em 0; /* 调整间距 */
+      }
 
-  /* 调整 header/footer 内边距 */
-  .header,
-  .footer {
-    padding: 1em; /* 从2.5em 3em缩小，适配手机 */
-  }
+      /* 调整 header/footer 内边距 */
+      .header,
+      .article,
+      .footer {
+        padding: 1em; /* 从2.5em 3em缩小，适配手机 */
+      }
 
-  /* 调整表格样式，避免横向溢出 */
-  table {
-    display: block; /* 改为块级，允许横向滚动 */
-    overflow-x: auto; /* 横向滚动条 */
-    -webkit-overflow-scrolling: touch; /* 移动端顺滑滚动 */
-  }
+      /* 调整表格样式，避免横向溢出 */
+      table {
+        display: block; /* 改为块级，允许横向滚动 */
+        overflow-x: auto; /* 横向滚动条 */
+        -webkit-overflow-scrolling: touch; /* 移动端顺滑滚动 */
+      }
 
-  /* 调整代码块样式 */
-  pre {
-    padding: 0.3em;
-    font-size: 0.9em; /* 缩小代码字体 */
-  }
+      /* 调整代码块样式 */
+      pre {
+        padding: 0.3em;
+        font-size: 0.9em; /* 缩小代码字体 */
+      }
 
-  /* 调整 shields-icons 图标布局（你新增的class） */
-  .shields-icons {
-    text-align: center; /* 图标居中 */
-  }
-  .shields-icons a {
-    display: inline-block;
-    margin: 5px 2px; /* 缩小图标间距 */
-  }
-  .shields-icons img {
-    max-width: 100%; /* 图标自适应 */
-  }
+      /* 调整 shields-icons 图标布局（你新增的class） */
+      .shields-icons {
+        text-align: center; /* 图标居中 */
+      }
+      .shields-icons a {
+        display: inline-block;
+        margin: 5px 2px; /* 缩小图标间距 */
+      }
+      .shields-icons img {
+        max-width: 100%; /* 图标自适应 */
+      }
 
-  /* 调整截图样式 */
-  .screenshot {
-    margin: 10px 0;
-  }
+      /* 调整截图样式 */
+      .screenshot {
+        margin: 10px 0;
+      }
 
-  /* 调整列表/段落行高，提升可读性 */
-  p, li {
-    line-height: 1.5em;
-    font-size: 0.95em;
-    padding: 0 5px;
-  }
-}
+      /* 调整列表/段落行高，提升可读性 */
+      p, li {
+        line-height: 1.5em;
+        font-size: 0.95em;
+        padding: 0 5px;
+      }
+    }
 
-/* 2. 小屏手机适配（屏幕宽度 ≤ 480px，如iPhone SE/安卓小屏机） */
-@media screen and (max-width: 480px) {
-  .title {
-    font-size: 1.5em; /* 进一步缩小标题 */
-  }
+    /* 2. 手机横屏适配（可选） */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .title {
+        font-size: 1.8em; /* 横屏时标题略大 */
+      }
+    }
 
-  /* 代码字体再缩小，适配超小屏 */
-  pre code {
-    font-size: 0.85em;
-  }
+    /* 3. 小屏手机适配（屏幕宽度 ≤ 480px，如iPhone SE/安卓小屏机） */
+    @media (max-width: 480px) {
+      .paper {
+        margin: 0;
+      }
 
-  /* 表格单元格内边距缩小 */
-  th, td {
-    padding: 0 8px;
-    line-height: 2em;
-  }
-}
+      .title {
+        font-size: 1.5em; /* 进一步缩小标题 */
+      }
 
-/* 3. 手机横屏适配（可选） */
-@media screen and (max-width: 768px) and (orientation: landscape) {
-  .title {
-    font-size: 1.8em; /* 横屏时标题略大 */
-  }
-  .paper {
-    padding: 15px; /* 横屏内边距稍大 */
-  }
-}
+      /* 代码字体再缩小，适配超小屏 */
+      pre code {
+        font-size: 0.85em;
+      }
 
-/* 4. 高清屏适配（Retina屏，如iPhone） */
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-       screen and (min-device-pixel-ratio: 2) {
-  /* 可选：高清屏优化，比如图标/图片清晰度 */
-  img {
-    image-rendering: -webkit-optimize-contrast;
-  }
-}
+      /* 表格单元格内边距缩小 */
+      th, td {
+        padding: 0 8px;
+        line-height: 2em;
+      }
+    }
+
+    /* 4. 高清屏适配（Retina屏，如iPhone） */
+    @media screen and (-webkit-min-device-pixel-ratio: 2),
+           screen and (min-device-pixel-ratio: 2) {
+      /* 可选：高清屏优化，比如图标/图片清晰度 */
+      img {
+        image-rendering: -webkit-optimize-contrast;
+      }
+    }
   </style>
 </head>
 <body>
@@ -231,10 +233,14 @@ const convertMarkdownToHTML = (content) => {
     <p><a href="https://github.com/yaohaixiao/renames.js">View on GitHub</a> ·<a href="https://github.com/yaohaixiao/renames.js/issues">Issues</a></p>
   </footer>
 </main>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
 <script>
-  document.querySelectorAll('pre code').forEach((el) => {
-    hljs.highlightElement(el);
-  });
+  (function(){
+    // 代码高亮
+    document.querySelectorAll('pre code').forEach((el) => {
+      hljs.highlightElement(el);
+    });
+  })();
 </script>
 </body>
 </html>`;

@@ -28,7 +28,10 @@ const publishApiHTML = async (markedPath, htmlPath) => {
       '<header class="header"><h1 class="title">$1<strong class="mark">$2</strong></h1></header>',
     )
     .replace(SHIELDS_PATTERN, '<p class="shields-icons">$2</p>')
-    .replaceAll(MAIN_PATTERN, '$1<article class="article">$2</article>$3')
+    .replaceAll(
+      MAIN_PATTERN,
+      '$1<article class="article" id="article">$2</article>$3',
+    )
     .replaceAll('./docs/', './')
     .replace(IMAGE_PATTERN, '<p class="screenshot">$1</p>');
   const formattedHTMLCode = await prettier.format(HTMLCode, {

@@ -15,6 +15,7 @@ renames.js - 基于 Node 的批量文件名重命名 cli 工具库。
 - 支持文件名自定义过滤文件；
 - 支持文件名自定义文件排序；
 - 支持文件名自定义格式化名；
+- 支持缓存重命名数据，可恢复原始名称。可使用命令开启或关闭缓存功能，支持清理缓存；
 
 ## Usage
 
@@ -36,7 +37,7 @@ renames.js 和其它 cli 工具一样，也可以通过 -h 选项获取完整帮
 renames -h
 ```
 
-renames.js 提供目前提供一个 arguments（dir-path）参数和 2 个 command子命令：init、revoke，以及10多个 options 配置选项。
+renames.js 提供目前提供一个 arguments（dir-path）参数和 3 个 command子命令：init、revoke、cache，以及10多个 options 配置选项。
 
 ### Arguments:
 
@@ -76,7 +77,8 @@ renames.js 提供了较为丰富的 options 配置选项，用以控制重命名
 | --cache                                | 可选，缓存重命名操作结果。开启后会创建 renames.cache.json 文件记录重命名的数据                                  |
 | -h, --help                             | display help for command                                                                                        |
 
-**注意：**0.2.0 开始，将原来的排序方式中的 type 更名为 extension 了，但做了兼容处理，即设置 type 和 extension 效果相同，建议 0.2.0 版本后使用 extension。
+**注意：**
+0.2.0 开始，将原来的排序方式中的 type 更名为 extension 了，但做了兼容处理，即设置 type 和 extension 效果相同，建议 0.2.0 版本后使用 extension。
 
 例如希望将 C:\Downloads 目录下的文件批量重命名为数字索引的信息，可以输入以下命令：
 
@@ -86,7 +88,7 @@ renames C:\Downloads --autoIndex only
 
 ### Command
 
-renames.js 目前仅提供了 2 个子命令：init 和 revoke。
+renames.js 目前仅提供了 3 个子命令：init、revoke 和 cache。
 
 #### init 子命令
 
@@ -129,7 +131,7 @@ renames init --dir C:\Downloads --names C:\Downloads\names.txt
 renames init --dir C:\Downloads --names 名称1,名称2
 ```
 
-以上命令的功能是将 C:\Downloads 文件夹下的文件名，已 names 文件名数据进行重命名。
+以上命令的功能是将 C:\Downloads 文件夹下的文件名，已 names 配置选项指定的文件名数据进行重命名。
 
 #### revoke 子命令
 
@@ -140,19 +142,24 @@ renames init --dir C:\Downloads --names 名称1,名称2
   "C:\\Users\\haixi\\Downloads\\壁纸": [
     {
       "oldFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\01.jpg",
-      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\02.jpg"
+      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\02.jpg",
+      "updated": "2026-02-23 20:25:55"
     },
     {
       "oldFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\02.jpg",
-      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\05.jpg"
+      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\05.jpg",
+      "updated": "2026-02-23 20:25:55"
     },
     {
       "oldFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\03.jpg",
-      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\162285546526.jpg"
+      "newFilePath": "C:\\Users\\haixi\\Downloads\\壁纸\\162285546526.jpg",
+      "updated": "2026-02-23 20:25:55"
     }
   ]
 }
 ```
+
+**说明：** 0.3.0 版本中中新增了 updated 属性。
 
 revoke 子命令是用来恢复 renames.cache.json 文件记录的一个或者全部目录的重命名操作，恢复一条记录的命令如下：
 
@@ -184,14 +191,108 @@ renames revoke C:\Downloads
 
 #### revoke 子命令的 Options 配置选项
 
-| 参数名    | 参数说明                                                     |
-| --------- | ------------------------------------------------------------ |
-| -a, --all | 可选，目标文件夹（绝对或相对）路径（注意：仅 init 命令支持） |
+| 参数名    | 参数说明                       |
+| --------- | ------------------------------ |
+| -a, --all | 可选，是否恢复缓存中的所有数据 |
 
 恢复全部记录的命令如下：
 
 ```bash
 renames revoke -a
+```
+
+#### cache 子命令
+
+cache 子命令就是专门用来处理缓存数据和缓存配置选项的。同样我们也可以使用 -h 参数查看它的参数和配置选项，命令如下：
+
+```bash
+renames cache -h
+```
+
+### cache 子命令的 Arguments 参数
+
+- dir-path - 可选，目标文件夹（绝对或相对）路径，如不设置，则是进行全局的（查看或清除全部的缓存数据）操作。
+
+使用 dir-path 参数的命令如下：
+
+```bash
+renames cache C:\Downloads
+```
+
+添加 dirPath 参数，为显示缓存文件中缓存的指定文件夹路径下的操作记录。如果查看全部的记录，可以查看 --all 或者 --list 配置选项中的说明。
+
+#### cache 子命令的 Options 配置选项
+
+| 参数名      | 参数说明                                     |
+| ----------- | -------------------------------------------- |
+| -a, --all   | 可选，是否显示缓存中的所有数据               |
+| -c, --clear | 可选，清除缓存中的重命名记录                 |
+| --delete    | 可选，删除缓存文件或者清除缓存中的重命名记录 |
+| --off       | 可选，关闭缓存重命名记录                     |
+| --on        | 可选，开启缓存重命名记录                     |
+| -l, --list  | 可选，列表显示缓存的文件夹路径记录           |
+| -h, --help  | display help for command                     |
+
+我们可以使用 **--off** 和 **--on**
+参数开启或者关闭 renames.config.js 中的 cache 配置选项，命令如下：
+
+```bash
+# 开启
+renames cache --on
+```
+
+```bash
+# 关闭
+renames cache --off
+```
+
+如果希望删除缓存文件 renames.cache.json，则可以使用 **--delete**
+配置选项，命令如下：
+
+```bash
+# 删除缓存文件 renames.config.json
+renames cache --delete
+
+# 指定 dirPath 则清除指定目录的下的缓存数据，效果同 --clear 配置参数
+reanmes cache C:\Downloads --delete
+```
+
+希望查看全部的缓存记录，则可以使用 **--all** 或者 **-a** 配置选项，命令如下：
+
+```bash
+# --all 与 -a 效果相同
+renames cache --all
+
+# -a 为 --all 的缩写
+renames cache -a
+```
+
+--all 配置选项显示的是 JSON 格式的数据，**--list** 或者 **-l**
+配置选项则以有序列表的形式显示，命令如下：
+
+```bash
+# 不指定 dirPath 列表显示缓存的所有的目录数据
+renames cache --list
+
+# -l 与 --list 效果相同
+renames cache -l
+
+# 指定 dirPath 则显示该目录下的缓存数据
+renames cache C:\Downloads -l
+```
+
+查看过缓存数据，我们就可以使用 **--clear** 或者 **-c**
+配置选项删除缓存数据，命令如下：
+
+```bash
+# 不指定 dirPath 列表清除缓存文件中的所有的缓存数据
+renames cache --clear
+
+# -c 与 --clear 效果相同
+reanmes cache -c
+
+# 指定 dirPath 则清除该目录下的缓存数据
+renames cache C:\Downloads -c
 ```
 
 ## renames.config.js 配置文件
@@ -335,11 +436,11 @@ export default {
 };
 ```
 
-### Typical Use Case
+## Typical Use Case
 
 下面介绍通过调整配置 renames.config.js 的配置，实现批量重命名的一些典型的使用案例，操作起来是非常的简单的。
 
-#### autoIndex: 'only'
+### autoIndex: 'only'
 
 将杂乱的图片库的文件名，批量重命名为自动生成数值（升序）索引（例如：1.jpg -
 2x.jpg）的文件名，调整 renames.config.js 配置如下：
@@ -376,7 +477,7 @@ export default {
 
 说明：执行 renames 命令，未配置任何参数和配置参数，则执行命令时完全使用配置文件的设置。
 
-#### startIndex
+### startIndex
 
 如果你是一个爱收集壁纸的人，应该会陆续收集更多的图片，我们可以使用 startIndex 在原来的索引位置继续自动生成数值索引名称，配置如下：
 
@@ -411,7 +512,7 @@ export default {
 
 ![startIndex](./docs/img/startIndex.png)
 
-#### indexPadZero
+### indexPadZero
 
 细心的朋友应该发现文件名 01.jpg，自动用‘0’填充。使用的就是 indexPadZero 这个配置参数。 现在将文件夹的图片文件数量增加到100以上，看看索引使用自动填充‘0’后的效果，配置如下：
 
@@ -481,7 +582,7 @@ export default {
 
 可以看到，关闭后就不会使用‘0’自动填充了。
 
-#### prefix、suffix、connector
+### prefix、suffix、connector
 
 接着我们可以对以上重命名好的文件名再继续调整，使用 prefix、suffix、connector 这3个配置参数，添加前缀和后缀，配置如下：
 
@@ -515,7 +616,7 @@ export default {
 
 ![prefix-suffix-connector](./docs/img/prefix-suffix-connector.png)
 
-#### filter
+### filter
 
 接着我们使用 filter 配置参数，进一步对上面重命名的文件再操作，我们将图片中的 .png 格式的图片再批量处理以下，配置如下：
 
@@ -559,7 +660,7 @@ export default {
 
 ![filter](./docs/img/filter.png)
 
-#### format
+### format
 
 接下来，我们将使用 format 参数，将上面我们使用 filter 参数将 .png 格式的图片的后缀再改成 1080p，配置如下：
 
@@ -606,7 +707,7 @@ export default {
 
 ![format](./docs/img/format.png)
 
-#### nameList、sortBy
+### nameList、sortBy
 
 前面介绍的都是直接修改原来的文件名的方式来重命名，namesList 则可以通过外部数据将定义好的文件名结合 sortBy 将文件的顺序调整跟 namesList 中的数据一致，进行批量重命名。
 
