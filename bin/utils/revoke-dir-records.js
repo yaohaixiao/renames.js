@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import showWarningLog from '../../lib/utils/show-warning-log.js';
+import toLocaleTime from '../../lib/utils/to-locale-time.js';
 
 import revokeRename from './revoke-rename.js';
 
@@ -25,12 +26,14 @@ const revokeDirRecords = (renames, dirPath) => {
   // 还原 revokePath 中的数据
   for (const record of cacheRecords) {
     const { oldFilePath, newFilePath } = record;
+    const updated = toLocaleTime();
 
     revokeRename(record);
 
     records.push({
       oldFilePath: newFilePath,
       newFilePath: oldFilePath,
+      updated,
     });
   }
 

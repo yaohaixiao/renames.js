@@ -24,7 +24,7 @@ const parseCommandOption = (value, defaultValue = false, optionName = '') => {
       : parseNumberOption(value, defaultValue, optionName);
   }
 
-  // 解析 autoIndex、indexPadZero、force
+  // 解析布尔值类型的配置参数
   return parseBooleanOption(value, defaultValue);
 };
 

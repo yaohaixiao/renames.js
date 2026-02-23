@@ -4,6 +4,7 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearCacheRecords from './clear-cache-records.js';
 import displayCacheRecords from './display-cache-records.js';
+import listDirCache from './list-dir-cache.js';
 
 /**
  * # 处理指定目录的缓存操作（显示/清理）
@@ -25,9 +26,13 @@ const clearOrDisplayDirCache = async (dirPath, options) => {
 
   const records = renames[dirPath];
 
-  if (!records) {
+  if (!records || records.length === 0) {
     showWarningLog('警告', dirPath, '的缓存记录不存在或已被清除');
     return false;
+  }
+
+  if (options.list) {
+    return listDirCache(dirPath);
   }
 
   await displayCacheRecords(stringify(records));

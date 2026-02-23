@@ -10,7 +10,7 @@ import rename from '../../lib/utils/rename.js';
 const revokeRename = (record) => {
   const { oldFilePath, newFilePath } = record;
 
-  return rename(oldFilePath, newFilePath);
+  return rename(newFilePath, oldFilePath);
 };
 
 export default revokeRename;

@@ -21,7 +21,11 @@ const deleteCacheFile = () => {
 
   removeFile(CACHE_FILE_PATH);
 
-  console.log(chalk.greenBright('成功：'), chalk.blueBright(CACHE_FILE_NAME), '缓存文件已删除');
+  console.log(
+    chalk.greenBright('成功：'),
+    chalk.blueBright(CACHE_FILE_NAME),
+    '缓存文件已删除',
+  );
 
   return true;
 };
