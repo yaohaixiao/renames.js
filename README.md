@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@yaohaixiao/renames.js)](https://www.npmjs.com/package/@yaohaixiao/renames.js)
 [![prettier code style](https://img.shields.io/badge/code_style-prettier-07b759.svg)](https://prettier.io)
 [![npm downloads](https://img.shields.io/npm/dt/@yaohaixiao/renames.js)](https://npmcharts.com/compare/@yaohaixiao/renames.js?minimal=true)
-[![MIT License](https://img.shields.io/github/license/yaohaixiao/renames.js.svg)](https://github.com/yaohaixiao/renames.js/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/badge/License-MIT-07b759.svg)](https://github.com/yaohaixiao/renames.js/blob/main/LICENSE)
 
 renames.js - 基于 Node 的批量文件名重命名 cli 工具库。
 
