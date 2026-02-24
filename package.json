@@ -8,7 +8,8 @@
   },
   "scripts": {
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "docs": "node ./build/publish-api-html.js",
+    "docs:formatted": "node ./build/publish-api-html.js action=format",
+    "docs:minified": "node ./build/publish-api-html.js action=minify",
     "format": "npm run format:es && npm run format:prettier",
     "format:es": "eslint . --fix",
     "format:prettier": "npm run format:prettier:raw -- --write",

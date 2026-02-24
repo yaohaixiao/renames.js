@@ -1,6 +1,18 @@
 import { marked } from 'marked';
 
-const convertMarkdownToHTML = (content) => {
+import CONSTANTS from '../../lib/constants.js';
+import readFile from '../../lib/utils/read-file.js';
+
+/**
+ * # 将 readme.md 中的 markdown 代码转化成 api 文档需要的 HTML 代码
+ *
+ * @function convertReadmeMarkdownToHTML
+ * @returns {string} - 返回使用 marked 转化后的 HTML 代码
+ */
+const convertReadmeMarkdownToHTML = () => {
+  const { README_PATH } = CONSTANTS;
+  const markdownCode = readFile(README_PATH);
+
   return `<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -228,7 +240,7 @@ const convertMarkdownToHTML = (content) => {
 </head>
 <body>
 <main class="paper">
-  ${marked.parse(content)}
+  ${marked.parse(markdownCode)}
   <footer class="footer">
     <p>Copyright © 2026 <a href="https://github.com/yaohaixiao">乘风巨浪</a>, all right reserved.</p>
     <p>Code licensed under&nbsp;<a href="http://opensource.org/licenses/mit-license.html">MIT License</a></p>
@@ -249,4 +261,4 @@ const convertMarkdownToHTML = (content) => {
 </html>`;
 };
 
-export default convertMarkdownToHTML;
+export default convertReadmeMarkdownToHTML;
