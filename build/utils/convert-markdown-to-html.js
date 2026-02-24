@@ -24,7 +24,7 @@ const convertMarkdownToHTML = (content) => {
     }
 
     a:link,
-    a:visited
+    a:visited,
     a:hover {
       text-decoration: underline;
       color: #4da621;

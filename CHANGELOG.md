@@ -2,7 +2,6 @@
 
 * fix: 修复 main-command-action.js 模块处理 namesList 参数直接传递文件名数据的逻辑错误； ([e6595f6](https://github.com/yaohaixiao/renames.js/commit/e6595f6))
 * chore: 调整 analysis-names-list.js 模块，添加返回数据的逻辑； ([9dd8f80](https://github.com/yaohaixiao/renames.js/commit/9dd8f80))
-* chore: 更新 API 文档； ([824080c](https://github.com/yaohaixiao/renames.js/commit/824080c))
 * docs: 更新 api 文档 ([6aaf35c](https://github.com/yaohaixiao/renames.js/commit/6aaf35c))
 
 
