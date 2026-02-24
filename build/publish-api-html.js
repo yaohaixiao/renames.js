@@ -73,12 +73,12 @@ const publishApiHTML = async (markdownPath, htmlPath) => {
 
   // 执行压缩
   minify(formattedHTMLCode, minifyOptions)
-    .then(minifiedHTML => {
+    .then((minifiedHTML) => {
       // 将压缩后的代码写入文件
       writeFile(htmlPath, minifiedHTML);
       console.log('API 文档发布完成！');
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('API 文档发布失败：', error);
     });
 };
