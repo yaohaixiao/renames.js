@@ -7,44 +7,40 @@ import getRevokeCommandOptions from '../options/get-revoke-command-options.js';
  * # 辅助函数：为 Commander 实例添加通用选项
  *
  * @function addCommandOptions
- * @param {object} commanderInstance - Commander 实例
- * @param {string} [commandName='main'] - 命令名称. Default is `'main'`
+ * @param {object} command - Commander 实例
+ * @param {string} [name='main'] - 命令名称. Default is `'main'`
  */
-const addCommandOptions = (commanderInstance, commandName = 'main') => {
-  let commandOptions = '';
+const addCommandOptions = (command, name = 'main') => {
+  let options = '';
 
   // 获取命令选项配置
-  switch (commandName) {
+  switch (name) {
     case 'cache': {
-      commandOptions = getCacheCommandOptions();
+      options = getCacheCommandOptions();
       break;
     }
     case 'init': {
-      commandOptions = getInitCommandOptions();
+      options = getInitCommandOptions();
       break;
     }
     case 'revoke': {
-      commandOptions = getRevokeCommandOptions();
+      options = getRevokeCommandOptions();
       break;
     }
     default: {
-      commandOptions = getMainCommandOptions();
+      options = getMainCommandOptions();
       break;
     }
   }
 
   // 给命令实例添加选项配置
-  for (const option of commandOptions) {
+  for (const option of options) {
     if (option.parser) {
-      commanderInstance.option(option.flags, option.description, option.parser);
+      command.option(option.flags, option.description, option.parser);
     } else if (option.defaultValue) {
-      commanderInstance.option(
-        option.flags,
-        option.description,
-        option.defaultValue,
-      );
+      command.option(option.flags, option.description, option.defaultValue);
     } else {
-      commanderInstance.option(option.flags, option.description);
+      command.option(option.flags, option.description);
     }
   }
 };
