@@ -30,7 +30,7 @@ const executeMainCommand = async (dirPath, options) => {
 
   // 合并命令行输入的配置参数
   const finalOptions = { ...config, ...options };
-  const { namesList, files } = finalOptions;
+  const { namesList, filesList } = finalOptions;
   let finalFiles = [];
 
   // 将 namesList 配置项中的数据转化成数组格式的数据
@@ -38,9 +38,9 @@ const executeMainCommand = async (dirPath, options) => {
     finalOptions.namesList = processNamesList(namesList);
   }
 
-  // 将 files 配置项中的数据转化成数组格式数据
-  if (files) {
-    finalFiles = files.split(',');
+  // 将 filesList 配置项中的数据转化成数组格式的数据
+  if (filesList) {
+    finalFiles = filesList.split(',');
   }
 
   return executeRenames(finalDirPath, finalFiles, finalOptions);

@@ -34,17 +34,20 @@ const revokeCommandAction = async (dirPath = '', options = null) => {
     revokeGroupRecords(renames, groupId);
   } else {
     // options 配置了 all 则还原所有数据
-    if (options.all) {
+    if (options?.all) {
       return revokeGroupsRecordsByCategory(renames, 'all');
     }
-    if (options.dirs) {
+
+    if (options?.dirs) {
       // options 配置了 dirs 则还原所有 dirPath 数据
       return revokeGroupsRecordsByCategory(renames, 'dirs');
     }
-    if (options.groups) {
+
+    if (options?.groups) {
       // options 配置了 groups 则还原所有 files 数据
       return revokeGroupsRecordsByCategory(renames, 'groups');
     }
+
     // 读取配置文件
     const config = await import(`../../${CONFIG_FILE_NAME}`);
 

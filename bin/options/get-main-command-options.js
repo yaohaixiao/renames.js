@@ -13,6 +13,7 @@ const getMainCommandOptions = () => {
     DEMO_FILE_NAME,
     DEMO_LIST_PATH,
     DEMO_LIST_DATA,
+    DEMO_FILES_DATA,
     DEMO_FULL_FILE_NAME,
     DEMO_PREFIX,
     DEMO_SUFFIX,
@@ -31,11 +32,11 @@ const getMainCommandOptions = () => {
 
   return [
     {
-      flags: '--names, --names-list <list>',
-      description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
+      flags: '--files, --files-list <list>',
+      description: `可选，文件名列表数组数据，例如："${DEMO_FILES_DATA}"。`,
     },
     {
-      flags: '--files <files>',
+      flags: '--names, --names-list <list>',
       description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
     },
     {

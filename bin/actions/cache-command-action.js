@@ -14,20 +14,20 @@ import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
  *
  * @function cacheCommandAction
  * @param {string} dirPath - 目标文件夹（绝对或相对）路径
- * @param {object} options - 配置参数对象
+ * @param {object} [options={}] - 配置参数对象. Default is `{}`
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
-const cacheCommandAction = async (dirPath = '', options = null) => {
+const cacheCommandAction = async (dirPath = '', options = {}) => {
   const { CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
   let targetDirPath = dirPath;
 
   // 处理开启或者关闭缓存
   if (!targetDirPath) {
-    if (options.off) {
+    if (options?.off) {
       return switchCacheOfConfig(false);
     }
 
-    if (options.on) {
+    if (options?.on) {
       return switchCacheOfConfig(true);
     }
   }
@@ -40,20 +40,20 @@ const cacheCommandAction = async (dirPath = '', options = null) => {
   // 处理未传入目录路径的情况
   if (!targetDirPath) {
     // 删除缓存文件
-    if (options.delete) {
+    if (options?.delete) {
       return deleteCacheFile();
     }
 
-    if (options.dirs) {
+    if (options?.dirs) {
       return displayCacheByCategory(options, 'dirs');
     }
 
-    if (options.groups) {
+    if (options?.groups) {
       return displayCacheByCategory(options, 'groups');
     }
 
     // 处理全量操作
-    if (options.all) {
+    if (options?.all) {
       return clearOrDisplayAllCache(options);
     }
 
@@ -65,6 +65,7 @@ const cacheCommandAction = async (dirPath = '', options = null) => {
   if (targetDirPath) {
     return clearOrDisplayGroupCache(targetDirPath, options);
   }
+
   showWarningLog(
     '警告',
     '无任何相关缓存数据',

@@ -3,7 +3,7 @@ import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearCacheRecords from './clear-cache-records.js';
-import displayCacheByCategory from './display-cache-by-category.js';
+import displayCacheRecordsJSON from './display-cache-records-json.js';
 import listGroupCache from './list-group-cache.js';
 
 /**
@@ -16,7 +16,7 @@ import listGroupCache from './list-group-cache.js';
  */
 const clearOrDisplayGroupCache = async (groupId, options) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
-  const { parse } = JSON;
+  const { parse, stringify } = JSON;
   const cacheJSON = readFile(CACHE_FILE_PATH);
   const renames = parse(cacheJSON);
 
@@ -35,7 +35,7 @@ const clearOrDisplayGroupCache = async (groupId, options) => {
     return listGroupCache(groupId);
   }
 
-  await displayCacheByCategory(options, 'dirs');
+  await displayCacheRecordsJSON(stringify(records));
 
   return true;
 };
