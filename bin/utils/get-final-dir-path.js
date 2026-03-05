@@ -24,8 +24,8 @@ const getFinalDirPath = async (dirPath, options) => {
     return options.dirPath;
   }
 
-  // 仅设置了 options.files
-  if (options?.files) {
+  // 仅设置了 options.filesList
+  if (options?.filesList) {
     return '';
   }
 
