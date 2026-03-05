@@ -24,6 +24,11 @@ const getFinalDirPath = async (dirPath, options) => {
     return options.dirPath;
   }
 
+  // 仅设置了 options.files
+  if (options?.files) {
+    return '';
+  }
+
   // 交互式获取路径
   return await input({
     message: chalk.greenBright(

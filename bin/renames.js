@@ -5,6 +5,7 @@ import { program } from 'commander';
 import CONSTANTS from '../lib/constants.js';
 
 import addCommandOptions from './utils/add-command-options.js';
+import setupGracefulExit from './utils/setup-graceful-exit.js';
 import cacheCommandAction from './actions/cache-command-action.js';
 import initCommandAction from './actions/init-command-action.js';
 import mainCommandAction from './actions/main-command-action.js';
@@ -75,5 +76,7 @@ cacheCommand
     `可选，目标文件夹（绝对或相对）路径，如不设置，则是进行全局的（查看或清除全部的缓存数据）操作`,
   )
   .action(cacheCommandAction);
+
+setupGracefulExit();
 
 program.parse(process.argv);

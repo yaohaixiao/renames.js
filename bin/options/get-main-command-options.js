@@ -31,7 +31,11 @@ const getMainCommandOptions = () => {
 
   return [
     {
-      flags: '--names, --namesList <namesList>',
+      flags: '--names, --names-list <list>',
+      description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
+    },
+    {
+      flags: '--files <files>',
       description: `可选，文件名列表数组数据，例如："${DEMO_LIST_DATA}"。或者文件名列表文件的路径，例如："${DEMO_LIST_PATH}"。`,
     },
     {
@@ -47,34 +51,34 @@ const getMainCommandOptions = () => {
       description: `可选，文件名的前/后缀字符串间的连接字符串，例如："${DEMO_FULL_FILE_NAME}"中的"${DEMO_CONNECTOR}"`,
     },
     {
-      flags: '--autoIndex [enable]',
+      flags: '--auto-index [enable]',
       description: '可选，是否自动生成索引编号（default：false）',
       parser: (enable) => parseCommandOption(enable, false),
     },
     {
-      flags: '--startIndex <startIndex>',
+      flags: '--start-index <index>',
       description: `可选，索引编号起始值（default：${DEFAULT_START_INDEX}）`,
       parser: (index) =>
         parseCommandOption(index, DEFAULT_START_INDEX, '--startIndex'),
     },
     {
-      flags: '--indexPadZero [enable]',
+      flags: '--index-pad-zero [enable]',
       description: '可选，是否自动用"0"填充索引编号（default: false）',
       parser: (enable) => parseCommandOption(enable, DEFAULT_INDEX_PAD_ZERO),
     },
     {
-      flags: '--indexLength <indexLength>',
+      flags: '--index-length <length>',
       description: '可选，自动编号自动补"0"的字符长度（default: "auto"）',
       parser: (length) =>
         parseCommandOption(length, DEFAULT_INDEX_LENGTH, '--indexLength'),
     },
     {
-      flags: '--indexPrefix <indexPrefix>',
+      flags: '--index-prefix <prefix>',
       description: `可选，索引编号的前缀字符串，例如："${DEMO_FILE_NAME}"中的"第"`,
       defaultValue: DEFAULT_INDEX_PREFIX,
     },
     {
-      flags: '--indexSuffix <indexSuffix>',
+      flags: '--index-suffix <suffix>',
       description: `可选，索引编号的后缀字符串，例如："${DEMO_FILE_NAME}"中的"话"`,
       defaultValue: DEFAULT_INDEX_SUFFIX,
     },
@@ -93,7 +97,7 @@ const getMainCommandOptions = () => {
       description: '可选，重命名后的扩展名，例如：".txt"',
     },
     {
-      flags: '--sort, --sortBy <sortBy>',
+      flags: '--sort, --sort-by <by>',
       description:
         '可选，排序类型，可选项：name、extension、size、birthtime 和 modify-time（default：name）',
     },

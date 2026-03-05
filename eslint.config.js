@@ -84,6 +84,7 @@ export default defineConfig(
       'n/file-extension-in-import': [2, 'always'],
       'n/no-missing-import': 0,
       'n/no-unpublished-import': 0,
+      'n/no-process-exit': 0,
     },
   },
 
