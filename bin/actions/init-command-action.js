@@ -33,7 +33,7 @@ const initCommandAction = (options) => {
       );
     })
     .catch((error) => {
-      console.log(chalk.red(`生成配置文件失败：${error.message}`));
+      throw new Error(`生成配置文件失败：${error.message}`);
     });
 };
 
