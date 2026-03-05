@@ -14,8 +14,16 @@ const getCacheCommandOptions = () => [
     description: `可选，清除缓存中的重命名记录`,
   },
   {
+    flags: '--dirs',
+    description: `可选，显示缓存中的所有通过 dirPath 配置选项重命名的记录`,
+  },
+  {
     flags: '--delete',
     description: `可选，删除缓存文件或者清除缓存中的重命名记录`,
+  },
+  {
+    flags: '--groups',
+    description: `可选，显示缓存中的所有通过 files 配置选项重命名的记录`,
   },
   {
     flags: '--off',
@@ -27,7 +35,7 @@ const getCacheCommandOptions = () => [
   },
   {
     flags: '-l, --list',
-    description: `可选，列表显示缓存的文件夹路径记录`,
+    description: `可选，列表显示缓存的记录`,
   },
 ];
 

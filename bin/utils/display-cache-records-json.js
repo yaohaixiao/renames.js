@@ -4,11 +4,11 @@ import { highlight } from 'cli-highlight';
 /**
  * # 显示缓存记录
  *
- * @function displayCacheRecords
+ * @function displayCacheRecordsJSON
  * @param {string} cacheJSON - 要显示的 JSON 数据
  * @returns {Promise<void>}
  */
-const displayCacheRecords = async (cacheJSON) => {
+const displayCacheRecordsJSON = async (cacheJSON) => {
   const formatedJSONCode = await prettier.format(cacheJSON, {
     // 指定解析器为 json
     parser: 'json',
@@ -28,4 +28,4 @@ const displayCacheRecords = async (cacheJSON) => {
   );
 };
 
-export default displayCacheRecords;
+export default displayCacheRecordsJSON;

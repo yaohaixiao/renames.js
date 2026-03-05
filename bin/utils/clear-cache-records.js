@@ -8,16 +8,17 @@ import chalk from 'chalk';
  * # 清理所有或者指定目录下的缓存信息
  *
  * @function clearCacheRecords
- * @param {string} [revokeDir='all'] - 要清除的缓存的目录路径. Default is `'all'`
+ * @param {string} [groupId='all'] - 缓存记录 id（dirPath 路径，或者 group-uuid）. Default
+ *   is `'all'`
  * @returns {boolean} - 操作成功，则返回 true，否则返回 false
  */
-const clearCacheRecords = (revokeDir = 'all') => {
-  const { parse, stringify } = JSON;
+const clearCacheRecords = (groupId = 'all') => {
   const { CACHE_FILE_PATH } = CONSTANTS;
+  const { parse, stringify } = JSON;
 
   const renames = parse(readFile(CACHE_FILE_PATH));
 
-  if (revokeDir === 'all') {
+  if (groupId === 'all') {
     writeFile(CACHE_FILE_PATH, '{}');
     console.log(
       chalk.greenBright('成功:'),
@@ -25,19 +26,19 @@ const clearCacheRecords = (revokeDir = 'all') => {
       '已清除',
     );
   } else {
-    const records = renames[revokeDir];
+    const records = renames[groupId];
 
     if (!records) {
-      showWarningLog('警告', revokeDir, '的缓存记录不存在或已被清除');
+      showWarningLog('警告', groupId, '的缓存记录不存在或已被清除');
       return false;
     }
 
-    delete renames[revokeDir];
+    delete renames[groupId];
 
     writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
     console.log(
       chalk.greenBright('成功：'),
-      chalk.blueBright(revokeDir),
+      chalk.blueBright(groupId),
       '的缓存记录已清除',
     );
   }

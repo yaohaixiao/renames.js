@@ -4,9 +4,9 @@ import isFileExists from '../../lib/utils/is-file-exists.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearOrDisplayAllCache from '../utils/clear-or-display-all-cache.js';
-import clearOrDisplayDirCache from '../utils/clear-or-display-dir-cache.js';
+import clearOrDisplayGroupCache from '../utils/clear-or-display-group-cache.js';
 import deleteCacheFile from '../utils/delete-cache-file.js';
-import listDirCache from '../utils/list-dir-cache.js';
+import displayCacheByCategory from '../utils/display-cache-by-category.js';
 import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
 
 /**
@@ -44,8 +44,12 @@ const cacheCommandAction = async (dirPath = '', options = null) => {
       return deleteCacheFile();
     }
 
-    if (options.list) {
-      return listDirCache('all');
+    if (options.dirs) {
+      return displayCacheByCategory(options, 'dirs');
+    }
+
+    if (options.groups) {
+      return displayCacheByCategory(options, 'groups');
     }
 
     // 处理全量操作
@@ -59,8 +63,13 @@ const cacheCommandAction = async (dirPath = '', options = null) => {
 
   // 处理指定目录的缓存操作
   if (targetDirPath) {
-    return clearOrDisplayDirCache(targetDirPath, options);
+    return clearOrDisplayGroupCache(targetDirPath, options);
   }
+  showWarningLog(
+    '警告',
+    '无任何相关缓存数据',
+    '请指定文件夹路径或者缓存记录id',
+  );
 
   return true;
 };
