@@ -7,15 +7,15 @@
 const getRevokeCommandOptions = () => [
   {
     flags: '-a, --all',
-    description: `可选，撤销（将所有文件的文件名恢复成原来的名字）缓存中所有重命名的记录`,
+    description: `可选，撤销缓存记录中所有重命名操作`,
   },
   {
     flags: '--dirs',
-    description: `可选，撤销缓存中的所有通过 dirPath 配置选项重命名的记录`,
+    description: `可选，撤销缓存记录中的所有 source 类型为 dir 的重命名操作`,
   },
   {
     flags: '--groups',
-    description: `可选，撤销缓存中的所有通过 files 配置选项重命名的记录`,
+    description: `可选，撤销缓存记录中的所有 source 类型为 group 的重命名操作`,
   },
 ];
 

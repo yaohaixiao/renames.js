@@ -1,4 +1,6 @@
 import CONSTANTS from '../../lib/constants.js';
+import isFileExists from '../../lib/utils/is-file-exists.js';
+import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import toLocaleTime from '../../lib/utils/to-locale-time.js';
 import writeFile from '../../lib/utils/write-file.js';
@@ -9,18 +11,28 @@ import revokeRename from './revoke-rename.js';
  * # 撤销缓存记录中指定 groupId 的文件重命名
  *
  * @function revokeGroupRecords
- * @param {object} renames - 缓存的 renames 记录
  * @param {string} groupId - 记录 Id
  * @returns {boolean} - 撤销操作成功，返回 true，否则返回 false
  */
-const revokeGroupRecords = (renames, groupId) => {
+const revokeGroupRecords = (groupId) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
-  const { stringify } = JSON;
-  const records = [];
+
+  if (!isFileExists(CACHE_FILE_PATH)) {
+    showWarningLog(
+      '警告',
+      CACHE_FILE_PATH,
+      '文件不存在或已删除，无任何数据可恢复',
+    );
+    return false;
+  }
+
+  const { parse, stringify } = JSON;
+  const renames = parse(readFile(CACHE_FILE_PATH));
   const cacheRecords = renames[groupId];
+  const records = [];
 
   if (!cacheRecords || cacheRecords.length === 0) {
-    showWarningLog('警告', groupId, '的缓存数据不存在或已被清除');
+    showWarningLog('警告', groupId, '的缓存数据不存在或已被清理');
     return false;
   }
 
