@@ -6,6 +6,8 @@ import padZero from '../../lib/utils/pad-zero.js';
 import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
+import parseRenamesToList from './parse-renames-to-list.js';
+
 /**
  * # 列表显示指定 groupId 的缓存记录
  *
@@ -22,10 +24,8 @@ const listGroupCache = (groupId) => {
   }
 
   const renames = JSON.parse(readFile(CACHE_FILE_PATH));
-
-  // 显示目录列表
-
-  const records = renames[groupId];
+  const records =
+    groupId === 'all' ? parseRenamesToList(renames) : renames[groupId];
 
   if (!records || records.length === 0) {
     showWarningLog('警告', groupId, '的缓存记录不存在或已被清除');

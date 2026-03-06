@@ -24,24 +24,23 @@ const displayCacheByCategory = async (options, category = 'all') => {
   }
 
   const { parse, stringify } = JSON;
+
+  // 列表显示
+  if (options?.list) {
+    return listCacheGroups(category);
+  }
+
   const renames = parse(readFile(CACHE_FILE_PATH));
   const keys = Object.keys(renames);
   const records = {};
-  let groups = [];
+  const groups = filterGroupsByCategory(keys, category);
 
-  // 列表显示
-  if (options.list) {
-    listCacheGroups(renames, category);
-  } else {
-    groups = filterGroupsByCategory(keys, category);
-
-    for (const key of groups) {
-      records[key] = renames[key];
-    }
-
-    // JSON 格式显示
-    await displayCacheRecordsJSON(stringify(records));
+  for (const key of groups) {
+    records[key] = renames[key];
   }
+
+  // JSON 格式显示
+  await displayCacheRecordsJSON(stringify(records));
 
   return true;
 };

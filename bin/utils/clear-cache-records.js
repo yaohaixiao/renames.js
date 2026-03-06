@@ -1,8 +1,10 @@
+import chalk from 'chalk';
+
 import CONSTANTS from '../../lib/constants.js';
+import isFileExists from '../../lib/utils/is-file-exists.js';
 import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import writeFile from '../../lib/utils/write-file.js';
-import chalk from 'chalk';
 
 /**
  * # 清理所有或者指定目录下的缓存信息
@@ -15,6 +17,16 @@ import chalk from 'chalk';
 const clearCacheRecords = (groupId = 'all') => {
   const { CACHE_FILE_PATH } = CONSTANTS;
   const { parse, stringify } = JSON;
+
+  if (!groupId) {
+    showWarningLog('警告', '未指定缓存记录的 groupId', '已退出程序');
+    return false;
+  }
+
+  if (!isFileExists(CACHE_FILE_PATH)) {
+    showWarningLog('警告', CACHE_FILE_PATH, '缓存文件不存在或已被删除');
+    return false;
+  }
 
   const renames = parse(readFile(CACHE_FILE_PATH));
 
@@ -29,7 +41,7 @@ const clearCacheRecords = (groupId = 'all') => {
     const records = renames[groupId];
 
     if (!records) {
-      showWarningLog('警告', groupId, '的缓存记录不存在或已被清除');
+      showWarningLog('警告', groupId, '的缓存记录不存在或已被清理');
       return false;
     }
 

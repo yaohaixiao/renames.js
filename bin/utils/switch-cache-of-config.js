@@ -16,11 +16,10 @@ import terminalLink from './terminal-link.js';
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
  */
 const switchCacheOfConfig = async (enable = true) => {
-  const { CONFIG_FILE_NAME, CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } =
-    CONSTANTS;
+  const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
   if (!isFileExists(CONFIG_FILE_PATH)) {
-    showWarningLog('警告', CONFIG_FILE_NAME, '配置文件不存在或已被删除');
+    showWarningLog('警告', CONFIG_FILE_PATH, '文件不存在或已被删除');
     return false;
   }
 

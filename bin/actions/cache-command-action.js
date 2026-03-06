@@ -1,11 +1,9 @@
-import CONSTANTS from '../../lib/constants.js';
 import getOptionsFromConfigJs from '../../lib/utils/get-options-from-config-js.js';
-import isFileExists from '../../lib/utils/is-file-exists.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearOrDisplayAllCache from '../utils/clear-or-display-all-cache.js';
 import clearOrDisplayGroupCache from '../utils/clear-or-display-group-cache.js';
-import deleteCacheFile from '../utils/delete-cache-file.js';
+import deleteCache from '../utils/delete-cache.js';
 import displayCacheByCategory from '../utils/display-cache-by-category.js';
 import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
 
@@ -18,32 +16,29 @@ import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
 const cacheCommandAction = async (dirPath = '', options = {}) => {
-  const { CACHE_FILE_NAME, CACHE_FILE_PATH } = CONSTANTS;
   let targetDirPath = dirPath;
 
-  // 处理开启或者关闭缓存
+  // 设置 cache 配置选项
   if (!targetDirPath) {
+    // 关闭缓存
     if (options?.off) {
       return switchCacheOfConfig(false);
     }
 
+    // 开启缓存
     if (options?.on) {
       return switchCacheOfConfig(true);
     }
   }
 
-  if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在，无任何缓存数据');
-    return false;
-  }
-
   // 处理未传入目录路径的情况
   if (!targetDirPath) {
-    // 删除缓存文件
+    // 删除缓存文件或清理缓存记录
     if (options?.delete) {
-      return deleteCacheFile();
+      return deleteCache(options);
     }
 
+    // 显示 source 为 dir 类型缓存记录
     if (options?.dirs) {
       return displayCacheByCategory(options, 'dirs');
     }
@@ -66,11 +61,7 @@ const cacheCommandAction = async (dirPath = '', options = {}) => {
     return clearOrDisplayGroupCache(targetDirPath, options);
   }
 
-  showWarningLog(
-    '警告',
-    '无任何相关缓存数据',
-    '请指定文件夹路径或者缓存记录id',
-  );
+  showWarningLog('警告', '无任何相关缓存数据', '请指缓存记录的 groupId');
 
   return true;
 };
