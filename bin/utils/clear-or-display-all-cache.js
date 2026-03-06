@@ -13,7 +13,7 @@ import listGroupCache from './list-group-cache.js';
  */
 const clearOrDisplayAllCache = async (options) => {
   // 删除缓存文件
-  if (options?.all) {
+  if (options?.delete) {
     return deleteCacheFile();
   }
 

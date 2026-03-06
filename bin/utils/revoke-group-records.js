@@ -11,18 +11,14 @@ import revokeRename from './revoke-rename.js';
  * # 撤销缓存记录中指定 groupId 的文件重命名
  *
  * @function revokeGroupRecords
- * @param {string} groupId - 记录 Id
+ * @param {string} groupId - 缓存记录 ID
  * @returns {boolean} - 撤销操作成功，返回 true，否则返回 false
  */
 const revokeGroupRecords = (groupId) => {
-  const { CACHE_FILE_PATH } = CONSTANTS;
+  const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog(
-      '警告',
-      CACHE_FILE_PATH,
-      '文件不存在或已删除，无任何数据可恢复',
-    );
+    showWarningLog('警告', CACHE_FILE_NAME, '缓存文件不存在或已被删除');
     return false;
   }
 
@@ -32,7 +28,11 @@ const revokeGroupRecords = (groupId) => {
   const records = [];
 
   if (!cacheRecords || cacheRecords.length === 0) {
-    showWarningLog('警告', groupId, '的缓存数据不存在或已被清理');
+    showWarningLog(
+      '警告',
+      `缓存记录 ID 为 ${groupId} 的数据`,
+      '不存在或已被清理',
+    );
     return false;
   }
 

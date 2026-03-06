@@ -15,14 +15,14 @@ const deleteCacheFile = () => {
   const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在或已删除');
+    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在或已被删除');
     return false;
   }
 
   removeFile(CACHE_FILE_PATH);
 
   console.log(
-    chalk.greenBright('成功：'),
+    chalk.greenBright('成功:'),
     chalk.blueBright(CACHE_FILE_NAME),
     '缓存文件已删除',
   );

@@ -20,7 +20,7 @@ const clearGroupsCache = (category = 'all') => {
   const { parse, stringify } = JSON;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在或已删除');
+    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在或已被删除');
     return false;
   }
 
@@ -35,7 +35,7 @@ const clearGroupsCache = (category = 'all') => {
   writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
 
   console.log(
-    chalk.greenBright('成功：'),
+    chalk.greenBright('成功:'),
     chalk.blueBright(category),
     chalk.green('类型的缓存记录已被清理'),
   );

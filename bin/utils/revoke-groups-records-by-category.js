@@ -14,23 +14,23 @@ import revokeGroupRecords from './revoke-group-records.js';
  * @returns {boolean} - 执行成功，返回 true，否则返回 false
  */
 const revokeGroupsRecordsByCategory = (category = 'all') => {
-  const { CACHE_FILE_PATH } = CONSTANTS;
+  const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog(
-      '警告',
-      CACHE_FILE_PATH,
-      '文件不存在或已删除，无任何数据可恢复',
-    );
+    showWarningLog('警告', CACHE_FILE_NAME, '缓存文件不存在或已被删除');
     return false;
   }
 
   const renames = JSON.parse(readFile(CACHE_FILE_PATH));
   const keys = Object.keys(renames);
   const groups = filterGroupsByCategory(keys, category);
+  const keywords =
+    category === 'all'
+      ? `缓存记录已被清空`
+      : `缓存文件中 source 类型为 ${category.replace(/s$/, '')} 的记录已被清空`;
 
   if (!groups || groups.length === 0) {
-    showWarningLog('警告', category, '类型的缓存记录为空，无任何数据可恢复');
+    showWarningLog('警告', keywords, '无法进行撤销操作');
     return false;
   }
 

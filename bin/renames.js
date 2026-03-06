@@ -11,7 +11,14 @@ import initCommandAction from './actions/init-command-action.js';
 import mainCommandAction from './actions/main-command-action.js';
 import revokeCommandAction from './actions/revoke-command-action.js';
 
-const { CONFIG_FILE_NAME, CACHE_FILE_NAME, PACKAGE_JSON } = CONSTANTS;
+const {
+  DEMO_DIR_PATH,
+  DEMO_GROUP_ID,
+  DEMO_DIR_ID,
+  CONFIG_FILE_NAME,
+  CACHE_FILE_NAME,
+  PACKAGE_JSON,
+} = CONSTANTS;
 const { version, author, description } = PACKAGE_JSON;
 
 // 配置主程序
@@ -28,7 +35,7 @@ addCommandOptions(mainCommand);
 mainCommand
   .argument(
     '[dir-path]',
-    `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CONFIG_FILE_NAME} 中的 dirPath 属性`,
+    `可选，执行重命名操作的目标文件夹（绝对或相对）路径，例如："${DEMO_DIR_PATH}"。如不设置，则使用配置文件 ${CONFIG_FILE_NAME} 中的 dirPath 属性`,
   )
   .action(mainCommandAction);
 
@@ -46,7 +53,9 @@ initCommand.action(initCommandAction);
 // 配置 revoke 命令
 const revokeCommand = program
   .command('revoke')
-  .description(`开启缓存重命名结果后，用来撤某个目录或者全部重命名操作`);
+  .description(
+    `开启缓存重命名记录后，用来撤指定记录ID、或者 source 类型、以及全部重命名操作`,
+  );
 
 // revoke 命令添加选项
 addCommandOptions(revokeCommand, 'revoke');
@@ -54,8 +63,8 @@ addCommandOptions(revokeCommand, 'revoke');
 // revoke 命令逻辑
 revokeCommand
   .argument(
-    '[dir-path]',
-    `可选，目标文件夹（绝对或相对）路径，如不设置，则使用 ${CACHE_FILE_NAME} 中的 dirPath 属性`,
+    '[group-id]',
+    `可选，指定缓存文件中的记录ID值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
   )
   .action(revokeCommandAction);
 
@@ -63,7 +72,7 @@ revokeCommand
 const cacheCommand = program
   .command('cache')
   .description(
-    `显示缓存文件中的数据和调整配置文件中 cache 配置选项的开启或关闭状态`,
+    `开启缓存重命名记录后，用来删除缓存记录文件，或者显示或者清理定记录ID、或者 source 类型、以及全部缓存记录。也可以调整 ${CONFIG_FILE_NAME} 配置文件中的 cache 配置选项`,
   );
 
 // cache 命令添加选项
@@ -72,8 +81,8 @@ addCommandOptions(cacheCommand, 'cache');
 // cache 命令逻辑
 cacheCommand
   .argument(
-    '[dir-path]',
-    `可选，目标文件夹（绝对或相对）路径，如不设置，则是进行全局的（查看或清除全部的缓存数据）操作`,
+    '[group-id]',
+    `指定缓存文件中的记录ID值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
   )
   .action(cacheCommandAction);
 

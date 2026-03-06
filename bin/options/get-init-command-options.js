@@ -13,15 +13,15 @@ const getInitCommandOptions = () => {
   return [
     {
       flags: '--dir, --dir-path <path>',
-      description: `可选，目标文件夹（绝对或相对）路径，例如："${DEMO_DIR_PATH}"`,
+      description: `可选，执行重命名操作的目标文件夹（绝对或相对）路径，例如："${DEMO_DIR_PATH}"`,
     },
     {
       flags: '--files, --files-list <list>',
-      description: `可选，文件名列表数组数据，例如："${DEMO_FILES_DATA}"`,
+      description: `可选，执行重命名操作的目标文件名列表数据，例如："${DEMO_FILES_DATA}"`,
     },
     {
       flags: '--names, --names-list <list>',
-      description: `可选，文件名列表数组数据，或者文件名列表文件的路径，例如："${DEMO_LIST_DATA}" 或者 "${DEMO_LIST_PATH}"`,
+      description: `可选，最终期望的文件名列表数据，或者文件名列表文件的路径，例如："${DEMO_LIST_DATA}" 或者 "${DEMO_LIST_PATH}"`,
     },
   ];
 };

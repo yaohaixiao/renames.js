@@ -34,6 +34,15 @@ const displayCacheByCategory = async (options, category = 'all') => {
   const keys = Object.keys(renames);
   const records = {};
   const groups = filterGroupsByCategory(keys, category);
+  const keywords =
+    category === 'all'
+      ? `所有缓存记录已被清空`
+      : `缓存文件中 source 类型为 ${category.replace(/s$/, '')} 的记录已被清空`;
+
+  if (!groups || groups.length === 0) {
+    showWarningLog('警告', keywords, '暂无数据显示');
+    return false;
+  }
 
   for (const key of groups) {
     records[key] = renames[key];

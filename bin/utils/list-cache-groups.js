@@ -16,10 +16,10 @@ import filterGroupsByCategory from './filter-groups-by-category.js';
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
 const listCacheGroups = (category = 'all') => {
-  const { CACHE_FILE_PATH } = CONSTANTS;
+  const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
-    showWarningLog('警告', CACHE_FILE_PATH, '文件不存在或已被删除');
+    showWarningLog('警告', CACHE_FILE_NAME, '文件不存在或已被删除');
     return false;
   }
 

@@ -20,7 +20,7 @@ const initCommandAction = async (options) => {
       if (!isCancel) {
         console.log(
           chalk.green(
-            `\n成功： ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件已生成！`,
+            `\n成功: ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件已生成！`,
           ),
         );
         return true;
@@ -28,7 +28,7 @@ const initCommandAction = async (options) => {
 
       console.log(
         chalk.yellowBright(
-          `\n提示：已取消重写 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件！`,
+          `\n提示: 已取消重写 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件！`,
         ),
       );
       return false;

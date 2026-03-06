@@ -10,31 +10,38 @@ import listGroupCache from './list-group-cache.js';
  * # 处理指定 groupId 的缓存操作（显示/清理）
  *
  * @function clearOrDisplayGroupCache
- * @param {string} groupId - 缓存记录 id（dirPath 路径，或者 group-uuid）
- * @param {object} options - 配置参数对象
+ * @param {string} groupId - 缓存记录 ID
+ * @param {object} [options={}] - 配置参数对象. Default is `{}`
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
  */
-const clearOrDisplayGroupCache = async (groupId, options) => {
+const clearOrDisplayGroupCache = async (groupId, options = {}) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
   const { parse, stringify } = JSON;
   const cacheJSON = readFile(CACHE_FILE_PATH);
   const renames = parse(cacheJSON);
 
-  if (options.clear || options.delete) {
+  // 清理指定 groupId 的缓存记录
+  if (options?.clear || options?.delete) {
     return clearCacheRecords(groupId);
   }
 
   const records = renames[groupId];
 
   if (!records || records.length === 0) {
-    showWarningLog('警告', groupId, '的缓存记录不存在或已被清除');
+    showWarningLog(
+      '警告',
+      `缓存记录 ID 为 ${groupId} 的数据`,
+      '不存在或已被清理',
+    );
     return false;
   }
 
-  if (options.list) {
+  // 列表显示缓存数据
+  if (options?.list) {
     return listGroupCache(groupId);
   }
 
+  // JSON 格式显示缓存记录
   await displayCacheRecordsJSON(stringify(records));
 
   return true;
