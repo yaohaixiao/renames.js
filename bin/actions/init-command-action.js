@@ -10,30 +10,31 @@ import terminalLink from '../utils/terminal-link.js';
  *
  * @function initCommandAction
  * @param {object} options - 配置参数对象
- * @returns {Promise<void>}
+ * @returns {Promise<boolean>} - 执行成功，返回 true，否则返回 false
  */
-const initCommandAction = (options) => {
+const initCommandAction = async (options) => {
   const { CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL } = CONSTANTS;
 
-  createConfig(options)
+  return createConfig(options)
     .then(({ isCancel }) => {
       if (!isCancel) {
         console.log(
           chalk.green(
-            `\n配置文件 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 已生成！`,
+            `\n成功： ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件已生成！`,
           ),
         );
-        return false;
+        return true;
       }
 
       console.log(
         chalk.yellowBright(
-          `\n已取消重写 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件！`,
+          `\n提示：已取消重写 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件！`,
         ),
       );
+      return false;
     })
     .catch((error) => {
-      throw new Error(`生成配置文件失败：${error.message}`);
+      throw new Error(`${error.message}`);
     });
 };
 
