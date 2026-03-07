@@ -11,11 +11,11 @@ import filterGroupsByCategory from './filter-groups-by-category.js';
 /**
  * # 清理指定类别的缓存记录
  *
- * @function clearGroupsCache
+ * @function clearCacheRecordsByCategory
  * @param {string} [category='all'] - 类别名称. Default is `'all'`
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
-const clearGroupsCache = (category = 'all') => {
+const clearCacheRecordsByCategory = (category = 'all') => {
   const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
   const { parse, stringify } = JSON;
 
@@ -25,8 +25,7 @@ const clearGroupsCache = (category = 'all') => {
   }
 
   const renames = parse(readFile(CACHE_FILE_PATH));
-  const keys = Object.keys(renames);
-  const groups = filterGroupsByCategory(keys, category);
+  const groups = filterGroupsByCategory(Object.keys(renames), category);
 
   for (const group of groups) {
     delete renames[group];
@@ -43,4 +42,4 @@ const clearGroupsCache = (category = 'all') => {
   return true;
 };
 
-export default clearGroupsCache;
+export default clearCacheRecordsByCategory;

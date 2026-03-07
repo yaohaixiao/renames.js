@@ -2,19 +2,19 @@ import CONSTANTS from '../../lib/constants.js';
 import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
-import clearCacheRecords from './clear-cache-records.js';
+import clearCacheRecordsById from './clear-cache-records-by-id.js';
 import displayCacheRecordsJSON from './display-cache-records-json.js';
-import listGroupCache from './list-group-cache.js';
+import listCacheRecordsById from './list-cache-records-by-id.js';
 
 /**
  * # 处理指定 groupId 的缓存操作（显示/清理）
  *
- * @function clearOrDisplayGroupCache
+ * @function clearOrLogCacheRecordsById
  * @param {string} groupId - 缓存记录 ID
  * @param {object} [options={}] - 配置参数对象. Default is `{}`
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
  */
-const clearOrDisplayGroupCache = async (groupId, options = {}) => {
+const clearOrLogCacheRecordsById = async (groupId, options = {}) => {
   const { CACHE_FILE_PATH } = CONSTANTS;
   const { parse, stringify } = JSON;
   const cacheJSON = readFile(CACHE_FILE_PATH);
@@ -22,7 +22,7 @@ const clearOrDisplayGroupCache = async (groupId, options = {}) => {
 
   // 清理指定 groupId 的缓存记录
   if (options?.clear || options?.delete) {
-    return clearCacheRecords(groupId);
+    return clearCacheRecordsById(groupId);
   }
 
   const records = renames[groupId];
@@ -38,7 +38,7 @@ const clearOrDisplayGroupCache = async (groupId, options = {}) => {
 
   // 列表显示缓存数据
   if (options?.list) {
-    return listGroupCache(groupId);
+    return listCacheRecordsById(groupId);
   }
 
   // JSON 格式显示缓存记录
@@ -47,4 +47,4 @@ const clearOrDisplayGroupCache = async (groupId, options = {}) => {
   return true;
 };
 
-export default clearOrDisplayGroupCache;
+export default clearOrLogCacheRecordsById;

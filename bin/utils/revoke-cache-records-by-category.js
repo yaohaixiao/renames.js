@@ -4,16 +4,16 @@ import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import filterGroupsByCategory from './filter-groups-by-category.js';
-import revokeGroupRecords from './revoke-group-records.js';
+import revokeCacheRecordsById from './revoke-cache-records-by-id.js';
 
 /**
  * # 撤销指定类别的缓存记录
  *
- * @function revokeGroupsRecordsByCategory
+ * @function revokeCacheRecordsByCategory
  * @param {string} category - 缓存的类别
  * @returns {boolean} - 执行成功，返回 true，否则返回 false
  */
-const revokeGroupsRecordsByCategory = (category = 'all') => {
+const revokeCacheRecordsByCategory = (category = 'all') => {
   const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
@@ -22,8 +22,7 @@ const revokeGroupsRecordsByCategory = (category = 'all') => {
   }
 
   const renames = JSON.parse(readFile(CACHE_FILE_PATH));
-  const keys = Object.keys(renames);
-  const groups = filterGroupsByCategory(keys, category);
+  const groups = filterGroupsByCategory(Object.keys(renames), category);
   const keywords =
     category === 'all'
       ? `缓存记录已被清空`
@@ -35,10 +34,10 @@ const revokeGroupsRecordsByCategory = (category = 'all') => {
   }
 
   for (const group of groups) {
-    revokeGroupRecords(group);
+    revokeCacheRecordsById(group);
   }
 
   return true;
 };
 
-export default revokeGroupsRecordsByCategory;
+export default revokeCacheRecordsByCategory;

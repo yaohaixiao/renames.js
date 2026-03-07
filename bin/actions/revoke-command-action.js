@@ -5,8 +5,8 @@ import getOptionsFromConfigJs from '../../lib/utils/get-options-from-config-js.j
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import uuidToArray from '../../lib/utils/uuid-to-array.js';
 
-import revokeGroupsRecordsByCategory from '../utils/revoke-groups-records-by-category.js';
-import revokeGroupRecords from '../utils/revoke-group-records.js';
+import revokeCacheRecordsByCategory from '../utils/revoke-cache-records-by-category.js';
+import revokeCacheRecordsById from '../utils/revoke-cache-records-by-id.js';
 
 /**
  * # revoke 命令的 action 逻辑
@@ -22,25 +22,27 @@ const revokeCommandAction = async (groupId = '', options = null) => {
   // 传入的 groupId，撤销对应的重命名操作
   if (groupId) {
     // 恢复缓存的操作记录
-    return revokeGroupRecords(groupId);
+    return revokeCacheRecordsById(groupId);
   }
 
-  // options 配置了 all 则还原所有数据
-  if (options?.all) {
-    return revokeGroupsRecordsByCategory('all');
-  }
+  /* -------- 全局相关的操作 -------- */
 
+  // 撤销 source 为 dir 类型缓存记录的重命名操作
   if (options?.dirs) {
-    // options 配置了 dirs 则还原所有 dirPath 数据
-    return revokeGroupsRecordsByCategory('dirs');
+    return revokeCacheRecordsByCategory('dirs');
   }
 
+  // 撤销 source 为 group 类型缓存记录的重命名操作
   if (options?.groups) {
-    // options 配置了 groups 则还原所有 files 数据
-    return revokeGroupsRecordsByCategory('groups');
+    return revokeCacheRecordsByCategory('groups');
   }
 
-  // 使用 renames.config.js 中的 dirPath 参数
+  // 撤销所有缓存记录中的重命名操作
+  if (options?.all) {
+    return revokeCacheRecordsByCategory('all');
+  }
+
+  /* -------- 未传递缓存记录 ID 时，读取配置文件的 dirPath 配置选项转化为缓存记录 ID -------- */
   const dirPath = await getOptionsFromConfigJs('dirPath');
 
   if (!dirPath) {
@@ -52,7 +54,9 @@ const revokeCommandAction = async (groupId = '', options = null) => {
     return false;
   }
 
-  return revokeGroupRecords(`dir-${v5(dirPath, uuidToArray(NAMESPACE_OID))}`);
+  return revokeCacheRecordsById(
+    `dir-${v5(dirPath, uuidToArray(NAMESPACE_OID))}`,
+  );
 };
 
 export default revokeCommandAction;

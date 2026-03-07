@@ -9,6 +9,10 @@
 const filterGroupsByCategory = (keys, category = 'all') => {
   let groups = [];
 
+  if (!keys || keys.length === 0) {
+    return groups;
+  }
+
   switch (category) {
     case 'dirs': {
       groups = keys.filter((key) => !key.startsWith('group-'));

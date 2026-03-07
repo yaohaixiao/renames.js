@@ -1,8 +1,7 @@
-import chalk from 'chalk';
-
 import CONSTANTS from '../../lib/constants.js';
 import isFileExists from '../../lib/utils/is-file-exists.js';
 import removeFile from '../../lib/utils/remove-file.js';
+import showSuccessLog from '../../lib/utils/show-success-log.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 /**
@@ -21,11 +20,7 @@ const deleteCacheFile = () => {
 
   removeFile(CACHE_FILE_PATH);
 
-  console.log(
-    chalk.greenBright('成功:'),
-    chalk.blueBright(CACHE_FILE_NAME),
-    '缓存文件已删除',
-  );
+  showSuccessLog('成功', `缓存文件 ${CACHE_FILE_NAME}`, '已被删除');
 
   return true;
 };

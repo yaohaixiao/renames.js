@@ -6,28 +6,28 @@ import isFileExists from '../../lib/utils/is-file-exists.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import uuidToArray from '../../lib/utils/uuid-to-array.js';
 
-import clearGroupsCache from './clear-groups-cache.js';
-import clearCacheRecords from './clear-cache-records.js';
+import clearCacheRecordsByCategory from './clear-cache-records-by-category.js';
+import clearCacheRecordsById from './clear-cache-records-by-id.js';
 import deleteCacheFile from './delete-cache-file.js';
 
 /**
  * # 删除缓存文件或者清理某个组别的缓存记录
  *
- * @function deleteCache
+ * @function deleteOrClearCache
  * @param {object} [options={}] - 配置信息对象. Default is `{}`
  * @returns {Promise<boolean>} - 操作成功，返回 true，否则返回 false
  */
-const deleteCache = async (options = {}) => {
+const deleteOrClearCache = async (options = {}) => {
   const { CONFIG_FILE_PATH, CONFIG_FILE_NAME, NAMESPACE_OID } = CONSTANTS;
 
   // 清理 source 为 dir 类型的缓存记录
   if (options?.dirs) {
-    return clearGroupsCache('dirs');
+    return clearCacheRecordsByCategory('dirs');
   }
 
   // 清理 source 为 group 类型的缓存记录
   if (options?.groups) {
-    return clearGroupsCache('groups');
+    return clearCacheRecordsByCategory('groups');
   }
 
   // 删除缓存文件
@@ -52,7 +52,9 @@ const deleteCache = async (options = {}) => {
     return false;
   }
 
-  return clearCacheRecords(`dir-${v5(dirPath, uuidToArray(NAMESPACE_OID))}`);
+  return clearCacheRecordsById(
+    `dir-${v5(dirPath, uuidToArray(NAMESPACE_OID))}`,
+  );
 };
 
-export default deleteCache;
+export default deleteOrClearCache;

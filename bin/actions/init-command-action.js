@@ -1,7 +1,7 @@
-import chalk from 'chalk';
-
 import CONSTANTS from '../../lib/constants.js';
 import createConfig from '../../lib/create-config.js';
+import showSuccessLog from '../../lib/utils/show-success-log.js';
+import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import terminalLink from '../utils/terminal-link.js';
 
@@ -17,21 +17,22 @@ const initCommandAction = async (options) => {
 
   return createConfig(options)
     .then(({ isCancel }) => {
-      if (!isCancel) {
-        console.log(
-          chalk.green(
-            `\n成功: ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件已生成！`,
-          ),
+      // 取消重写配置文件
+      if (isCancel) {
+        showWarningLog(
+          '\n提示',
+          '已取消重写配置文件',
+          `稍后可手动编辑：${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)}`,
         );
-        return true;
+        return false;
       }
 
-      console.log(
-        chalk.yellowBright(
-          `\n提示: 已取消重写 ${terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL)} 配置文件！`,
-        ),
+      showSuccessLog(
+        '\n成功',
+        terminalLink(CONFIG_FILE_PATH, CONFIG_FILE_PATH_URL),
+        '配置文件已生成',
       );
-      return false;
+      return true;
     })
     .catch((error) => {
       throw new Error(`${error.message}`);

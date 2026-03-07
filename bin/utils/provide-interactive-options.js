@@ -35,7 +35,7 @@ const provideInteractiveOptions = async (options) => {
           description: '执行命令：renames init，创建配置文件',
         },
         {
-          name: '退出',
+          name: '退出程序',
           value: 'exit',
           disabled: false,
         },

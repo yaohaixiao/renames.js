@@ -9,13 +9,13 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 import filterGroupsByCategory from './filter-groups-by-category.js';
 
 /**
- * # 列表显示缓存中的所有 groupId
+ * # 列表显示指定缓存 source 类型的缓存数据
  *
- * @function listCacheGroups
+ * @function listCacheGroupsByCategory
  * @param {string} [category='all'] - 类别字符串. Default is `'all'`
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
-const listCacheGroups = (category = 'all') => {
+const listCacheGroupsByCategory = (category = 'all') => {
   const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
@@ -24,8 +24,7 @@ const listCacheGroups = (category = 'all') => {
   }
 
   const renames = JSON.parse(readFile(CACHE_FILE_PATH));
-  const keys = Object.keys(renames);
-  const groups = filterGroupsByCategory(keys, category);
+  const groups = filterGroupsByCategory(Object.keys(renames), category);
   const { length } = groups.length.toString();
 
   for (const [index, key] of groups.entries()) {
@@ -38,4 +37,4 @@ const listCacheGroups = (category = 'all') => {
   return true;
 };
 
-export default listCacheGroups;
+export default listCacheGroupsByCategory;

@@ -33,7 +33,7 @@ const addCommandOptions = (command, name = 'main') => {
     }
   }
 
-  // 给命令实例添加选项配置
+  // 给命令实例添加配置选项
   for (const option of options) {
     if (option.parser) {
       command.option(option.flags, option.description, option.parser);

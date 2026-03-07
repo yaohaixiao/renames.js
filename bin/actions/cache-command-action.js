@@ -5,11 +5,11 @@ import getOptionsFromConfigJs from '../../lib/utils/get-options-from-config-js.j
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import uuidToArray from '../../lib/utils/uuid-to-array.js';
 
-import clearOrDisplayAllCache from '../utils/clear-or-display-all-cache.js';
-import clearOrDisplayGroupCache from '../utils/clear-or-display-group-cache.js';
-import deleteCache from '../utils/delete-cache.js';
-import displayCacheByCategory from '../utils/display-cache-by-category.js';
-import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
+import clearOrLogAllCacheRecords from '../utils/clear-or-log-all-cache-records.js';
+import clearOrLogCacheRecordsById from '../utils/clear-or-log-cache-records-by-id.js';
+import deleteOrClearCache from '../utils/delete-or-clear-cache.js';
+import logCacheByCategory from '../utils/log-cache-by-category.js';
+import switchCacheOption from '../utils/switch-cache-option.js';
 
 /**
  * # cache 命令的 action 逻辑
@@ -22,40 +22,43 @@ import switchCacheOfConfig from '../utils/switch-cache-of-config.js';
 const cacheCommandAction = async (groupId = '', options = {}) => {
   const { CONFIG_FILE_NAME, NAMESPACE_OID } = CONSTANTS;
 
+  // 清理或者显示指定缓存 ID 的缓存信息
   if (groupId) {
-    return clearOrDisplayGroupCache(groupId, options);
+    return clearOrLogCacheRecordsById(groupId, options);
   }
 
+  /* -------- 全局相关的操作 -------- */
   // 关闭 cache 配置选项
   if (options?.off) {
-    return switchCacheOfConfig(false);
+    return switchCacheOption(false);
   }
 
   // 开启 cache 配置选项
   if (options?.on) {
-    return switchCacheOfConfig(true);
+    return switchCacheOption(true);
   }
 
   // 删除缓存文件或清理缓存记录
   if (options?.delete) {
-    return deleteCache(options);
+    return deleteOrClearCache(options);
+  }
+
+  // 清理或者显示全部缓存记录
+  if (options?.all) {
+    return clearOrLogAllCacheRecords(options);
   }
 
   // 显示 source 为 dir 类型缓存记录
   if (options?.dirs) {
-    return displayCacheByCategory(options, 'dirs');
+    return logCacheByCategory(options, 'dirs');
   }
 
+  // 显示 source 为 group 类型缓存记录
   if (options?.groups) {
-    return displayCacheByCategory(options, 'groups');
+    return logCacheByCategory(options, 'groups');
   }
 
-  // 处理全量操作
-  if (options?.all) {
-    return clearOrDisplayAllCache(options);
-  }
-
-  // 获取默认目录路径
+  /* -------- 未传递缓存记录 ID 时，读取配置文件的 dirPath 配置选项转化为缓存记录 ID -------- */
   const dirPath = await getOptionsFromConfigJs('dirPath');
 
   if (!dirPath) {
@@ -67,7 +70,7 @@ const cacheCommandAction = async (groupId = '', options = {}) => {
     return false;
   }
 
-  return clearOrDisplayGroupCache(
+  return clearOrLogCacheRecordsById(
     `dir-${v5(dirPath, uuidToArray(NAMESPACE_OID))}`,
     options,
   );

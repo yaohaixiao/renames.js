@@ -5,16 +5,16 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 import toLocaleTime from '../../lib/utils/to-locale-time.js';
 import writeFile from '../../lib/utils/write-file.js';
 
-import revokeRename from './revoke-rename.js';
+import revokeCacheRecord from './revoke-cache-record.js';
 
 /**
  * # 撤销缓存记录中指定 groupId 的文件重命名
  *
- * @function revokeGroupRecords
+ * @function revokeCacheRecordsById
  * @param {string} groupId - 缓存记录 ID
  * @returns {boolean} - 撤销操作成功，返回 true，否则返回 false
  */
-const revokeGroupRecords = (groupId) => {
+const revokeCacheRecordsById = (groupId) => {
   const { CACHE_FILE_PATH, CACHE_FILE_NAME } = CONSTANTS;
 
   if (!isFileExists(CACHE_FILE_PATH)) {
@@ -41,7 +41,7 @@ const revokeGroupRecords = (groupId) => {
     const { id, oldFilePath, newFilePath, source } = record;
     const updated = toLocaleTime();
 
-    revokeRename(record);
+    revokeCacheRecord(record);
 
     records.push({
       id,
@@ -61,4 +61,4 @@ const revokeGroupRecords = (groupId) => {
   return true;
 };
 
-export default revokeGroupRecords;
+export default revokeCacheRecordsById;
