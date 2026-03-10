@@ -1,26 +1,26 @@
 ## 0.4.0 (2026-03-10)
 
-* chore: 处理其他 files-list 配置项相关的模块调整； ([5f1807d](https://github.com/yaohaixiao/renames.js/commit/5f1807d))
-* chore: 调整 JsDoc 注释和 API 文档； ([e8d10e6](https://github.com/yaohaixiao/renames.js/commit/e8d10e6))
-* chore: 调整 revoke 子命令相关代码，优化代码可读性 ([cf5cef4](https://github.com/yaohaixiao/renames.js/commit/cf5cef4))
-* chore: 调整默认配置和创建配置文件的逻辑，添加 files-list 配置选项的相关逻辑； ([d4baf2a](https://github.com/yaohaixiao/renames.js/commit/d4baf2a))
-* chore: 调整文件名，优化提示文本 ([a57e655](https://github.com/yaohaixiao/renames.js/commit/a57e655))
-* chore: 更新 API 文档 ([a178306](https://github.com/yaohaixiao/renames.js/commit/a178306))
-* chore: 统一调整提示文本 ([1d2794a](https://github.com/yaohaixiao/renames.js/commit/1d2794a))
-* chore: update .hushk/commit-msg ([044f810](https://github.com/yaohaixiao/renames.js/commit/044f810))
-* feat: 调整 init 子命令配置选项； ([6102b93](https://github.com/yaohaixiao/renames.js/commit/6102b93))
-* feat: 给 cache 子命令添加 --dirs 和 --groups 配置选项； ([dea03ab](https://github.com/yaohaixiao/renames.js/commit/dea03ab))
-* feat: 给 init 子命令添加 files-list 配置选项； ([30bdc64](https://github.com/yaohaixiao/renames.js/commit/30bdc64))
-* feat: 给 revoke 子命令添加 --dirs 和 --groups 配置选项； ([22eb54e](https://github.com/yaohaixiao/renames.js/commit/22eb54e))
-* feat: 添加 files 配置选项，增加添加额外零散文件重命名； ([8cb70f3](https://github.com/yaohaixiao/renames.js/commit/8cb70f3))
-* feat: 优化 cache 子命令，添加更多配置选项的命令组合； ([30e5390](https://github.com/yaohaixiao/renames.js/commit/30e5390))
-* fix: 修复 init 命令 namesList 命令行输入无法获取的问题 ([56167fe](https://github.com/yaohaixiao/renames.js/commit/56167fe))
-* fix: 修复 record-rename.js 模块处理不存在的文件报错的问题； ([91f211a](https://github.com/yaohaixiao/renames.js/commit/91f211a))
-* docs: 调整优化 API 文档发布模块代码； ([ee1bffd](https://github.com/yaohaixiao/renames.js/commit/ee1bffd))
-* docs: 启用 HTML 代码压缩处理，优化 API 文档 ([fd2538c](https://github.com/yaohaixiao/renames.js/commit/fd2538c))
-* docs: update API docs ([f8492f0](https://github.com/yaohaixiao/renames.js/commit/f8492f0))
-
-
+- chore: 处理其他 files-list 配置项相关的模块调整； ([5f1807d](https://github.com/yaohaixiao/renames.js/commit/5f1807d))
+- chore: 调整 JsDoc 注释和 API 文档； ([e8d10e6](https://github.com/yaohaixiao/renames.js/commit/e8d10e6))
+- chore: 调整 revoke 子命令相关代码，优化代码可读性 ([cf5cef4](https://github.com/yaohaixiao/renames.js/commit/cf5cef4))
+- chore: 调整默认配置和创建配置文件的逻辑，添加 files-list 配置选项的相关逻辑； ([d4baf2a](https://github.com/yaohaixiao/renames.js/commit/d4baf2a))
+- chore: 调整文件名，优化提示文本 ([a57e655](https://github.com/yaohaixiao/renames.js/commit/a57e655))
+- chore: 更新 API 文档 ([a178306](https://github.com/yaohaixiao/renames.js/commit/a178306))
+- chore: 统一调整提示文本 ([1d2794a](https://github.com/yaohaixiao/renames.js/commit/1d2794a))
+- chore: update .hushk/commit-msg
+  ([044f810](https://github.com/yaohaixiao/renames.js/commit/044f810))
+- feat: 调整 init 子命令配置选项； ([6102b93](https://github.com/yaohaixiao/renames.js/commit/6102b93))
+- feat: 给 cache 子命令添加 --dirs 和 --groups 配置选项； ([dea03ab](https://github.com/yaohaixiao/renames.js/commit/dea03ab))
+- feat: 给 init 子命令添加 files-list 配置选项； ([30bdc64](https://github.com/yaohaixiao/renames.js/commit/30bdc64))
+- feat: 给 revoke 子命令添加 --dirs 和 --groups 配置选项； ([22eb54e](https://github.com/yaohaixiao/renames.js/commit/22eb54e))
+- feat: 添加 files 配置选项，增加添加额外零散文件重命名； ([8cb70f3](https://github.com/yaohaixiao/renames.js/commit/8cb70f3))
+- feat: 优化 cache 子命令，添加更多配置选项的命令组合； ([30e5390](https://github.com/yaohaixiao/renames.js/commit/30e5390))
+- fix: 修复 init 命令 namesList 命令行输入无法获取的问题 ([56167fe](https://github.com/yaohaixiao/renames.js/commit/56167fe))
+- fix: 修复 record-rename.js 模块处理不存在的文件报错的问题； ([91f211a](https://github.com/yaohaixiao/renames.js/commit/91f211a))
+- docs: 调整优化 API 文档发布模块代码； ([ee1bffd](https://github.com/yaohaixiao/renames.js/commit/ee1bffd))
+- docs: 启用 HTML 代码压缩处理，优化 API 文档 ([fd2538c](https://github.com/yaohaixiao/renames.js/commit/fd2538c))
+- docs: update API docs
+  ([f8492f0](https://github.com/yaohaixiao/renames.js/commit/f8492f0))
 
 ## <small>0.3.1 (2026-02-23)</small>
 
