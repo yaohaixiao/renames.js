@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 
 /**
- * # 辅助函数：执行帮助命令
+ * # 执行帮助命令
  *
  * @function executeHelpCommand
  */

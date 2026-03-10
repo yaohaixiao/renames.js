@@ -5,13 +5,14 @@ import showWarningLog from '../../lib/utils/show-warning-log.js';
 import showSuccessLog from '../../lib/utils/show-success-log.js';
 import writeConfigJs from '../../lib/utils/write-config-js.js';
 
-import terminalLink from './terminal-link.js';
+import terminalLink from '../../lib/utils/terminal-link.js';
 
 /**
  * # 处理关闭缓存的逻辑
  *
+ * @async
  * @function switchCacheOption
- * @param {boolean} [enable=false] - 是否开启. Default is `false`
+ * @param {boolean} [enable=false] - 可选，是否开启. Default is `false`
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
  */
 const switchCacheOption = async (enable = true) => {

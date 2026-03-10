@@ -1,9 +1,9 @@
 /**
- * # 辅助函数：解析命令传入布尔类型的参数值
+ * # 解析命令传入布尔类型的参数值
  *
  * @function parseBooleanOption
  * @param {string} value - 输入的参数值
- * @param {boolean | string} [defaultValue=false] - 默认值. Default is `false`
+ * @param {boolean | string} [defaultValue=false] - 可选，默认值. Default is `false`
  * @returns {boolean | string | number} - 解析后的配置参数值
  */
 const parseBooleanOption = (value, defaultValue) => {

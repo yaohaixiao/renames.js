@@ -3,11 +3,12 @@ import createConfig from '../../lib/create-config.js';
 import showSuccessLog from '../../lib/utils/show-success-log.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
-import terminalLink from '../utils/terminal-link.js';
+import terminalLink from '../../lib/utils/terminal-link.js';
 
 /**
  * # init 命令的 action 逻辑
  *
+ * @async
  * @function initCommandAction
  * @param {object} options - 配置参数对象
  * @returns {Promise<boolean>} - 执行成功，返回 true，否则返回 false

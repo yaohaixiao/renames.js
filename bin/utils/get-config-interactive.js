@@ -2,8 +2,9 @@ import chalk from 'chalk';
 import { input } from '@inquirer/prompts';
 
 /**
- * # 辅助函数：交互式获取必填配置（提取重复交互逻辑，减少分支嵌套）
+ * # 交互式获取必填配置（提取重复交互逻辑，减少分支嵌套）
  *
+ * @async
  * @function getConfigInteractive
  * @param {object} config - 目标配置对象
  * @param {string} key - 配置项键名

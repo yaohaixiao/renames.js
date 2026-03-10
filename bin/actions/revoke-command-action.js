@@ -11,6 +11,7 @@ import revokeCacheRecordsById from '../utils/revoke-cache-records-by-id.js';
 /**
  * # revoke 命令的 action 逻辑
  *
+ * @async
  * @function revokeCommandAction
  * @param {string} groupId - 缓存记录 id
  * @param {object} options - 配置参数对象

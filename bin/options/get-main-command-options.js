@@ -60,7 +60,7 @@ const getMainCommandOptions = () => {
       flags: '--start-index <index>',
       description: `可选，索引编号起始值（default：${DEFAULT_START_INDEX}）`,
       parser: (index) =>
-        parseCommandOption(index, DEFAULT_START_INDEX, '--startIndex'),
+        parseCommandOption(index, DEFAULT_START_INDEX, '--start-index'),
     },
     {
       flags: '--index-pad-zero [enable]',
@@ -71,7 +71,7 @@ const getMainCommandOptions = () => {
       flags: '--index-length <length>',
       description: '可选，自动编号自动补"0"的字符长度（default: "auto"）',
       parser: (length) =>
-        parseCommandOption(length, DEFAULT_INDEX_LENGTH, '--indexLength'),
+        parseCommandOption(length, DEFAULT_INDEX_LENGTH, '--index-length'),
     },
     {
       flags: '--index-prefix <prefix>',

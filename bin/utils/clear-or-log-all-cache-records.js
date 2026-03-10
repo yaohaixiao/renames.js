@@ -1,12 +1,13 @@
 import clearCacheRecordsById from './clear-cache-records-by-id.js';
 import deleteCacheFile from './delete-cache-file.js';
-import logCacheByCategory from './log-cache-by-category.js';
+import logCacheRecordsByCategory from './log-cache-records-by-category.js';
 import listCacheGroupsByCategory from './list-cache-groups-by-category.js';
 import listCacheRecordsById from './list-cache-records-by-id.js';
 
 /**
  * #处理全量缓存操作（显示/清理）
  *
+ * @async
  * @function clearOrLogAllCacheRecords
  * @param {object} options - 配置参数对象
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
@@ -24,11 +25,11 @@ const clearOrLogAllCacheRecords = async (options) => {
 
   // JSON 格式显示缓存记录
   if (options?.dirs) {
-    return logCacheByCategory(options, 'dirs');
+    return logCacheRecordsByCategory(options, 'dirs');
   }
 
   if (options?.groups) {
-    return logCacheByCategory(options, 'groups');
+    return logCacheRecordsByCategory(options, 'groups');
   }
 
   // 列表格式显示缓存记录
@@ -46,7 +47,7 @@ const clearOrLogAllCacheRecords = async (options) => {
   }
 
   // JSON 格式显示所有缓存记录
-  return logCacheByCategory(options, 'all');
+  return logCacheRecordsByCategory(options, 'all');
 };
 
 export default clearOrLogAllCacheRecords;

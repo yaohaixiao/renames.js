@@ -4,8 +4,9 @@ import { input } from '@inquirer/prompts';
 import CONSTANTS from '../../lib/constants.js';
 
 /**
- * # 辅助函数：获取最终的文件夹路径
+ * # 获取最终的文件夹路径
  *
+ * @async
  * @function getFinalDirPath
  * @param {string} dirPath - 命令行传入的路径
  * @param {object} options - 配置参数对象

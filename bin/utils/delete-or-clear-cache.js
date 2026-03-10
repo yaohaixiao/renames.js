@@ -13,8 +13,9 @@ import deleteCacheFile from './delete-cache-file.js';
 /**
  * # 删除缓存文件或者清理某个组别的缓存记录
  *
+ * @async
  * @function deleteOrClearCache
- * @param {object} [options={}] - 配置信息对象. Default is `{}`
+ * @param {object} [options={}] - 可选，配置信息对象. Default is `{}`
  * @returns {Promise<boolean>} - 操作成功，返回 true，否则返回 false
  */
 const deleteOrClearCache = async (options = {}) => {

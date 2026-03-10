@@ -7,8 +7,13 @@ import CONSTANTS from '../../lib/constants.js';
  * @returns {Array} 选项配置数组
  */
 const getInitCommandOptions = () => {
-  const { DEMO_DIR_PATH, DEMO_LIST_PATH, DEMO_LIST_DATA, DEMO_FILES_DATA } =
-    CONSTANTS;
+  const {
+    DEMO_DIR_PATH,
+    DEMO_LIST_PATH,
+    DEMO_LIST_DATA,
+    DEMO_FILES_DATA,
+    CACHE_FILE_NAME,
+  } = CONSTANTS;
 
   return [
     {
@@ -22,6 +27,10 @@ const getInitCommandOptions = () => {
     {
       flags: '--names, --names-list <list>',
       description: `可选，最终期望的文件名列表数据，或者文件名列表文件的路径，例如："${DEMO_LIST_DATA}" 或者 "${DEMO_LIST_PATH}"`,
+    },
+    {
+      flags: '--cache',
+      description: `可选，缓存重命名操作结果。开启后会创建 ${CACHE_FILE_NAME} 文件记录重命名的数据`,
     },
   ];
 };

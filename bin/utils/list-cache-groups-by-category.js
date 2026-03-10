@@ -12,7 +12,7 @@ import filterGroupsByCategory from './filter-groups-by-category.js';
  * # 列表显示指定缓存 source 类型的缓存数据
  *
  * @function listCacheGroupsByCategory
- * @param {string} [category='all'] - 类别字符串. Default is `'all'`
+ * @param {string} [category='all'] - 可选，缓存记录 source 属性的名称. Default is `'all'`
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
 const listCacheGroupsByCategory = (category = 'all') => {

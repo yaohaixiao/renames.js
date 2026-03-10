@@ -4,11 +4,11 @@ import getMainCommandOptions from '../options/get-main-command-options.js';
 import getRevokeCommandOptions from '../options/get-revoke-command-options.js';
 
 /**
- * # 辅助函数：为 Commander 实例添加通用选项
+ * # 为 Commander 实例添加通用选项
  *
  * @function addCommandOptions
  * @param {object} command - Commander 实例
- * @param {string} [name='main'] - 命令名称. Default is `'main'`
+ * @param {string} [name='main'] - 可选，命令名称. Default is `'main'`
  */
 const addCommandOptions = (command, name = 'main') => {
   let options = '';

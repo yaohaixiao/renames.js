@@ -1,7 +1,7 @@
 import isFileExists from '../../lib/utils/is-file-exists.js';
 
 /**
- * # 辅助函数：处理文件名列表参数
+ * # 处理文件名列表参数
  *
  * @function processNamesList
  * @param {string} nameList - 输入的文件名列表（路径或逗号分隔字符串）

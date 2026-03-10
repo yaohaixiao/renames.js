@@ -3,7 +3,7 @@
  *
  * @function filterGroupsByCategory
  * @param {Array} keys - 所有类别的数组数据
- * @param {string} [category='all'] - 类别字符串. Default is `'all'`
+ * @param {string} [category='all'] - 可选，缓存记录 source 属性的名称. Default is `'all'`
  * @returns {Array} - 返回过滤后的组别数据
  */
 const filterGroupsByCategory = (keys, category = 'all') => {

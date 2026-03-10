@@ -1,9 +1,7 @@
-import { supportsColor } from 'chalk';
-
 /**
  * # Jest.config.js - jest 配置
  *
- * Created By: Yaohaixiao Update: 2026.1.10
+ * Created By: Yaohaixiao Update: 2026.3.8
  */
 export default {
   moduleFileExtensions: ['js'],
@@ -33,7 +31,7 @@ export default {
   testTimeout: 5000,
   // 确保不会忽略转换 chalk
   transformIgnorePatterns: [
-    'node_modules/(?!(chalk|ansi-styles|supports-color)/)',
+    'node_modules/(?!(chalk|ansi-styles|supports-color|uuid)/)',
   ],
   collectCoverage: true,
   coverageDirectory: 'report/coverage',

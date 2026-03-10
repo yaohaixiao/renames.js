@@ -3,15 +3,16 @@ import readFile from '../../lib/utils/read-file.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 
 import clearCacheRecordsById from './clear-cache-records-by-id.js';
-import displayCacheRecordsJSON from './display-cache-records-json.js';
+import displayFormatedJsonCacheRecords from './display-formated-json-cache-records.js';
 import listCacheRecordsById from './list-cache-records-by-id.js';
 
 /**
  * # 处理指定 groupId 的缓存操作（显示/清理）
  *
+ * @async
  * @function clearOrLogCacheRecordsById
  * @param {string} groupId - 缓存记录 ID
- * @param {object} [options={}] - 配置参数对象. Default is `{}`
+ * @param {object} [options={}] - 可选，配置参数对象. Default is `{}`
  * @returns {Promise<boolean>} - 操作成功，则返回 true，否则返回 false
  */
 const clearOrLogCacheRecordsById = async (groupId, options = {}) => {
@@ -42,7 +43,7 @@ const clearOrLogCacheRecordsById = async (groupId, options = {}) => {
   }
 
   // JSON 格式显示缓存记录
-  await displayCacheRecordsJSON(stringify(records));
+  await displayFormatedJsonCacheRecords(stringify(records));
 
   return true;
 };

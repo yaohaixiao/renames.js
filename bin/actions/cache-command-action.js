@@ -8,12 +8,13 @@ import uuidToArray from '../../lib/utils/uuid-to-array.js';
 import clearOrLogAllCacheRecords from '../utils/clear-or-log-all-cache-records.js';
 import clearOrLogCacheRecordsById from '../utils/clear-or-log-cache-records-by-id.js';
 import deleteOrClearCache from '../utils/delete-or-clear-cache.js';
-import logCacheByCategory from '../utils/log-cache-by-category.js';
+import logCacheRecordsByCategory from '../utils/log-cache-records-by-category.js';
 import switchCacheOption from '../utils/switch-cache-option.js';
 
 /**
  * # cache 命令的 action 逻辑
  *
+ * @async
  * @function cacheCommandAction
  * @param {string} groupId - 缓存记录 ID
  * @param {object} [options={}] - 配置参数对象. Default is `{}`
@@ -43,19 +44,19 @@ const cacheCommandAction = async (groupId = '', options = {}) => {
     return deleteOrClearCache(options);
   }
 
-  // 清理或者显示全部缓存记录
-  if (options?.all) {
-    return clearOrLogAllCacheRecords(options);
-  }
-
   // 显示 source 为 dir 类型缓存记录
   if (options?.dirs) {
-    return logCacheByCategory(options, 'dirs');
+    return logCacheRecordsByCategory(options, 'dirs');
   }
 
   // 显示 source 为 group 类型缓存记录
   if (options?.groups) {
-    return logCacheByCategory(options, 'groups');
+    return logCacheRecordsByCategory(options, 'groups');
+  }
+
+  // 清理或者显示全部缓存记录
+  if (options?.all) {
+    return clearOrLogAllCacheRecords(options);
   }
 
   /* -------- 未传递缓存记录 ID 时，读取配置文件的 dirPath 配置选项转化为缓存记录 ID -------- */

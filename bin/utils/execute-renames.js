@@ -2,7 +2,7 @@ import CONSTANTS from '../../lib/constants.js';
 import isFileExists from '../../lib/utils/is-file-exists.js';
 import renames from '../../index.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
-import terminalLink from '../utils/terminal-link.js';
+import terminalLink from '../../lib/utils/terminal-link.js';
 
 /**
  * # 执行重命名程序

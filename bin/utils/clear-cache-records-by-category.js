@@ -12,7 +12,7 @@ import filterGroupsByCategory from './filter-groups-by-category.js';
  * # 清理指定类别的缓存记录
  *
  * @function clearCacheRecordsByCategory
- * @param {string} [category='all'] - 类别名称. Default is `'all'`
+ * @param {string} [category='all'] - 可选，缓存记录 source 属性的名称. Default is `'all'`
  * @returns {boolean} - 操作成功，返回 true，否则返回 false
  */
 const clearCacheRecordsByCategory = (category = 'all') => {

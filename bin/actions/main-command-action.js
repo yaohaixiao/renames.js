@@ -8,6 +8,7 @@ import provideInteractiveOptions from '../utils/provide-interactive-options.js';
 /**
  * # 主命令的 action 逻辑
  *
+ * @async
  * @function mainCommandAction
  * @param {string} dirPath - 目标文件夹（绝对或相对）路径
  * @param {object} options - 配置参数对象

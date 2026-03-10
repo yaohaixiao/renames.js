@@ -7,6 +7,7 @@ import isEmptyObject from '../../lib/utils/is-empty-object.js';
 /**
  * # 无配置文件且未提供配置参数时，提供交互式选择
  *
+ * @async
  * @function provideInteractiveOptions
  * @param {object} options - 用户从命令行传入的配置选项
  * @returns {Promise<string>} - 返回用户对交互选择的结果

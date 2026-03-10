@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 
 /**
- * # 辅助函数：执行初始化命令
+ * # 执行初始化命令
  *
  * @function executeInitCommand
  */
