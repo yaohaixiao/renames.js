@@ -52,28 +52,28 @@ renames.js 提供目前提供 1 个 arguments 参数和 3 个 subcommands 子命
 
 renames.js 提供了较为丰富的 options 配置选项，用以控制重命名的操作细节处理方式：
 
-| 参数名                           | 参数说明                                                                                                      |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| --dir, --dir-path &lt;path&gt; | 可选，执行重命名操作的目标文件夹（绝对或相对）路径                                                            |
+| 参数名                             | 参数说明                                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| --dir, --dir-path &lt;path&gt;     | 可选，执行重命名操作的目标文件夹（绝对或相对）路径                                                            |
 | --files, --files-list &lt;list&gt; | 可选，文件名列表数组数据，例如："C:\第01话：新的开始.mp4,D:\动画片-第01话：新的开始-1080p.mp4"                |
 | --names, --names-list &lt;list&gt; | 可选，文件名列表数组数据，例如："新的开始,完美结局"。或者文件名列表文件的路径，例如："C:\Downloads\names.txt" |
-| --prefix &lt;prefix&gt;       | 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"                               |
-| --suffix &lt;suffix&gt;       | 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"                                |
-| --connector &lt;connector&gt; | 可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-"                   |
-| --auto-index [enable]         | 可选，是否自动生成索引编号（default：false）                                                                  |
-| --start-index &lt;startIndex&gt; | 可选，索引编号起始值（default：0）                                                                            |
-| --index-pad-zero [enable]     | 可选，是否自动用"0"填充索引编号（default：true）                                                              |
-| --index-length [length]       | 可选，自动编号自动补"0"的字符长度（default: "auto"）                                                          |
-| --index-prefix &lt;prefix&gt; | 可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第")                              |
-| --index-suffix &lt;suffix&gt; | 可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集")                              |
-| --delimiter &lt;delimiter&gt; | 可选，索引编号和的前/后缀字符串间的连接符，例如："第01话：新的开始.mp4"中的"：" (default: "：")               |
-| -f, --force [enable]          | 可选，是否强制重命名（default：false）                                                                        |
-| --ext, --extname &lt;extname&gt; | 可选，重命名后的扩展名，例如：".txt"                                                                          |
-| --sort, --sort-by &lt;by&gt;  | 可选，排序类型，可选项：name、extension、size、birthtime 和 modify-time (default: "name")                     |
-| --order &lt;order&gt;         | 可选，排序方式，可选项：desc 和 asc (default: "asc")                                                          |
-| --sensitivity &lt;sensitivity&gt; | 可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base")      |
-| --cache                       | 可选，缓存重命名操作结果。开启后会创建 renames.cache.json 文件记录重命名的数据                                |
-| -h, --help                    | display help for command                                                                                      |
+| --prefix &lt;prefix&gt;            | 可选，文件名的前缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"动画片"                               |
+| --suffix &lt;suffix&gt;            | 可选，文件名的后缀字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"1080p"                                |
+| --connector &lt;connector&gt;      | 可选，文件名的前/后缀字符串间的连接字符串，例如："动画片-第01话：新的开始-1080p.mp4"中的"-"                   |
+| --auto-index [enable]              | 可选，是否自动生成索引编号（default：false）                                                                  |
+| --start-index &lt;startIndex&gt;   | 可选，索引编号起始值（default：0）                                                                            |
+| --index-pad-zero [enable]          | 可选，是否自动用"0"填充索引编号（default：true）                                                              |
+| --index-length [length]            | 可选，自动编号自动补"0"的字符长度（default: "auto"）                                                          |
+| --index-prefix &lt;prefix&gt;      | 可选，索引编号的前缀字符串，例如："第01话：新的开始.mp4"中的"第" (default: "第")                              |
+| --index-suffix &lt;suffix&gt;      | 可选，索引编号的后缀字符串，例如："第01话：新的开始.mp4"中的"话" (default: "集")                              |
+| --delimiter &lt;delimiter&gt;      | 可选，索引编号和的前/后缀字符串间的连接符，例如："第01话：新的开始.mp4"中的"：" (default: "：")               |
+| -f, --force [enable]               | 可选，是否强制重命名（default：false）                                                                        |
+| --ext, --extname &lt;extname&gt;   | 可选，重命名后的扩展名，例如：".txt"                                                                          |
+| --sort, --sort-by &lt;by&gt;       | 可选，排序类型，可选项：name、extension、size、birthtime 和 modify-time (default: "name")                     |
+| --order &lt;order&gt;              | 可选，排序方式，可选项：desc 和 asc (default: "asc")                                                          |
+| --sensitivity &lt;sensitivity&gt;  | 可选，排序方式为 name 时，大小写/重音处理的方式，可选项：base、accent、case 和 variant (default: "base")      |
+| --cache                            | 可选，缓存重命名操作结果。开启后会创建 renames.cache.json 文件记录重命名的数据                                |
+| -h, --help                         | display help for command                                                                                      |
 
 ### Basic Usage：
 
