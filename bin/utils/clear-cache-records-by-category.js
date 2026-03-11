@@ -1,8 +1,7 @@
-import chalk from 'chalk';
-
 import CONSTANTS from '../../lib/constants.js';
 import isFileExists from '../../lib/utils/is-file-exists.js';
 import readFile from '../../lib/utils/read-file.js';
+import showSuccessLog from '../../lib/utils/show-success-log.js';
 import showWarningLog from '../../lib/utils/show-warning-log.js';
 import writeFile from '../../lib/utils/write-file.js';
 
@@ -27,17 +26,23 @@ const clearCacheRecordsByCategory = (category = 'all') => {
   const renames = parse(readFile(CACHE_FILE_PATH));
   const groups = filterGroupsByCategory(Object.keys(renames), category);
 
+  const keywords =
+    category === 'all'
+      ? '缓存记录中无任何数据'
+      : `缓存记录中无任何 source 为 ${category.replace(/s$/, '')} 的数据`;
+
+  if (!groups || groups.length === 0) {
+    showWarningLog('警告', keywords, '无法进行清理操作');
+    return false;
+  }
+
   for (const group of groups) {
     delete renames[group];
   }
 
   writeFile(CACHE_FILE_PATH, stringify(renames, null, 2));
 
-  console.log(
-    chalk.greenBright('成功:'),
-    chalk.blueBright(category),
-    chalk.green('类型的缓存记录已被清理'),
-  );
+  showSuccessLog('成功', keywords, '已被清理');
 
   return true;
 };

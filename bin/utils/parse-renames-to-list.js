@@ -12,6 +12,10 @@ const parseRenamesToList = (renames, category = 'all') => {
   const groups = filterGroupsByCategory(Object.keys(renames), category);
   const records = [];
 
+  if (!groups || groups.length === 0) {
+    return records;
+  }
+
   for (const group of groups) {
     records.push(...renames[group]);
   }

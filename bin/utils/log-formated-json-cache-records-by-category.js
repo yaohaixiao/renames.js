@@ -29,11 +29,11 @@ const logFormatedJsonCacheRecordsByCategory = async (category = 'all') => {
   const groups = filterGroupsByCategory(Object.keys(renames), category);
   const keywords =
     category === 'all'
-      ? `所有缓存记录已被清空`
-      : `缓存文件中 source 类型为 ${category.replace(/s$/, '')} 的记录已被清空`;
+      ? `所有缓存中无任何数据`
+      : `缓存文件中无任何 source 类型为 ${category.replace(/s$/, '')} 的数据`;
 
   if (!groups || groups.length === 0) {
-    showWarningLog('警告', keywords, '暂无相关数据');
+    showWarningLog('警告', keywords, '或数据已被清理');
     return false;
   }
 

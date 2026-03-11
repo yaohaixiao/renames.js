@@ -25,6 +25,16 @@ const listCacheGroupsByCategory = (category = 'all') => {
 
   const renames = JSON.parse(readFile(CACHE_FILE_PATH));
   const groups = filterGroupsByCategory(Object.keys(renames), category);
+  const keywords =
+    category === 'all'
+      ? '缓存记录中无任何数据'
+      : `缓存记录中无任何 source 为 ${category.replace(/s$/, '')} 的数据`;
+
+  if (!groups || groups.length === 0) {
+    showWarningLog('警告', keywords, '或数据已被清理');
+    return false;
+  }
+
   const { length } = groups.length.toString();
 
   for (const [index, key] of groups.entries()) {
