@@ -1,14 +1,14 @@
 ## 0.5.0 (2026-04-06)
 
-* docs: 更新 API 文档 ([fd9d571](https://github.com/yaohaixiao/renames.js/commit/fd9d571))
-* chore: 调整 jsDocs 的注释文案 ([22a685c](https://github.com/yaohaixiao/renames.js/commit/22a685c))
-* chore: 调整帮助文档的文案 ([fc88e30](https://github.com/yaohaixiao/renames.js/commit/fc88e30))
-* chore: 调整警告信息文案； ([a75c064](https://github.com/yaohaixiao/renames.js/commit/a75c064))
-* chore: update CHANGELOG.md and format code ([9f93e00](https://github.com/yaohaixiao/renames.js/commit/9f93e00))
-* chore: update README.md ([8e94557](https://github.com/yaohaixiao/renames.js/commit/8e94557))
-* feat: 添加 edit 子命令 ([e96f402](https://github.com/yaohaixiao/renames.js/commit/e96f402))
-
-
+- docs: 更新 API 文档 ([fd9d571](https://github.com/yaohaixiao/renames.js/commit/fd9d571))
+- chore: 调整 jsDocs 的注释文案 ([22a685c](https://github.com/yaohaixiao/renames.js/commit/22a685c))
+- chore: 调整帮助文档的文案 ([fc88e30](https://github.com/yaohaixiao/renames.js/commit/fc88e30))
+- chore: 调整警告信息文案； ([a75c064](https://github.com/yaohaixiao/renames.js/commit/a75c064))
+- chore: update CHANGELOG.md and format code
+  ([9f93e00](https://github.com/yaohaixiao/renames.js/commit/9f93e00))
+- chore: update README.md
+  ([8e94557](https://github.com/yaohaixiao/renames.js/commit/8e94557))
+- feat: 添加 edit 子命令 ([e96f402](https://github.com/yaohaixiao/renames.js/commit/e96f402))
 
 ## 0.4.0 (2026-03-10)
 
