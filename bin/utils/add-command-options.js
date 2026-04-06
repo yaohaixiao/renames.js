@@ -1,4 +1,5 @@
 import getCacheCommandOptions from '../options/get-cache-command-options.js';
+import getEditCommandOptions from '../options/get-edit-command-options.js';
 import getInitCommandOptions from '../options/get-init-command-options.js';
 import getMainCommandOptions from '../options/get-main-command-options.js';
 import getRevokeCommandOptions from '../options/get-revoke-command-options.js';
@@ -17,6 +18,10 @@ const addCommandOptions = (command, name = 'main') => {
   switch (name) {
     case 'cache': {
       options = getCacheCommandOptions();
+      break;
+    }
+    case 'edit': {
+      options = getEditCommandOptions();
       break;
     }
     case 'init': {

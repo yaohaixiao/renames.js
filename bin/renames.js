@@ -7,6 +7,7 @@ import CONSTANTS from '../lib/constants.js';
 import addCommandOptions from './utils/add-command-options.js';
 import setupGracefulExit from './utils/setup-graceful-exit.js';
 import cacheCommandAction from './actions/cache-command-action.js';
+import editCommandAction from './actions/edit-command-action.js';
 import initCommandAction from './actions/init-command-action.js';
 import mainCommandAction from './actions/main-command-action.js';
 import revokeCommandAction from './actions/revoke-command-action.js';
@@ -85,6 +86,21 @@ cacheCommand
     `指定缓存文件中的记录ID值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
   )
   .action(cacheCommandAction);
+
+// 配置 edit 命令
+const editCommand = program
+  .command('edit')
+  .description(
+    `用来使用指定的文本编辑器打开配置文件 ${CONFIG_FILE_NAME}，或者缓存文件 ${CACHE_FILE_NAME}`,
+  );
+
+// edit 命令添加选项
+addCommandOptions(editCommand, 'edit');
+
+// edit 命令逻辑
+editCommand
+  .argument('[file-type]', `可选，指定文件类型：config 或者 cache`, 'config')
+  .action(editCommandAction);
 
 setupGracefulExit();
 
