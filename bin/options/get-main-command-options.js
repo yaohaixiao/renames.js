@@ -3,7 +3,7 @@ import CONSTANTS from '../../lib/constants.js';
 import parseCommandOption from '../utils/parse-command-option.js';
 
 /**
- * # 辅助函数：获取主命令选项配置数据
+ * # 获取主命令选项配置数据
  *
  * @function getMainCommandOptions
  * @returns {Array} 选项配置数组

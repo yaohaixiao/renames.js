@@ -1,7 +1,7 @@
 import CONSTANTS from '../../lib/constants.js';
 
 /**
- * # 辅助函数：获取 init 命令选项配置数据
+ * # 获取 init 命令选项配置数据
  *
  * @function getInitCommandOptions
  * @returns {Array} 选项配置数组
