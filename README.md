@@ -42,7 +42,7 @@ renames.js 和其它 cli 工具一样，也可以通过 -h 选项获取完整帮
 renames -h
 ```
 
-renames.js 提供目前提供 1 个 arguments 参数和 3 个 subcommands 子命令：init、revoke、cache，以及 10 多个 options 配置选项。
+renames.js 提供目前提供 1 个 arguments 参数和 4 个 subcommands 子命令：init、revoke、cache 和 edit，以及 10 多个 options 配置选项。
 
 ### Arguments:
 
@@ -89,6 +89,9 @@ renames cache -a -l
 
 # 撤销所有重命名操作
 renames revoke -a
+
+# 使用 vscode 编辑器打开配置文件 renames.config.js
+renames edit config --editor code
 ```
 
 ## renames.config.js
@@ -535,7 +538,17 @@ export default {
 
 ## Subcommands
 
-renames.js 目前提供了 3 个子命令：init、revoke 和 cache。
+renames.js 目前提供了 4 个子命令：init、revoke、cache 和 edit：
+
+- **init [options]** - 生成配置文件：renames.config.js
+- **revoke [group-id]
+  [options]** - 撤销缓存文件 renames.cache.json 中（全部、指定记录 id 值、指定 source 类型）的重命名操作
+- **cache [group-id] [options]** - cache 子命令有3个功能：
+  - 1.删除缓存文件 renames.cache.json
+  - 2.显示或者清理缓存文件 renames.cache.json 中（全部、指定记录 id 值、指定 source 类型）的数据
+  - 3.调整配置文件 renames.config.js 中的 cache 配置选项的值
+- **edit [generated-type]
+  [options]** - 编辑 renames 命令生成的（renames.config.js 或者 renames.cache.json）文件
 
 ### init 子命令
 
@@ -782,6 +795,52 @@ renames cache --groups -c
 
 # 清理全部 source 属性为 dir 的缓存记录ID
 renames cache --dirs -c
+```
+
+### edit 子命令
+
+edit 子命令是用来编辑 renames 命令生成（renames.cache.json 和 renames.config.js）文件，edit 子命令解决了之前用户无法快速打开 renames.config.js 配置文件的问题。命令如下：
+
+```bash
+renames edit
+```
+
+当然，edit 子命令后添加 -h 配置选项也可以查看完整的 edit 子命令的帮助信息：
+
+```bash
+renames edit -h
+```
+
+#### edit 子命令的 Arguments 参数
+
+- generated-type - 可选，指定编辑文件的类型，例如：config 或者 cache，默认为 config。命令如下：
+
+```bash
+# 不设置，默认编辑配置文件 等同 renames edit config
+renames edit
+
+# 编辑配置文件 renames.config.js
+renames edit config
+
+# 编辑缓存文件 renames.cache.json
+renames edit cache
+```
+
+#### edit 子命令的 Options 配置选项
+
+| 参数名     | 参数说明                                                 |
+| ---------- | -------------------------------------------------------- |
+| --editor   | 可选，指定打开文件的编辑器名称，传递则使用系统默认编辑器 |
+| -h, --help | display help for command                                 |
+
+edit 子命令唯一的功能性的配置选项就是：--editor，可以设置用户常用的代码编辑器打开配置或者缓存文件。其使用的命令如下：
+
+```bash
+# 指定使用 vim 编辑器，如果系统没有安装，则使用默认编辑器
+renames edit config --editor vim
+
+# 指定使用 vscode 编辑器
+renames edit config --editor code
 ```
 
 ## API Documentation

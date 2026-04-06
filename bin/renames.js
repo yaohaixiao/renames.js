@@ -99,7 +99,11 @@ addCommandOptions(editCommand, 'edit');
 
 // edit 命令逻辑
 editCommand
-  .argument('[generated-type]', `可选，指定 renames 命令生成文件的类型：config 或者 cache`, 'config')
+  .argument(
+    '[generated-type]',
+    `可选，指定 renames 命令生成文件的类型：config 或者 cache`,
+    'config',
+  )
   .action(editCommandAction);
 
 setupGracefulExit();
