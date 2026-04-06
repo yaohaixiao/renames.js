@@ -43,7 +43,7 @@ mainCommand
 // 配置 init 命令
 const initCommand = program
   .command('init')
-  .description(`用以生成配置文件 ${CONFIG_FILE_NAME}`);
+  .description(`生成配置文件：${CONFIG_FILE_NAME}`);
 
 // init 命令添加选项
 addCommandOptions(initCommand, 'init');
@@ -55,7 +55,7 @@ initCommand.action(initCommandAction);
 const revokeCommand = program
   .command('revoke')
   .description(
-    `开启缓存重命名记录后，用来撤指定记录ID、或者 source 类型、以及全部重命名操作`,
+    `撤销缓存文件 ${CACHE_FILE_NAME} 中（全部、指定记录 id 值、指定 source 类型）的重命名操作`,
   );
 
 // revoke 命令添加选项
@@ -65,7 +65,7 @@ addCommandOptions(revokeCommand, 'revoke');
 revokeCommand
   .argument(
     '[group-id]',
-    `可选，指定缓存文件中的记录ID值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
+    `可选，指定的记录 id 值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
   )
   .action(revokeCommandAction);
 
@@ -73,7 +73,7 @@ revokeCommand
 const cacheCommand = program
   .command('cache')
   .description(
-    `开启缓存重命名记录后，用来删除缓存记录文件，或者显示或者清理定记录ID、或者 source 类型、以及全部缓存记录。也可以调整 ${CONFIG_FILE_NAME} 配置文件中的 cache 配置选项`,
+    `1.删除缓存文件 ${CACHE_FILE_NAME}\n2.显示或者清理缓存文件 ${CACHE_FILE_NAME} 中（全部、指定记录 id 值、指定 source 类型）的数据\n3.调整配置文件 ${CONFIG_FILE_NAME} 中的 cache 配置选项的值`,
   );
 
 // cache 命令添加选项
@@ -83,7 +83,7 @@ addCommandOptions(cacheCommand, 'cache');
 cacheCommand
   .argument(
     '[group-id]',
-    `指定缓存文件中的记录ID值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
+    `可选，指定的记录 id 值，例如："${DEMO_DIR_ID}" 或者 "${DEMO_GROUP_ID}"（UUID 指 32 位字符的字符串）。\n如不设置，则使用配置文件 ${CACHE_FILE_NAME} 中的 dirPath 属性转化为 dir-UUID 格式，作为记录ID值`,
   )
   .action(cacheCommandAction);
 
@@ -91,7 +91,7 @@ cacheCommand
 const editCommand = program
   .command('edit')
   .description(
-    `用来使用指定的文本编辑器打开配置文件 ${CONFIG_FILE_NAME}，或者缓存文件 ${CACHE_FILE_NAME}`,
+    `编辑 renames 命令生成的（${CONFIG_FILE_NAME} 或者 ${CACHE_FILE_NAME}）文件`,
   );
 
 // edit 命令添加选项
@@ -99,7 +99,7 @@ addCommandOptions(editCommand, 'edit');
 
 // edit 命令逻辑
 editCommand
-  .argument('[file-type]', `可选，指定文件类型：config 或者 cache`, 'config')
+  .argument('[generated-type]', `可选，指定 renames 命令生成文件的类型：config 或者 cache`, 'config')
   .action(editCommandAction);
 
 setupGracefulExit();
